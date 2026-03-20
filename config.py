@@ -94,7 +94,7 @@ PRETRAINED_BATCH_SIZE = 128
 PRETRAINED_EPOCHS = 12
 
 # End-to-End Pretrained models (Model 5 & 6)
-E2E_PRETRAINED_BATCH_SIZE = 128  # Nhỏ hơn vì ResNet-50 chạy forward pass mỗi batch
+E2E_PRETRAINED_BATCH_SIZE = 64  # Nhỏ hơn vì ResNet-50 chạy forward pass mỗi batch
 
 # Chung
 TEACHER_FORCING_RATIO = 1.0     # Bắt đầu = 1.0
