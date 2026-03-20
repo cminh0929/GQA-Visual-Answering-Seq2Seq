@@ -23,8 +23,8 @@ if IS_KAGGLE:
     VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
     VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
     TEST_JSON = os.path.join(SUBSET_DIR, "testdev_balanced_questions.json")
-    # File h5 sẽ được tạo bởi extract_features.py trên Kaggle
-    FEATURES_H5 = os.path.join(BASE_DIR, "resnet50_features.h5")
+    # File h5 đã được bạn tải lên thành công vào INPUT (Dùng vĩnh viễn, không cần chạy lại)
+    FEATURES_H5 = os.path.join(META_DATA_DIR, "resnet50_features.h5")
 else:
     BASE_DIR = r"d:\Deeplearning"
     DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
