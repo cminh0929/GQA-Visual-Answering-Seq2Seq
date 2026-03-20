@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Project specific
+gqa_data/
+results/
+tmp/
+.ipynb_checkpoints/
+*.h5
+*.pkl
+
+# Kaggle
+.kaggle/
+kernel-metadata.json
+dataset-metadata.json
+
+# IDE
+.vscode/
+.idea/
