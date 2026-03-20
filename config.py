@@ -13,17 +13,17 @@ IS_KAGGLE = os.path.exists("/kaggle/input")
 
 if IS_KAGGLE:
     BASE_DIR = "/kaggle/working"
-    # Dữ liệu subset (JSON + vocab) bạn upload lên
-    META_DATA_DIR = "/kaggle/input/gqa-vqa-subset"
-    # Dữ liệu ảnh gốc (từ bộ dataset bạn upload dạng zip, Kaggle tự giải nén)
-    IMAGES_DIR = "/kaggle/input/gqa-images-subset"
+    # Dữ liệu subset (JSON + vocab) - Dựa theo đường dẫn thực tế trên Notebook của bạn
+    META_DATA_DIR = "/kaggle/input/datasets/minhngcng3/gqa-vqa-subset"
+    # Dữ liệu ảnh gốc (từ bộ dataset 3.9GB bạn upload)
+    IMAGES_DIR = "/kaggle/input/datasets/minhngcng3/gqa-images-subset"
 
     SUBSET_DIR = META_DATA_DIR
     TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
     VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
     VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
     TEST_JSON = os.path.join(SUBSET_DIR, "testdev_balanced_questions.json")
-    # File h5 sẽ được tạo bởi extract_features.py trên Kaggle (thư mục ghi được)
+    # File h5 sẽ được tạo bởi extract_features.py trên Kaggle
     FEATURES_H5 = os.path.join(BASE_DIR, "resnet50_features.h5")
 else:
     BASE_DIR = r"d:\Deeplearning"
