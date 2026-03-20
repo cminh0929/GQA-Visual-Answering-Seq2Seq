@@ -16,7 +16,7 @@ if IS_KAGGLE:
     # Dữ liệu subset (JSON + vocab) - Dựa theo đường dẫn thực tế trên Notebook của bạn
     META_DATA_DIR = "/kaggle/input/datasets/minhngcng3/gqa-vqa-subset"
     # Dữ liệu ảnh gốc (từ bộ dataset 3.9GB bạn upload)
-    IMAGES_DIR = "/kaggle/input/datasets/minhngcng3/gqa-images-subset"
+    IMAGES_DIR = "/kaggle/input/datasets/minhngcng3/gqa-images-subset/images_subset"
 
     SUBSET_DIR = META_DATA_DIR
     TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
@@ -85,16 +85,16 @@ RESNET_SPATIAL_SIZE = 7     # Feature map: 7x7x2048
 # ============================================================
 # Scratch models
 SCRATCH_LR = 5e-4
-SCRATCH_BATCH_SIZE = 32
+SCRATCH_BATCH_SIZE = 128
 SCRATCH_EPOCHS = 12
 
 # Pretrained models (pre-extracted features)
 PRETRAINED_LR = 1e-4
-PRETRAINED_BATCH_SIZE = 32
+PRETRAINED_BATCH_SIZE = 128
 PRETRAINED_EPOCHS = 12
 
 # End-to-End Pretrained models (Model 5 & 6)
-E2E_PRETRAINED_BATCH_SIZE = 32  # Nhỏ hơn vì ResNet-50 chạy forward pass mỗi batch
+E2E_PRETRAINED_BATCH_SIZE = 128  # Nhỏ hơn vì ResNet-50 chạy forward pass mỗi batch
 
 # Chung
 TEACHER_FORCING_RATIO = 1.0     # Bắt đầu = 1.0
