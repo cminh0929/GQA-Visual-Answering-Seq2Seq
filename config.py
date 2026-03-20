@@ -8,28 +8,40 @@ import os
 # ============================================================
 # ĐƯỜNG DẪN DỮ LIỆU (DATA PATHS)
 # ============================================================
-BASE_DIR = r"d:\Deeplearning"
-DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
+# Kiểm tra môi trường (Kaggle hay Local)
+IS_KAGGLE = os.path.exists("/kaggle/input")
 
-# Ảnh gốc
-IMAGES_DIR = os.path.join(DATA_DIR, "images")
+if IS_KAGGLE:
+    BASE_DIR = "/kaggle/working"
+    # Dữ liệu subset (JSON + vocab) bạn upload lên
+    META_DATA_DIR = "/kaggle/input/gqa-vqa-subset"
+    # Dữ liệu ảnh gốc (từ bộ dataset bạn upload dạng zip, Kaggle tự giải nén)
+    IMAGES_DIR = "/kaggle/input/gqa-images-subset"
 
-# Subset đã lọc
-SUBSET_DIR = os.path.join(DATA_DIR, "subset")
-TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
-VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
-TEST_JSON = os.path.join(DATA_DIR, "questions", "testdev_balanced_questions.json")
-
-# Vocabulary
-VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
-
-# Pre-extracted features (cho Model 2 & 4)
-FEATURES_H5 = os.path.join(SUBSET_DIR, "resnet50_features.h5")
+    SUBSET_DIR = META_DATA_DIR
+    TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
+    VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
+    VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
+    TEST_JSON = os.path.join(SUBSET_DIR, "testdev_balanced_questions.json")
+    # File h5 sẽ được tạo bởi extract_features.py trên Kaggle (thư mục ghi được)
+    FEATURES_H5 = os.path.join(BASE_DIR, "resnet50_features.h5")
+else:
+    BASE_DIR = r"d:\Deeplearning"
+    DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
+    IMAGES_DIR = os.path.join(DATA_DIR, "images")
+    SUBSET_DIR = os.path.join(DATA_DIR, "subset")
+    TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
+    VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
+    TEST_JSON = os.path.join(DATA_DIR, "questions", "testdev_balanced_questions.json")
+    VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
+    FEATURES_H5 = os.path.join(SUBSET_DIR, "resnet50_features.h5")
 
 # ============================================================
 # ĐƯỜNG DẪN KẾT QUẢ (RESULTS PATHS)
 # ============================================================
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
+if IS_KAGGLE and not os.path.exists(RESULTS_DIR):
+    os.makedirs(RESULTS_DIR, exist_ok=True)
 
 MODEL_DIRS = {
     "model_1": os.path.join(RESULTS_DIR, "model_1_scratch_no_att"),
