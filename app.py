@@ -1,7 +1,7 @@
 """
-app.py - Giao diện Web App tối giản cho VQA Seq2Seq
-Cho phép chọn giữa 6 Model.
-Chạy lệnh: py -3.10 -m streamlit run d:\Deeplearning\app.py
+app.py - Minimalist Web App Interface for VQA Seq2Seq
+Allows selecting between 6 Models.
+Run command: py -3.10 -m streamlit run d:\Deeplearning\app.py
 """
 
 import streamlit as st
@@ -14,7 +14,7 @@ import sys
 import json
 import random
 
-# Thêm path để import project modules
+# Add path to import project modules
 sys.path.insert(0, os.path.dirname(__file__))
 
 import config
@@ -28,7 +28,7 @@ from models.model_6 import VQAModel6_PretrainedEndToEndAtt
 from utils.logger import TrainingLogger
 
 # ============================================================
-# CẤU HÌNH GIAO DIỆN
+# UI CONFIGURATION
 # ============================================================
 st.set_page_config(page_title="VQA Demo", layout="centered")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -43,11 +43,11 @@ MODEL_NAMES = {
 }
 
 # ============================================================
-# TẢI MODEL & DATA
+# LOAD MODEL & DATA
 # ============================================================
 @st.cache_resource
 def load_base_resources():
-    """Tải từ vựng, ResNet (dùng chung cho Model 2 & 4), và dữ liệu Val."""
+    """Load vocabulary, ResNet (shared by Model 2 & 4), and Val data."""
     vocab = load_vocab(config.VOCAB_PATH)
     
     # ResNet-50 Feature Extractor
@@ -55,7 +55,7 @@ def load_base_resources():
     backbone = nn.Sequential(*list(resnet.children())[:-2]).eval().to(DEVICE)
     avgpool = nn.AdaptiveAvgPool2d((1, 1)).eval().to(DEVICE)
     
-    # Validation data cho Quick Inference
+    # Validation data for Quick Inference
     with open(config.VAL_JSON, "r", encoding="utf-8") as f:
         val_data = json.load(f)
     val_keys = list(val_data.keys())
@@ -64,7 +64,7 @@ def load_base_resources():
 
 @st.cache_resource
 def load_vqa_model(model_id, vocab_size):
-    """Tải trọng số cho model được chọn. Hàm này được cache theo model_id."""
+    """Load weights for the selected model. This function is cached by model_id."""
     if model_id == 1:
         model = VQAModel1_ScratchNoAtt(vocab_size)
     elif model_id == 2:
@@ -86,18 +86,18 @@ def load_vqa_model(model_id, vocab_size):
     return model, epoch
 
 # ============================================================
-# HÀM SUY LUẬN
+# INFERENCE FUNCTION
 # ============================================================
 def infer(image, question, model_id, model, vocab, backbone, avgpool):
-    """Hàm xử lý dự đoán tùy theo model_id."""
-    # 1. Số hóa câu hỏi
+    """Prediction handling function according to model_id."""
+    # 1. Numericalize question
     q_indices = [vocab.sos_idx] + vocab.numericalize(question) + [vocab.eos_idx]
     q_tensor = torch.tensor(q_indices).unsqueeze(0).to(DEVICE)
     
-    # Lựa chọn xử lý ảnh tùy Model
+    # Select image processing based on Model
     with torch.no_grad():
         if model_id in [1, 3, 5, 6]:
-            # Scratch models & E2E Pretrained models: Đưa ảnh vào thẳng model
+            # Scratch models & E2E Pretrained models: Input image directly into model
             image_size = config.SCRATCH_IMAGE_SIZE if model_id in [1, 3] else config.PRETRAINED_IMAGE_SIZE
             transform = get_image_transform(image_size)
             img_tensor = transform(image).unsqueeze(0).to(DEVICE)
@@ -108,63 +108,63 @@ def infer(image, question, model_id, model, vocab, backbone, avgpool):
             )
             
         else:
-            # Pretrained models: Trích xuất qua ResNet (224x224) trước
+            # Pretrained models: Extract through ResNet (224x224) first
             transform = get_image_transform(config.PRETRAINED_IMAGE_SIZE)
             img_tensor = transform(image).unsqueeze(0).to(DEVICE)
             
             spatial = backbone(img_tensor)
             if model_id == 2:
-                # No Attention: Lấy vector 2048-dim
+                # No Attention: Get 2048-dim vector
                 feature = avgpool(spatial).view(1, -1)
                 generated = model.generate(
                     feature, q_tensor,
                     vocab.sos_idx, vocab.eos_idx, max_len=config.MAX_ANSWER_LENGTH
                 )
             elif model_id == 4:
-                # Attention: Lấy spatial feature (49, 2048)
+                # Attention: Get spatial feature (49, 2048)
                 B, C, H, W = spatial.size()
                 spatial_flat = spatial.view(B, C, H * W).permute(0, 2, 1) # (1, 49, 2048)
                 
-                # Hàm generate qua class Attention có trả về thêm (generated, alphas)
+                # The generate function through Attention class returns additionally (generated, alphas)
                 generated = model.generate(
                     spatial_flat, q_tensor,
                     vocab.sos_idx, vocab.eos_idx, max_len=config.MAX_ANSWER_LENGTH
                 )
     
-    # 3. Code ngược lại thành chữ
-    # Chú ý Model 3, 4, 6 trả về Tuple do có Attention
+    # 3. Decode back to text
+    # Note Model 3, 4, 6 returns Tuple due to Attention
     if model_id in [3, 4, 6]:
-        ans_tensor = generated[0] # Model 3, 4, 6 trả về (generated, alphas)
+        ans_tensor = generated[0] # Model 3, 4, 6 return (generated, alphas)
     else:
         ans_tensor = generated
         
     return vocab.decode(ans_tensor[0].cpu())
 
 # ============================================================
-# GIAO DIỆN CHÍNH
+# MAIN UI
 # ============================================================
 def main():
-    st.title("🤖 Ứng dụng VQA Đa Mô Hình")
+    st.title("🤖 Multi-Model VQA Application")
     
     # Load Base Resources
     vocab, backbone, avgpool, val_data, val_keys = load_base_resources()
     
-    # TÙY CHỌN MÔ HÌNH
+    # MODEL OPTION
     selected_model_name = st.selectbox(
-        "🧠 Chọn mô hình để dự đoán:", 
+        "🧠 Select a model for prediction:", 
         list(MODEL_NAMES.values()),
-        index=1  # Mặc định là Model 2 (Pretrained)
+        index=1  # Default is Model 2 (Pretrained)
     )
-    # Lấy model_id từ string select (vd lấy số 2 từ "Model 2: ...")
+    # Extract model_id from select string (e.g. get 2 from "Model 2: ...")
     model_id = int(selected_model_name.split(":")[0][-1])
     
     vqa_model, trained_epoch = load_vqa_model(model_id, len(vocab))
     if trained_epoch == 0:
-        st.warning(f"⚠️ {selected_model_name} dường như chưa được huấn luyện (không thấy checkpoint). Kết quả có thể không chính xác.")
+        st.warning(f"⚠️ {selected_model_name} seems to be untrained (no checkpoint found). The result might be inaccurate.")
 
-    # KHUNG INFERENCE NGẪU NHIÊN
+    # RANDOM INFERENCE FRAME
     st.markdown("---")
-    if st.button("🎲 Lấy ngẫu nhiên 1 mẫu (Quick Inference)", type="secondary"):
+    if st.button("🎲 Get 1 random sample (Quick Inference)", type="secondary"):
         random_id = random.choice(val_keys)
         item = val_data[random_id]
         
@@ -176,43 +176,43 @@ def main():
         
         if os.path.exists(img_path):
             input_image = Image.open(img_path).convert("RGB")
-            st.image(input_image, caption=f"Ảnh ID: {img_id}", width=400)
-            st.info(f"**Câu hỏi:** {true_question}")
+            st.image(input_image, caption=f"Image ID: {img_id}", width=400)
+            st.info(f"**Question:** {true_question}")
             
-            with st.spinner(f"Đang phân tích với {MODEL_NAMES[model_id]}..."):
+            with st.spinner(f"Analyzing with {MODEL_NAMES[model_id]}..."):
                 try:
                     pred_answer = infer(input_image, true_question, model_id, vqa_model, vocab, backbone, avgpool)
-                    st.success(f"**🤖 Dự đoán:** {pred_answer}")
-                    st.write(f"*(✅ Đáp án đúng: {true_answer})*")
+                    st.success(f"**🤖 Prediction:** {pred_answer}")
+                    st.write(f"*(✅ True Answer: {true_answer})*")
                 except Exception as e:
-                    st.error(f"Lỗi: {e}")
+                    st.error(f"Error: {e}")
         else:
-            st.error("Không tải được ảnh từ máy.")
+            st.error("Failed to load image from local.")
 
     st.markdown("---")
-    st.subheader("Hoặc tự tải ảnh lên:")
+    st.subheader("Or upload your own image:")
 
-    # 1. Tải ảnh
-    uploaded_file = st.file_uploader("📥 Chọn ảnh (jpg, png)", type=["jpg", "png", "jpeg"])
+    # 1. Upload image
+    uploaded_file = st.file_uploader("📥 Select image (jpg, png)", type=["jpg", "png", "jpeg"])
     input_image = None
     if uploaded_file:
         input_image = Image.open(uploaded_file).convert("RGB")
-        st.image(input_image, caption="Ảnh đầu vào", width=400)
+        st.image(input_image, caption="Input Image", width=400)
 
-    # 2. Câu hỏi
-    question = st.text_input("❓ Nhập câu hỏi (Tiếng Anh):", "What is in the picture?")
+    # 2. Question
+    question = st.text_input("❓ Enter question (English):", "What is in the picture?")
 
-    # 3. Kết quả tự chọn
-    if st.button("Hỏi Mô Hình", type="primary"):
+    # 3. Model Answer
+    if st.button("Ask Model", type="primary"):
         if input_image and question:
-            with st.spinner(f"Đang phân tích với {MODEL_NAMES[model_id]}..."):
+            with st.spinner(f"Analyzing with {MODEL_NAMES[model_id]}..."):
                 try:
                     pred_answer = infer(input_image, question, model_id, vqa_model, vocab, backbone, avgpool)
-                    st.success(f"**🤖 Câu trả lời ({MODEL_NAMES[model_id]}):** {pred_answer}")
+                    st.success(f"**🤖 Answer ({MODEL_NAMES[model_id]}):** {pred_answer}")
                 except Exception as e:
-                    st.error(f"Đã xảy ra lỗi: {e}")
+                    st.error(f"An error occurred: {e}")
         else:
-            st.warning("Vui lòng nhập đủ hình ảnh và câu hỏi.")
+            st.warning("Please provide both image and question.")
 
 if __name__ == "__main__":
     main()

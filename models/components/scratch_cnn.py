@@ -1,5 +1,5 @@
 """
-scratch_cnn.py - Mạng CNN đơn giản train từ đầu (cho Model 1 & 3)
+scratch_cnn.py - Simple CNN trained from scratch (for Model 1 & 3)
 """
 
 import torch
@@ -8,10 +8,10 @@ import torch.nn as nn
 
 class ScratchCNN(nn.Module):
     """
-    CNN 4 lớp đơn giản để trích xuất đặc trưng ảnh từ đầu.
+    Simple 4-layer CNN to extract image features from scratch.
     Input:  (B, 3, 128, 128)
-    Output: (B, 512, 4, 4) nếu return_spatial=True  (cho Attention)
-            (B, 512)        nếu return_spatial=False (cho No Attention)
+    Output: (B, 512, 8, 8) if return_spatial=True  (for Attention)
+            (B, 512)       if return_spatial=False (for No Attention)
     """
 
     def __init__(self, out_channels=512, return_spatial=False):
@@ -50,10 +50,10 @@ class ScratchCNN(nn.Module):
     def forward(self, x):
         """
         Args:
-            x: (B, 3, 128, 128) - ảnh đầu vào
+            x: (B, 3, 128, 128) - input image
         Returns:
-            Nếu return_spatial: (B, 512, 8, 8) - feature map cho Attention
-            Nếu không:          (B, 512)        - vector cho No Attention
+            If return_spatial: (B, 512, 8, 8) - feature map for Attention
+            If not:            (B, 512)        - vector for No Attention
         """
         features = self.features(x)  # (B, 512, 8, 8)
 

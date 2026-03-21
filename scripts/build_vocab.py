@@ -1,16 +1,16 @@
 """
-build_vocab.py - Xây dựng bộ từ điển (Vocabulary) từ tập train subset.
-Bước 1 trong VQA_Seq2Seq_Project_Plan.md
+build_vocab.py - Build vocabulary from the train subset.
+Step 1 in VQA_Seq2Seq_Project_Plan.md
 
-Quét toàn bộ câu hỏi (question) và câu trả lời (fullAnswer) trong tập train,
-xây dựng bộ từ điển và lưu vào file vocab.pkl.
+Scans all questions and fullAnswers in the train set,
+builds the vocabulary and saves it to vocab.pkl.
 """
 
 import json
 import os
 import sys
 
-# Thêm thư mục gốc vào path để import
+# Add root directory to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from config import TRAIN_JSON, VOCAB_PATH, FREQ_THRESHOLD
@@ -22,13 +22,13 @@ def build():
     print("BUILDING VOCABULARY")
     print("=" * 60)
 
-    # 1. Load dữ liệu train
+    # 1. Load training data
     print(f"\n[1/3] Loading training data: {TRAIN_JSON}")
     with open(TRAIN_JSON, "r", encoding="utf-8") as f:
         data = json.load(f)
     print(f"      Total questions: {len(data)}")
 
-    # 2. Thu thập tất cả các câu (question + fullAnswer)
+    # 2. Collect all sentences (question + fullAnswer)
     print(f"\n[2/3] Collecting sentences...")
     all_sentences = []
     for item in data.values():
@@ -37,18 +37,18 @@ def build():
     print(f"      Total sentences: {len(all_sentences)} "
           f"({len(all_sentences)//2} questions + {len(all_sentences)//2} answers)")
 
-    # 3. Xây dựng vocab
+    # 3. Build vocab
     print(f"\n[3/3] Building vocabulary (freq_threshold={FREQ_THRESHOLD})...")
     vocab = Vocabulary(freq_threshold=FREQ_THRESHOLD)
     vocab.build_vocabulary(all_sentences)
 
-    # Thống kê
+    # Statistics
     print(f"\n--- VOCABULARY STATISTICS ---")
     print(f"Total words in vocab: {len(vocab)}")
     print(f"Special tokens: <PAD>={vocab.pad_idx}, <SOS>={vocab.sos_idx}, "
           f"<EOS>={vocab.eos_idx}, <UNK>={vocab.unk_idx}")
 
-    # Demo: chuyển đổi một mẫu
+    # Demo: convert one sample
     sample = list(data.values())[0]
     q = sample["question"]
     a = sample["fullAnswer"]
@@ -60,11 +60,11 @@ def build():
     print(f"Tokens:    {vocab.tokenize(a)}")
     print(f"Indices:   {vocab.numericalize(a)}")
 
-    # Decode ngược lại
+    # Decode back
     q_decoded = vocab.decode(vocab.numericalize(q))
     print(f"Decoded Q: {q_decoded}")
 
-    # 4. Lưu vocab
+    # 4. Save vocab
     print(f"\n--- SAVING ---")
     save_vocab(vocab, VOCAB_PATH)
     print(f"\nDone! Vocab saved to: {VOCAB_PATH}")

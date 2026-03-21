@@ -1,19 +1,19 @@
 """
-visualize.py - Trực quan hóa kết quả huấn luyện và so sánh mô hình
-Bước 6 trong VQA_Seq2Seq_Project_Plan.md
+visualize.py - Visualize training results and compare models
+Step 6 in VQA_Seq2Seq_Project_Plan.md
 
-Chức năng:
-1. Vẽ Learning Curves (Train/Val Loss) cho từng model
-2. Vẽ bảng so sánh metrics giữa các model
-3. Hiển thị mẫu dự đoán: Ảnh + Câu hỏi + Câu trả lời
-4. Trực quan Attention Heatmap (cho Model 3 & 4)
+Features:
+1. Plot Learning Curves (Train/Val Loss) for each model
+2. Plot metrics comparison table between models
+3. Show prediction samples: Image + Question + Answer
+4. Visualize Attention Heatmap (for Model 3 & 4)
 
 Usage:
     py -3.10 visualize.py --curves           (Learning curves)
-    py -3.10 visualize.py --compare          (So sánh metrics)
-    py -3.10 visualize.py --samples 4        (Mẫu dự đoán Model 4)
+    py -3.10 visualize.py --compare          (Metrics comparison)
+    py -3.10 visualize.py --samples 4        (Prediction samples Model 4)
     py -3.10 visualize.py --attention 4      (Attention maps Model 4)
-    py -3.10 visualize.py --all              (Tất cả)
+    py -3.10 visualize.py --all              (All visualisations)
 """
 
 import argparse
@@ -36,12 +36,12 @@ import config
 # ============================================================
 plt.style.use("seaborn-v0_8-darkgrid")
 COLORS = {
-    1: "#e74c3c",  # Đỏ - Scratch No Att
-    2: "#3498db",  # Xanh dương - Pretrained No Att
-    3: "#e67e22",  # Cam - Scratch Att
-    4: "#2ecc71",  # Xanh lá - Pretrained Att
-    5: "#9b59b6",  # Tím - Pretrained E2E
-    6: "#1abc9c",  # Xanh ngọc - Pretrained E2E Att
+    1: "#e74c3c",  # Red - Scratch No Att
+    2: "#3498db",  # Blue - Pretrained No Att
+    3: "#e67e22",  # Orange - Scratch Att
+    4: "#2ecc71",  # Green - Pretrained Att
+    5: "#9b59b6",  # Purple - Pretrained E2E
+    6: "#1abc9c",  # Cyan - Pretrained E2E Att
 }
 MODEL_LABELS = {
     1: "M1: Scratch",
@@ -57,7 +57,7 @@ MODEL_LABELS = {
 # 1. LEARNING CURVES
 # ============================================================
 def plot_learning_curves():
-    """Vẽ đồ thị Train Loss và Val Loss cho tất cả model đã train."""
+    """Plot Train Loss and Val Loss charts for all trained models."""
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
     fig.suptitle("Learning Curves - VQA Seq2Seq Models", fontsize=16, fontweight="bold")
 
@@ -142,11 +142,11 @@ def plot_learning_curves():
 # 2. METRICS COMPARISON
 # ============================================================
 def plot_comparison():
-    """Vẽ biểu đồ cột so sánh metrics giữa các model."""
+    """Plot bar chart comparing metrics across models."""
     comparison_path = os.path.join(config.RESULTS_DIR, "comparison.json")
 
     if not os.path.exists(comparison_path):
-        # Thử đọc từ từng model
+        # Default to reading from each model individually
         all_metrics = {}
         for model_id in range(1, 7):
             metrics_path = os.path.join(
@@ -163,7 +163,7 @@ def plot_comparison():
         with open(comparison_path, "r") as f:
             all_metrics = json.load(f)
 
-    # Metrics cần vẽ
+    # Required Metrics
     metric_keys = ["accuracy", "bleu_1", "bleu_4", "meteor", "rouge_l", "cider"]
     metric_labels = ["Accuracy", "BLEU-1", "BLEU-4", "METEOR", "ROUGE-L", "CIDEr"]
 
@@ -182,7 +182,7 @@ def plot_comparison():
                       label=MODEL_LABELS.get(mid_int, f"Model {mid}"),
                       color=COLORS.get(mid_int, "#95a5a6"),
                       edgecolor="white", linewidth=0.5)
-        # Hiển thị giá trị trên cột
+        # Show values on top of bars
         for bar, val in zip(bars, values):
             if val > 0:
                 ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.005,
@@ -206,7 +206,7 @@ def plot_comparison():
 # 3. SAMPLE PREDICTIONS
 # ============================================================
 def plot_samples(model_id):
-    """Hiển thị mẫu dự đoán: Ảnh + Câu hỏi + Câu trả lời."""
+    """Show prediction samples: Image + Question + Answer."""
     predictions_path = os.path.join(
         config.MODEL_DIRS[f"model_{model_id}"], "predictions.json"
     )
@@ -259,8 +259,8 @@ def plot_samples(model_id):
 # ============================================================
 def plot_attention(model_id):
     """
-    Trực quan hóa Attention Heatmap cho Model 3 & 4.
-    Cần chạy inference riêng để lấy attention weights.
+    Visualize Attention Heatmap for Model 3 & 4.
+    Requires running inference separately to get attention weights.
     """
     if model_id not in [3, 4, 6]:
         print(f"  Attention visualization only for Model 3, 4 & 6.")
@@ -311,7 +311,7 @@ def plot_attention(model_id):
         raw_data = json.load(f)
     raw_items = list(raw_data.values())
 
-    # Generate cho vài mẫu
+    # Generate for a few samples
     num_vis = 4
     fig, axes = plt.subplots(num_vis, 6, figsize=(24, num_vis * 4))
     fig.suptitle(f"Attention Maps - {MODEL_LABELS[model_id]}",
@@ -341,7 +341,7 @@ def plot_attention(model_id):
                 if word not in ["<SOS>", "<PAD>"]:
                     pred_words.append(word)
 
-            # Hiển thị ảnh gốc
+            # Show original image
             img_id = raw_items[i]["imageId"]
             img_path = os.path.join(config.IMAGES_DIR, f"{img_id}.jpg")
 
@@ -349,13 +349,13 @@ def plot_attention(model_id):
                 ax = axes[i][j] if num_vis > 1 else axes[j]
 
                 if j == 0:
-                    # Cột đầu: ảnh gốc + câu hỏi
+                    # First column: Original image + Question
                     if os.path.exists(img_path):
                         img = Image.open(img_path).convert("RGB")
                         ax.imshow(img)
                     ax.set_title(f"Q: {raw_items[i]['question'][:50]}", fontsize=8)
                 elif j - 1 < len(alphas) and j - 1 < len(pred_words):
-                    # Các cột tiếp: attention map cho mỗi từ
+                    # Next columns: attention map for each word
                     alpha = alphas[j-1][0].cpu().numpy()
                     alpha = alpha.reshape(spatial_size, spatial_size)
 

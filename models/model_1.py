@@ -1,9 +1,9 @@
 """
 Model 1: Scratch CNN + LSTM Seq2Seq (No Attention)
-- CNN: 4-layer CNN train từ đầu
+- CNN: 4-layer Scratch CNN
 - Question Encoder: Bi-LSTM
 - Decoder: LSTM (No Attention)
-- Training: End-to-End (CNN + LSTM song song)
+- Training: End-to-End (CNN + LSTM in parallel)
 """
 
 import torch
@@ -20,20 +20,20 @@ import config
 class VQAModel1_ScratchNoAtt(nn.Module):
     """
     Model 1: Scratch CNN + LSTM Seq2Seq (No Attention)
-    Input:  ảnh (B, 3, 128, 128) + câu hỏi (B, seq_len)
-    Output: câu trả lời (B, max_len, vocab_size)
+    Input: Image (B, 3, 128, 128) + Question (B, seq_len)
+    Output: Answer (B, max_len, vocab_size)
     """
 
     def __init__(self, vocab_size):
         super().__init__()
 
-        # Image Encoder: CNN Scratch → vector 512-d
+        # Image Encoder: Scratch CNN → 512-d vector
         self.image_encoder = ScratchCNN(
             out_channels=config.SCRATCH_CNN_OUT,
             return_spatial=False
         )
 
-        # Question Encoder: Bi-LSTM → vector (hidden_size * 2)-d
+        # Question Encoder: Bi-LSTM → (hidden_size * 2)-d vector
         self.question_encoder = QuestionEncoder(
             vocab_size=vocab_size,
             embed_size=config.EMBED_SIZE,
@@ -42,10 +42,10 @@ class VQAModel1_ScratchNoAtt(nn.Module):
             dropout=config.DROPOUT,
         )
 
-        # Fusion: Nối image_vector + question_vector
+        # Fusion: Concatenate image_vector + question_vector
         context_dim = config.SCRATCH_CNN_OUT + config.HIDDEN_SIZE * 2
 
-        # Answer Decoder: LSTM sinh câu trả lời
+        # Answer Decoder: LSTM for answer generation
         self.decoder = AnswerDecoder(
             vocab_size=vocab_size,
             embed_size=config.EMBED_SIZE,
@@ -77,7 +77,7 @@ class VQAModel1_ScratchNoAtt(nn.Module):
         return outputs
 
     def generate(self, images, questions, sos_idx, eos_idx, max_len=30):
-        """Sinh câu trả lời khi inference."""
+        """Answer generation for inference."""
         img_features = self.image_encoder(images)
         _, q_context = self.question_encoder(questions)
         context = torch.cat([img_features, q_context], dim=1)

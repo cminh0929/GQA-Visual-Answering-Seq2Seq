@@ -2,8 +2,8 @@
 Model 4: Pretrained ResNet-50 + LSTM Seq2Seq (With Spatial Attention)
 - CNN: ResNet-50 Pretrained (Frozen) → spatial feature map 7x7x2048
 - Question Encoder: Bi-LSTM
-- Decoder: Attention LSTM (Spatial Attention trên feature map)
-- Training: Chỉ train LSTM + Attention (features đã trích xuất trước)
+- Decoder: Attention LSTM (Spatial Attention on feature map)
+- Training: Only train LSTM + Attention (features pre-extracted)
 """
 
 import torch
@@ -19,10 +19,10 @@ import config
 class VQAModel4_PretrainedAtt(nn.Module):
     """
     Model 4: Pretrained ResNet-50 + LSTM Seq2Seq (With Spatial Attention)
-    Input:  pre-extracted spatial features (B, 49, 2048) + câu hỏi (B, seq_len)
-    Output: câu trả lời (B, max_len, vocab_size) + attention weights
+    Input: Pre-extracted spatial features (B, 49, 2048) + Question (B, seq_len)
+    Output: Answer (B, max_len, vocab_size) + attention weights
 
-    Đây là mô hình kỳ vọng cho kết quả tốt nhất.
+    This model is expected to provide the best results.
     """
 
     def __init__(self, vocab_size):
@@ -58,7 +58,7 @@ class VQAModel4_PretrainedAtt(nn.Module):
             answers: (B, a_len)
         Returns:
             outputs: (B, a_len, vocab_size)
-            alphas: List of attention weights (dùng để visualize)
+            alphas: List of attention weights (used for visualization)
         """
         # Encode question
         _, q_context = self.question_encoder(questions)  # (B, H*2)
@@ -71,7 +71,7 @@ class VQAModel4_PretrainedAtt(nn.Module):
 
     def generate(self, spatial_features, questions,
                  sos_idx, eos_idx, max_len=30):
-        """Sinh câu trả lời khi inference."""
+        """Answer generation for inference."""
         _, q_context = self.question_encoder(questions)
         return self.decoder.generate(
             spatial_features, q_context, sos_idx, eos_idx, max_len

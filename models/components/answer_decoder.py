@@ -1,6 +1,6 @@
 """
-answer_decoder.py - LSTM Decoder sinh câu trả lời (No Attention version)
-Dùng cho Model 1 & Model 2
+answer_decoder.py - LSTM Decoder for answer generation (No Attention version)
+Used for Model 1 & Model 2
 """
 
 import torch
@@ -9,24 +9,24 @@ import torch.nn as nn
 
 class AnswerDecoder(nn.Module):
     """
-    LSTM Decoder sinh câu trả lời từng từ một.
-    Nhận context vector (từ CNN + Question) làm hidden state ban đầu,
-    rồi autoregressive sinh ra từng token.
+    LSTM Decoder generates answers word by word.
+    Takes context vector (from CNN + Question) as initial hidden state,
+    then autoregressively generates each token.
 
     Input:  context_vector (B, context_dim)
-    Output: (B, seq_len, vocab_size) - xác suất cho từng từ tại mỗi bước
+    Output: (B, seq_len, vocab_size) - probability for each word at each step
     """
 
     def __init__(self, vocab_size, embed_size, hidden_size,
                  context_dim, num_layers=2, dropout=0.3):
         """
         Args:
-            vocab_size: Kích thước bộ từ điển
-            embed_size: Kích thước embedding
-            hidden_size: Kích thước hidden state LSTM
-            context_dim: Kích thước context vector đầu vào
-            num_layers: Số lớp LSTM
-            dropout: Tỷ lệ dropout
+            vocab_size: Vocabulary size
+            embed_size: Embedding size
+            hidden_size: LSTM hidden state size
+            context_dim: Input context vector size
+            num_layers: Number of LSTM layers
+            dropout: Dropout rate
         """
         super().__init__()
         self.hidden_size = hidden_size
@@ -34,7 +34,7 @@ class AnswerDecoder(nn.Module):
 
         self.embedding = nn.Embedding(vocab_size, embed_size, padding_idx=0)
 
-        # Chiếu context vector → hidden state kích thước phù hợp
+        # Project context vector → hidden state of appropriate size
         self.context_to_hidden = nn.Linear(context_dim, hidden_size * num_layers)
         self.context_to_cell = nn.Linear(context_dim, hidden_size * num_layers)
 
@@ -51,7 +51,7 @@ class AnswerDecoder(nn.Module):
 
     def _init_hidden(self, context):
         """
-        Khởi tạo hidden state từ context vector.
+        Initialize hidden state from context vector.
         Args:
             context: (B, context_dim)
         Returns:
@@ -72,27 +72,27 @@ class AnswerDecoder(nn.Module):
 
     def forward(self, context, targets, teacher_forcing_ratio=1.0):
         """
-        Forward pass khi huấn luyện (với Teacher Forcing).
+        Forward pass during training (with Teacher Forcing).
 
         Args:
-            context: (B, context_dim) - vector ngữ cảnh tổng hợp
-            targets: (B, max_len) - câu trả lời đúng (ground truth)
-            teacher_forcing_ratio: Xác suất sử dụng từ đúng thay vì từ dự đoán
+            context: (B, context_dim) - combined context vector
+            targets: (B, max_len) - true answer (ground truth)
+            teacher_forcing_ratio: Probability of using true word instead of predicted word
 
         Returns:
-            outputs: (B, max_len, vocab_size) - log-probabilities cho từng từ
+            outputs: (B, max_len, vocab_size) - log-probabilities for each word
         """
         batch_size = context.size(0)
         max_len = targets.size(1)
         vocab_size = self.fc_out.out_features
 
-        # Khởi tạo hidden state từ context
+        # Initialize hidden state from context
         hidden, cell = self._init_hidden(context)
 
-        # Tensor lưu kết quả
+        # Tensor to store results
         outputs = torch.zeros(batch_size, max_len, vocab_size).to(context.device)
 
-        # Token đầu tiên là <SOS> (lấy từ targets[:, 0])
+        # First token is <SOS> (from targets[:, 0])
         input_token = targets[:, 0].unsqueeze(1)  # (B, 1)
 
         for t in range(1, max_len):
@@ -101,26 +101,26 @@ class AnswerDecoder(nn.Module):
             prediction = self.fc_out(output.squeeze(1))  # (B, vocab_size)
             outputs[:, t, :] = prediction
 
-            # Teacher Forcing: dùng từ đúng hoặc từ dự đoán
+            # Teacher Forcing: use true word or predicted word
             if torch.rand(1).item() < teacher_forcing_ratio:
-                input_token = targets[:, t].unsqueeze(1)  # Từ đúng
+                input_token = targets[:, t].unsqueeze(1)  # True word
             else:
-                input_token = prediction.argmax(dim=1).unsqueeze(1)  # Từ dự đoán
+                input_token = prediction.argmax(dim=1).unsqueeze(1)  # Predicted word
 
         return outputs
 
     def generate(self, context, sos_idx, eos_idx, max_len=30):
         """
-        Sinh câu trả lời khi inference (không có Teacher Forcing).
+        Generate answer during inference (no Teacher Forcing).
 
         Args:
             context: (B, context_dim)
-            sos_idx: Index của token <SOS>
-            eos_idx: Index của token <EOS>
-            max_len: Độ dài tối đa câu trả lời
+            sos_idx: Index of <SOS> token
+            eos_idx: Index of <EOS> token
+            max_len: Maximum answer length
 
         Returns:
-            generated: (B, max_len) - indices của các từ được sinh ra
+            generated: (B, max_len) - indices of generated words
         """
         batch_size = context.size(0)
         hidden, cell = self._init_hidden(context)

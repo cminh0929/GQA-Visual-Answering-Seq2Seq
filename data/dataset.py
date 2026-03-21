@@ -1,6 +1,6 @@
 """
-data_utils.py - Vocabulary, Dataset và DataLoader cho VQA Seq2Seq
-Bước 1 trong VQA_Seq2Seq_Project_Plan.md
+dataset.py - Vocabulary, Dataset and DataLoader for VQA Seq2Seq
+Step 1 in VQA_Seq2Seq_Project_Plan.md
 """
 
 import os
@@ -21,8 +21,8 @@ from torchvision import transforms
 # ============================================================
 class Vocabulary:
     """
-    Bộ từ điển chuyển đổi giữa từ (word) và chỉ số (index).
-    Hỗ trợ các token đặc biệt: <PAD>, <SOS>, <EOS>, <UNK>.
+    Vocabulary dictionary converting between words and indices.
+    Supports special tokens: <PAD>, <SOS>, <EOS>, <UNK>.
     """
 
     PAD_TOKEN = "<PAD>"
@@ -33,7 +33,7 @@ class Vocabulary:
     def __init__(self, freq_threshold=3):
         """
         Args:
-            freq_threshold: Số lần xuất hiện tối thiểu để một từ được thêm vào vocab.
+            freq_threshold: Minimum frequency for a word to be added to vocab.
         """
         self.freq_threshold = freq_threshold
 
@@ -69,31 +69,31 @@ class Vocabulary:
     @staticmethod
     def tokenize(text):
         """
-        Tách câu thành danh sách các từ (tokens).
-        Xử lý dấu câu cơ bản: tách dấu ? . , ! ra khỏi từ.
+        Split sentence into list of tokens.
+        Handles basic punctuation: splits ? . , ! from words.
         """
         text = text.lower().strip()
-        # Tách dấu câu ra thành token riêng
+        # Split punctuation into individual tokens
         for punct in ["?", ".", ",", "!", ";", ":"]:
             text = text.replace(punct, f" {punct}")
         return text.split()
 
     def build_vocabulary(self, sentence_list):
         """
-        Xây dựng bộ từ điển từ danh sách câu.
-        Chỉ thêm từ có tần suất >= freq_threshold.
+        Build vocabulary from a list of sentences.
+        Only add words with frequency >= freq_threshold.
 
         Args:
-            sentence_list: List[str] - danh sách các câu (question + fullAnswer)
+            sentence_list: List[str] - list of sentences (question + fullAnswer)
         """
         frequencies = Counter()
-        idx = len(self.itos)  # Bắt đầu từ index 4
+        idx = len(self.itos)  # Start from index 4
 
         for sentence in sentence_list:
             for word in self.tokenize(sentence):
                 frequencies[word] += 1
 
-                # Khi từ đạt ngưỡng tần suất, thêm vào vocab
+                # When word frequency reaches threshold, add to vocab
                 if frequencies[word] == self.freq_threshold:
                     self.stoi[word] = idx
                     self.itos[idx] = word
@@ -104,8 +104,8 @@ class Vocabulary:
 
     def numericalize(self, text):
         """
-        Chuyển câu văn bản thành danh sách các index.
-        Từ không có trong vocab sẽ được thay bằng <UNK>.
+        Convert text sentence to a list of indices.
+        Words not in vocab will be replaced with <UNK>.
         """
         return [
             self.stoi.get(token, self.unk_idx)
@@ -114,8 +114,8 @@ class Vocabulary:
 
     def decode(self, indices):
         """
-        Chuyển danh sách index ngược lại thành câu văn bản.
-        Dừng khi gặp <EOS> hoặc <PAD>.
+        Convert list of indices back to a text sentence.
+        Stop when encountering <EOS> or <PAD>.
         """
         words = []
         for idx in indices:
@@ -130,14 +130,14 @@ class Vocabulary:
 
 
 def save_vocab(vocab, path):
-    """Lưu Vocabulary vào file pickle."""
+    """Save Vocabulary to pickle file."""
     with open(path, "wb") as f:
         pickle.dump(vocab, f)
     print(f"Vocabulary saved to {path}")
 
 
 def load_vocab(path):
-    """Load Vocabulary từ file pickle."""
+    """Load Vocabulary from pickle file."""
     with open(path, "rb") as f:
         vocab = pickle.load(f)
     print(f"Vocabulary loaded: {len(vocab)} words")
@@ -150,8 +150,8 @@ def load_vocab(path):
 
 def get_image_transform(image_size=224):
     """
-    Transform chuẩn cho ảnh đầu vào.
-    Dùng cho cả Model Scratch (128x128) và Pretrained (224x224).
+    Standard transform for input image.
+    Used for both Scratch Model (128x128) and Pretrained Model (224x224).
     """
     return transforms.Compose([
         transforms.Resize((image_size, image_size)),
@@ -165,18 +165,18 @@ def get_image_transform(image_size=224):
 
 class GQADataset(Dataset):
     """
-    Dataset cho Model 1 & 3 (Scratch - End-to-End).
-    Trả về: (image_tensor, question_indices, answer_indices)
-    Ảnh được load trực tiếp từ đĩa và transform mỗi lần gọi.
+    Dataset for Model 1 & 3 (Scratch - End-to-End).
+    Returns: (image_tensor, question_indices, answer_indices)
+    Images are loaded directly from disk and transformed each call.
     """
 
     def __init__(self, json_file, images_dir, vocab, image_size=128):
         """
         Args:
-            json_file: Đường dẫn tới tệp JSON (train/val/test subset)
-            images_dir: Đường dẫn thư mục chứa ảnh
-            vocab: Đối tượng Vocabulary đã xây dựng
-            image_size: Kích thước ảnh đầu ra (128 cho Scratch)
+            json_file: Path to JSON file (train/val/test subset)
+            images_dir: Path to directory containing images
+            vocab: Built Vocabulary object
+            image_size: Output image size (128 for Scratch)
         """
         with open(json_file, "r", encoding="utf-8") as f:
             self.data = json.load(f)
@@ -195,12 +195,12 @@ class GQADataset(Dataset):
         question = item["question"]
         answer = item["fullAnswer"]
 
-        # Load và transform ảnh
+        # Load and transform image
         img_path = os.path.join(self.images_dir, f"{img_id}.jpg")
         img = Image.open(img_path).convert("RGB")
         img = self.transform(img)
 
-        # Chuyển văn bản → tensor indices (thêm SOS và EOS)
+        # Convert text → tensor indices (add SOS and EOS)
         q_indices = (
             [self.vocab.sos_idx]
             + self.vocab.numericalize(question)
@@ -217,19 +217,19 @@ class GQADataset(Dataset):
 
 class GQAFeaturesDataset(Dataset):
     """
-    Dataset cho Model 2 & 4 (Pretrained - Pre-extracted Features).
-    Trả về: (feature_vector, question_indices, answer_indices)
-    Features được load từ file HDF5 (đã trích xuất trước bằng ResNet-50).
+    Dataset for Model 2 & 4 (Pretrained - Pre-extracted Features).
+    Returns: (feature_vector, question_indices, answer_indices)
+    Features are loaded from HDF5 file (pre-extracted using ResNet-50).
     """
 
     def __init__(self, json_file, features_h5_path, vocab, use_spatial=False):
         """
         Args:
-            json_file: Đường dẫn tới tệp JSON (train/val/test subset)
-            features_h5_path: Đường dẫn tới file .h5 chứa features
-            vocab: Đối tượng Vocabulary đã xây dựng
-            use_spatial: True → lấy feature map 7x7x2048 (cho Attention)
-                         False → lấy vector 2048-d (cho No Attention)
+            json_file: Path to JSON file (train/val/test subset)
+            features_h5_path: Path to .h5 file containing features
+            vocab: Built Vocabulary object
+            use_spatial: True → extract 7x7x2048 feature map (for Attention)
+                         False → extract 2048-d vector (for No Attention)
         """
         with open(json_file, "r", encoding="utf-8") as f:
             self.data = json.load(f)
@@ -239,11 +239,11 @@ class GQAFeaturesDataset(Dataset):
         self.vocab = vocab
         self.use_spatial = use_spatial
 
-        # Mở file HDF5 (lazy loading)
+        # Open HDF5 file (lazy loading)
         self.h5_file = None
 
     def _open_h5(self):
-        """Mở file HDF5 (cần mở lại cho mỗi worker trong DataLoader)."""
+        """Open HDF5 file (needs to be reopened for each worker in DataLoader)."""
         if self.h5_file is None:
             self.h5_file = h5py.File(self.features_h5_path, "r")
 
@@ -258,19 +258,19 @@ class GQAFeaturesDataset(Dataset):
         question = item["question"]
         answer = item["fullAnswer"]
 
-        # Load feature từ HDF5
+        # Load feature from HDF5
         if self.use_spatial:
-            # Feature map 7x7x2048 cho Attention (Model 4)
+            # 7x7x2048 feature map for Attention (Model 4)
             feature = torch.tensor(
                 self.h5_file[f"spatial/{img_id}"][()], dtype=torch.float32
             )
         else:
-            # Vector 2048-d cho No Attention (Model 2)
+            # 2048-d vector for No Attention (Model 2)
             feature = torch.tensor(
                 self.h5_file[f"pooled/{img_id}"][()], dtype=torch.float32
             )
 
-        # Chuyển văn bản → tensor indices
+        # Convert text → tensor indices
         q_indices = (
             [self.vocab.sos_idx]
             + self.vocab.numericalize(question)
@@ -298,21 +298,21 @@ class GQAFeaturesDataset(Dataset):
 
 class VQACollate:
     """
-    Custom collate function để xử lý padding cho các batch
-    có câu hỏi và câu trả lời dài ngắn khác nhau.
+    Custom collate function to handle padding for batches
+    with questions and answers of varying lengths.
     """
 
     def __init__(self, pad_idx):
         self.pad_idx = pad_idx
 
     def __call__(self, batch):
-        # Tách batch thành 3 danh sách
+        # Split batch into 3 lists
         imgs_or_features, questions, answers = zip(*batch)
 
-        # Stack ảnh/features thành tensor
+        # Stack images/features to tensor
         imgs_or_features = torch.stack(imgs_or_features, dim=0)
 
-        # Pad câu hỏi và câu trả lời
+        # Pad questions and answers
         questions = pad_sequence(
             questions, batch_first=True, padding_value=self.pad_idx
         )
@@ -325,14 +325,14 @@ class VQACollate:
 
 def get_dataloader(dataset, batch_size, shuffle=True, num_workers=2, pad_idx=0):
     """
-    Tạo DataLoader từ Dataset với custom collate function.
+    Create DataLoader from Dataset with custom collate function.
 
     Args:
-        dataset: GQADataset hoặc GQAFeaturesDataset
-        batch_size: Kích thước batch
-        shuffle: Có xáo trộn dữ liệu không
-        num_workers: Số worker cho DataLoader
-        pad_idx: Index của token <PAD>
+        dataset: GQADataset or GQAFeaturesDataset
+        batch_size: Batch size
+        shuffle: Whether to shuffle data
+        num_workers: Number of workers for DataLoader
+        pad_idx: Index of <PAD> token
 
     Returns:
         DataLoader

@@ -1,5 +1,5 @@
 """
-train.py - Script huấn luyện chính cho 6 mô hình VQA Seq2Seq
+train.py - Main training script for 6 VQA Seq2Seq models
 
 Usage:
     py -3.10 train.py --model 1    (Scratch + No Attention, End-to-End)
@@ -8,7 +8,7 @@ Usage:
     py -3.10 train.py --model 4    (Pretrained + Attention, Pre-extracted)
     py -3.10 train.py --model 5    (Pretrained + No Attention, End-to-End)
     py -3.10 train.py --model 6    (Pretrained + Attention, End-to-End)
-    py -3.10 train.py --model 2 --resume   (Tiếp tục train từ checkpoint)
+    py -3.10 train.py --model 2 --resume   (Resume training from checkpoint)
 """
 
 import argparse
@@ -42,7 +42,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # ============================================================
 
 def get_model_config(model_id):
-    """Trả về cấu hình phù hợp cho từng model."""
+    """Return appropriate config for each model."""
     is_pretrained = model_id in [2, 4]       # Pre-extracted features
     is_end2end_pretrained = model_id in [5, 6]  # End-to-end pretrained
     has_attention = model_id in [3, 4, 6]
@@ -64,7 +64,7 @@ def get_model_config(model_id):
 
 
 def build_model(model_id, vocab_size):
-    """Tạo model dựa trên ID."""
+    """Create model based on ID."""
     models_map = {
         1: VQAModel1_ScratchNoAtt,
         2: VQAModel2_PretrainedNoAtt,
@@ -78,9 +78,9 @@ def build_model(model_id, vocab_size):
 
 
 def build_dataloaders(model_cfg, vocab):
-    """Tạo DataLoader cho train và val."""
+    """Create DataLoaders for train and val."""
     if model_cfg["is_pretrained"]:
-        # Model 2 & 4: Dùng pre-extracted features
+        # Model 2 & 4: Use pre-extracted features
         use_spatial = model_cfg["has_attention"]
         train_dataset = GQAFeaturesDataset(
             config.TRAIN_JSON, config.FEATURES_H5, vocab,
@@ -91,7 +91,7 @@ def build_dataloaders(model_cfg, vocab):
             use_spatial=use_spatial
         )
     else:
-        # Model 1, 3, 5, 6: Dùng raw images (End-to-End)
+        # Model 1, 3, 5, 6: Use raw images (End-to-End)
         train_dataset = GQADataset(
             config.TRAIN_JSON, config.IMAGES_DIR, vocab,
             image_size=model_cfg["image_size"]
@@ -121,7 +121,7 @@ def build_dataloaders(model_cfg, vocab):
 
 def train_one_epoch(model, loader, criterion, optimizer, tf_ratio,
                     has_attention, device):
-    """Huấn luyện 1 epoch."""
+    """Train 1 epoch."""
     model.train()
     total_loss = 0
     num_batches = 0
@@ -139,7 +139,7 @@ def train_one_epoch(model, loader, criterion, optimizer, tf_ratio,
         else:
             outputs = model(inputs, questions, answers, tf_ratio)
 
-        # Loss: bỏ token đầu tiên (<SOS>) của target
+        # Loss: discard the first token (<SOS>) of the target
         # outputs: (B, seq_len, vocab_size), answers: (B, seq_len)
         output_dim = outputs.shape[-1]
         outputs = outputs[:, 1:, :].contiguous().view(-1, output_dim)
@@ -156,7 +156,7 @@ def train_one_epoch(model, loader, criterion, optimizer, tf_ratio,
         total_loss += loss.item()
         num_batches += 1
 
-        # In tiến độ mỗi 100 batch
+        # Print progress every 100 batches
         if (batch_idx + 1) % 100 == 0:
             avg_loss = total_loss / num_batches
             print(f"    Batch {batch_idx+1}/{len(loader)} | "
@@ -166,7 +166,7 @@ def train_one_epoch(model, loader, criterion, optimizer, tf_ratio,
 
 
 def validate(model, loader, criterion, vocab, has_attention, device):
-    """Đánh giá trên tập validation."""
+    """Evaluate on the validation set."""
     model.eval()
     total_loss = 0
     correct = 0
@@ -179,7 +179,7 @@ def validate(model, loader, criterion, vocab, has_attention, device):
             questions = questions.to(device)
             answers = answers.to(device)
 
-            # Forward (teacher forcing = 0 khi validate)
+            # Forward (teacher forcing = 0 when validating)
             if has_attention:
                 outputs, _ = model(inputs, questions, answers, 0.0)
             else:
@@ -193,7 +193,7 @@ def validate(model, loader, criterion, vocab, has_attention, device):
             total_loss += loss.item()
             num_batches += 1
 
-            # Accuracy: so sánh từ dự đoán với từ đúng (bỏ qua PAD)
+            # Accuracy: compare predicted words with target words (ignore PAD)
             predictions = outputs[:, 1:, :].argmax(dim=-1)  # (B, seq_len-1)
             targets = answers[:, 1:]  # (B, seq_len-1)
 
@@ -218,7 +218,7 @@ def main():
                         help="Resume training from last checkpoint")
     args = parser.parse_args()
 
-    # Cấu hình
+    # Configuration
     model_cfg = get_model_config(args.model)
     model_names = {
         1: "Scratch + No Attention (End-to-End)",
@@ -273,7 +273,7 @@ def main():
     for epoch in range(start_epoch + 1, model_cfg["epochs"] + 1):
         epoch_start = time.time()
 
-        # Teacher forcing ratio (giảm dần)
+        # Teacher forcing ratio (decaying)
         tf_ratio = max(
             0.0,
             config.TEACHER_FORCING_RATIO - config.TEACHER_FORCING_DECAY * (epoch - 1)

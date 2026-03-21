@@ -1,5 +1,5 @@
 """
-question_encoder.py - LSTM Encoder cho câu hỏi (dùng chung cho cả 4 model)
+question_encoder.py - LSTM Encoder for questions (shared across all 4 models)
 """
 
 import torch
@@ -8,10 +8,10 @@ import torch.nn as nn
 
 class QuestionEncoder(nn.Module):
     """
-    Mã hóa câu hỏi bằng Word Embedding + Bi-LSTM.
-    Input:  (B, seq_len) - indices của câu hỏi
-    Output: (B, hidden_size * 2) - context vector (nối 2 chiều LSTM)
-            hoặc full outputs cho Attention
+    Encodes question using Word Embedding + Bi-LSTM.
+    Input:  (B, seq_len) - question indices
+    Output: (B, hidden_size * 2) - context vector (concat of 2 LSTM directions)
+            or full outputs for Attention
     """
 
     def __init__(self, vocab_size, embed_size, hidden_size,
@@ -31,15 +31,15 @@ class QuestionEncoder(nn.Module):
     def forward(self, x):
         """
         Args:
-            x: (B, seq_len) - câu hỏi đã numericalize
+            x: (B, seq_len) - numericalized question
         Returns:
-            outputs: (B, seq_len, hidden_size*2) - output tại mỗi bước
-            hidden:  (B, hidden_size*2) - context vector cuối cùng
+            outputs: (B, seq_len, hidden_size*2) - output at each step
+            hidden:  (B, hidden_size*2) - final context vector
         """
         embedded = self.dropout(self.embedding(x))    # (B, seq_len, embed_size)
         outputs, (hidden, cell) = self.lstm(embedded)  # outputs: (B, seq_len, H*2)
 
-        # Nối hidden state cuối cùng của 2 chiều (forward + backward)
+        # Concatenate final hidden state from 2 directions (forward + backward)
         # hidden shape: (num_layers*2, B, hidden_size)
         hidden_fwd = hidden[-2]  # (B, hidden_size)
         hidden_bwd = hidden[-1]  # (B, hidden_size)

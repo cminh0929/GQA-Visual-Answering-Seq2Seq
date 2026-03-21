@@ -3,7 +3,7 @@ Model 2: Pretrained ResNet-50 + LSTM Seq2Seq (No Attention)
 - CNN: ResNet-50 Pretrained (Frozen) → Pre-extracted features
 - Question Encoder: Bi-LSTM
 - Decoder: LSTM (No Attention)
-- Training: Chỉ train LSTM (features đã trích xuất trước vào .h5)
+- Training: Only train LSTM (features pre-extracted into .h5)
 """
 
 import torch
@@ -19,14 +19,14 @@ import config
 class VQAModel2_PretrainedNoAtt(nn.Module):
     """
     Model 2: Pretrained ResNet-50 + LSTM Seq2Seq (No Attention)
-    Input:  pre-extracted feature (B, 2048) + câu hỏi (B, seq_len)
-    Output: câu trả lời (B, max_len, vocab_size)
+    Input: Pre-extracted feature (B, 2048) + Question (B, seq_len)
+    Output: Answer (B, max_len, vocab_size)
     """
 
     def __init__(self, vocab_size):
         super().__init__()
 
-        # Chiếu feature 2048-d xuống embed_size để giảm chiều
+        # Project 2048-d feature to embed_size dimensions to reduce size
         self.image_proj = nn.Sequential(
             nn.Linear(config.RESNET_FEATURE_DIM, config.HIDDEN_SIZE * 2),
             nn.ReLU(),
@@ -71,7 +71,7 @@ class VQAModel2_PretrainedNoAtt(nn.Module):
         return outputs
 
     def generate(self, features, questions, sos_idx, eos_idx, max_len=30):
-        """Sinh câu trả lời khi inference."""
+        """Answer generation for inference."""
         img_proj = self.image_proj(features)
         _, q_context = self.question_encoder(questions)
         context = torch.cat([img_proj, q_context], dim=1)

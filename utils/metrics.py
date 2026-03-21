@@ -1,8 +1,8 @@
 """
-metrics.py - Các độ đo đánh giá cho VQA Seq2Seq
-Bước 5 trong VQA_Seq2Seq_Project_Plan.md
+metrics.py - Evaluation metrics for VQA Seq2Seq
+Step 5 in VQA_Seq2Seq_Project_Plan.md
 
-Hỗ trợ: Accuracy, BLEU-1/2/3/4, METEOR, ROUGE-L, CIDEr-D
+Supports: Accuracy, BLEU-1/2/3/4, METEOR, ROUGE-L, CIDEr-D
 """
 
 import re
@@ -11,7 +11,7 @@ import math
 
 
 def tokenize(text):
-    """Tách câu thành danh sách từ (lowercase)."""
+    """Split sentence into list of words (lowercase)."""
     text = text.lower().strip()
     for p in ["?", ".", ",", "!", ";", ":"]:
         text = text.replace(p, f" {p}")
@@ -23,11 +23,11 @@ def tokenize(text):
 # ============================================================
 def compute_accuracy(predictions, references):
     """
-    Accuracy: so sánh khớp chính xác 100% (lowercase, strip).
+    Accuracy: 100% exact match comparison (lowercase, strip).
 
     Args:
-        predictions: List[str] - câu trả lời dự đoán
-        references: List[str] - câu trả lời đúng
+        predictions: List[str] - predicted answers
+        references: List[str] - ground truth answers
     Returns:
         float
     """
@@ -42,12 +42,12 @@ def compute_accuracy(predictions, references):
 # BLEU (1, 2, 3, 4)
 # ============================================================
 def _ngrams(tokens, n):
-    """Trích xuất n-grams."""
+    """Extract n-grams."""
     return [tuple(tokens[i:i+n]) for i in range(len(tokens) - n + 1)]
 
 
 def _bleu_sentence(prediction_tokens, reference_tokens, max_n=4):
-    """Tính BLEU cho 1 cặp câu."""
+    """Compute BLEU for 1 pair of sentences."""
     scores = []
     for n in range(1, max_n + 1):
         pred_ngrams = _ngrams(prediction_tokens, n)
@@ -70,7 +70,7 @@ def _bleu_sentence(prediction_tokens, reference_tokens, max_n=4):
 
 def compute_bleu(predictions, references, max_n=4):
     """
-    Corpus-level BLEU-1 đến BLEU-4.
+    Corpus-level BLEU-1 to BLEU-4.
 
     Args:
         predictions: List[str]
@@ -111,7 +111,7 @@ def compute_bleu(predictions, references, max_n=4):
 # ============================================================
 def compute_meteor(predictions, references):
     """
-    METEOR đơn giản hóa (unigram matching + penalty cho gaps).
+    Simplified METEOR (unigram matching + penalty for gaps).
 
     Args:
         predictions: List[str]
@@ -139,8 +139,8 @@ def compute_meteor(predictions, references):
         if precision + recall == 0:
             continue
 
-        # F-mean (METEOR dùng harmonic mean với recall weight cao hơn)
-        alpha = 0.9  # Weight cho recall
+        # F-mean (METEOR uses harmonic mean with higher recall weight)
+        alpha = 0.9  # Weight for recall
         f_score = (precision * recall) / (alpha * precision + (1 - alpha) * recall)
         total_score += f_score
 
@@ -151,7 +151,7 @@ def compute_meteor(predictions, references):
 # ROUGE-L
 # ============================================================
 def _lcs_length(x, y):
-    """Tính độ dài Longest Common Subsequence."""
+    """Compute Longest Common Subsequence length."""
     m, n = len(x), len(y)
     dp = [[0] * (n + 1) for _ in range(m + 1)]
     for i in range(1, m + 1):
@@ -165,7 +165,7 @@ def _lcs_length(x, y):
 
 def compute_rouge_l(predictions, references):
     """
-    ROUGE-L dựa trên Longest Common Subsequence.
+    ROUGE-L based on Longest Common Subsequence.
 
     Args:
         predictions: List[str]
@@ -201,7 +201,7 @@ def compute_rouge_l(predictions, references):
 # ============================================================
 def compute_cider(predictions, references):
     """
-    CIDEr-D đơn giản hóa (TF-IDF weighted n-gram matching).
+    Simplified CIDEr-D (TF-IDF weighted n-gram matching).
 
     Args:
         predictions: List[str]
@@ -209,7 +209,7 @@ def compute_cider(predictions, references):
     Returns:
         float
     """
-    # Xây dựng document frequency
+    # Build document frequency
     doc_freq = Counter()
     for ref in references:
         tokens = set(tokenize(ref))
@@ -226,7 +226,7 @@ def compute_cider(predictions, references):
         if not pred_tokens or not ref_tokens:
             continue
 
-        # TF-IDF cho prediction
+        # TF-IDF for prediction
         pred_tf = Counter(pred_tokens)
         pred_tfidf = {}
         for t, count in pred_tf.items():
@@ -234,7 +234,7 @@ def compute_cider(predictions, references):
             idf = math.log(max(num_docs, 1) / max(doc_freq.get(t, 0), 1))
             pred_tfidf[t] = tf * idf
 
-        # TF-IDF cho reference
+        # TF-IDF for reference
         ref_tf = Counter(ref_tokens)
         ref_tfidf = {}
         for t, count in ref_tf.items():
@@ -251,7 +251,7 @@ def compute_cider(predictions, references):
 
         total_score += cosine
 
-    return (total_score / max(len(predictions), 1)) * 10  # CIDEr thường scale x10
+    return (total_score / max(len(predictions), 1)) * 10  # CIDEr usually scales x10
 
 
 # ============================================================
@@ -259,13 +259,13 @@ def compute_cider(predictions, references):
 # ============================================================
 def compute_all_metrics(predictions, references):
     """
-    Tính toán tất cả các độ đo.
+    Compute all metrics.
 
     Args:
-        predictions: List[str] - câu trả lời dự đoán
-        references: List[str] - câu trả lời đúng
+        predictions: List[str] - predicted answers
+        references: List[str] - ground truth answers
     Returns:
-        dict: Chứa tất cả metrics
+        dict: Contains all metrics
     """
     metrics = {}
 

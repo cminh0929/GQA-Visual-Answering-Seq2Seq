@@ -1,12 +1,12 @@
 """
 Model 5: Pretrained ResNet-50 (Frozen, End-to-End) + LSTM Seq2Seq (No Attention)
-- CNN: ResNet-50 Pretrained (Frozen) → chạy end-to-end mỗi batch
+- CNN: ResNet-50 Pretrained (Frozen) → runs end-to-end each batch
 - Question Encoder: Bi-LSTM
 - Decoder: LSTM (No Attention)
-- Training: End-to-End pipeline (CNN frozen, chỉ train LSTM)
+- Training: End-to-End pipeline (CNN frozen, only train LSTM)
 
-So sánh với Model 2: cùng CNN frozen, cùng decoder, nhưng end-to-end thay vì pre-extracted
-So sánh với Model 1: cùng pipeline end-to-end, nhưng pretrained CNN thay vì scratch
+Compare with Model 2: same frozen CNN, same decoder, but end-to-end instead of pre-extracted
+Compare with Model 1: same end-to-end pipeline, but pretrained CNN instead of scratch
 """
 
 import torch
@@ -23,17 +23,17 @@ import config
 class VQAModel5_PretrainedEndToEndNoAtt(nn.Module):
     """
     Model 5: Pretrained ResNet-50 (Frozen, End-to-End) + LSTM (No Attention)
-    Input:  ảnh (B, 3, 224, 224) + câu hỏi (B, seq_len)
-    Output: câu trả lời (B, max_len, vocab_size)
+    Input: Image (B, 3, 224, 224) + Question (B, seq_len)
+    Output: Answer (B, max_len, vocab_size)
     """
 
     def __init__(self, vocab_size):
         super().__init__()
 
-        # Image Encoder: ResNet-50 Pretrained (Frozen) → vector 2048-d
+        # Image Encoder: ResNet-50 Pretrained (Frozen) → 2048-d vector
         self.image_encoder = PretrainedCNN(return_spatial=False)
 
-        # Chiếu feature 2048-d xuống để fusion
+        # Project 2048-d feature for fusion
         self.image_proj = nn.Sequential(
             nn.Linear(config.RESNET_FEATURE_DIM, config.HIDDEN_SIZE * 2),
             nn.ReLU(),
@@ -65,7 +65,7 @@ class VQAModel5_PretrainedEndToEndNoAtt(nn.Module):
     def forward(self, images, questions, answers, teacher_forcing_ratio=1.0):
         """
         Args:
-            images: (B, 3, 224, 224) - ảnh gốc (end-to-end)
+            images: (B, 3, 224, 224) - original image (end-to-end)
             questions: (B, q_len)
             answers: (B, a_len)
         Returns:
@@ -80,7 +80,7 @@ class VQAModel5_PretrainedEndToEndNoAtt(nn.Module):
         return outputs
 
     def generate(self, images, questions, sos_idx, eos_idx, max_len=30):
-        """Sinh câu trả lời khi inference."""
+        """Answer generation for inference."""
         img_features = self.image_encoder(images)
         img_proj = self.image_proj(img_features)
         _, q_context = self.question_encoder(questions)

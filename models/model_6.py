@@ -1,12 +1,12 @@
 """
 Model 6: Pretrained ResNet-50 (Frozen, End-to-End) + LSTM Seq2Seq (With Spatial Attention)
-- CNN: ResNet-50 Pretrained (Frozen) → chạy end-to-end mỗi batch → spatial feature map
+- CNN: ResNet-50 Pretrained (Frozen) → runs end-to-end each batch → spatial feature map
 - Question Encoder: Bi-LSTM
-- Decoder: Attention LSTM (Spatial Attention trên feature map 7x7)
-- Training: End-to-End pipeline (CNN frozen, chỉ train LSTM + Attention)
+- Decoder: Attention LSTM (Spatial Attention on 7x7 feature map)
+- Training: End-to-End pipeline (CNN frozen, only train LSTM + Attention)
 
-So sánh với Model 4: cùng CNN frozen, cùng attention decoder, nhưng end-to-end thay vì pre-extracted
-So sánh với Model 3: cùng pipeline end-to-end, nhưng pretrained CNN thay vì scratch
+Compare with Model 4: same frozen CNN, same attention decoder, but end-to-end instead of pre-extracted
+Compare with Model 3: same end-to-end pipeline, but pretrained CNN instead of scratch
 """
 
 import torch
@@ -23,10 +23,10 @@ import config
 class VQAModel6_PretrainedEndToEndAtt(nn.Module):
     """
     Model 6: Pretrained ResNet-50 (Frozen, End-to-End) + LSTM (With Spatial Attention)
-    Input:  ảnh (B, 3, 224, 224) + câu hỏi (B, seq_len)
-    Output: câu trả lời (B, max_len, vocab_size) + attention weights
+    Input: Image (B, 3, 224, 224) + Question (B, seq_len)
+    Output: Answer (B, max_len, vocab_size) + attention weights
 
-    So sánh với Model 4 (pre-extracted) để đánh giá ảnh hưởng training strategy.
+    Compare with Model 4 (pre-extracted) to evaluate training strategy impact.
     """
 
     def __init__(self, vocab_size):
@@ -59,7 +59,7 @@ class VQAModel6_PretrainedEndToEndAtt(nn.Module):
     def forward(self, images, questions, answers, teacher_forcing_ratio=1.0):
         """
         Args:
-            images: (B, 3, 224, 224) - ảnh gốc (end-to-end)
+            images: (B, 3, 224, 224) - original image (end-to-end)
             questions: (B, q_len)
             answers: (B, a_len)
         Returns:
@@ -81,7 +81,7 @@ class VQAModel6_PretrainedEndToEndAtt(nn.Module):
         return outputs, alphas
 
     def generate(self, images, questions, sos_idx, eos_idx, max_len=30):
-        """Sinh câu trả lời khi inference."""
+        """Answer generation for inference."""
         spatial = self.image_encoder(images)
         B, C, H, W = spatial.size()
         spatial = spatial.view(B, C, H * W).permute(0, 2, 1)

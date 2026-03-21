@@ -47,5 +47,5 @@ if __name__ == "__main__":
     # Clean sceneGraphs folder
     cleanup_folder(scenegraphs_dir)
     
-    print("\n--- DỌN DẸP HOÀN TẤT ---")
-    print("Đã giữ lại: Toàn bộ ảnh, tệp ZIP, và các tệp trong thư mục 'subset'.")
+    print("\n--- CLEANUP COMPLETE ---")
+    print("Kept: All images, ZIP files, and files in the 'subset' folder.")

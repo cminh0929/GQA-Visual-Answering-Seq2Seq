@@ -1,11 +1,11 @@
 """
-extract_features.py - Trích xuất đặc trưng ảnh bằng ResNet-50 Pretrained
-Bước 2 trong VQA_Seq2Seq_Project_Plan.md
+extract_features.py - Extract image features using Pretrained ResNet-50
+Step 2 in VQA_Seq2Seq_Project_Plan.md
 
-Chạy tất cả ảnh (Train + Val + Test) qua ResNet-50 một lần duy nhất,
-lưu kết quả vào file HDF5:
-  - pooled/{img_id}:  vector 2048-d       (cho Model 2 - No Attention)
-  - spatial/{img_id}: feature map 49x2048  (cho Model 4 - Attention)
+Run all images (Train + Val + Test) through ResNet-50 once,
+save the results to an HDF5 file:
+  - pooled/{img_id}:  2048-d vector       (for Model 2 - No Attention)
+  - spatial/{img_id}: 49x2048 feature map  (for Model 4 - Attention)
 
 Usage:
     py -3.10 scripts/extract_features.py
@@ -21,22 +21,22 @@ from torchvision import models, transforms
 from PIL import Image
 from tqdm import tqdm
 
-# Thêm thư mục gốc vào path
+# Add root directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import config
 
 
 # ============================================================
-# CẤU HÌNH
+# CONFIGURATION
 # ============================================================
-BATCH_SIZE = 32  # Số ảnh xử lý mỗi lần (giảm nếu hết VRAM)
+BATCH_SIZE = 32  # Number of images to process at once (reduce if out of VRAM)
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def get_all_image_ids():
     """
-    Thu thập tất cả Image ID cần trích xuất từ Train + Val + Test.
-    Trả về set các ID duy nhất.
+    Collect all Image IDs to extract from Train + Val + Test.
+    Returns a set of unique IDs.
     """
     all_ids = set()
 
@@ -54,26 +54,26 @@ def get_all_image_ids():
 
 def build_resnet50():
     """
-    Load ResNet-50 Pretrained, bỏ lớp FC cuối cùng.
-    Trả về model ở chế độ eval (không train).
+    Load Pretrained ResNet-50, drop the last FC layer.
+    Return model in eval mode (no training).
     """
     resnet = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
 
-    # Bỏ lớp avgpool và fc cuối cùng
-    # Lấy output từ layer4 → feature map (B, 2048, 7, 7)
-    modules = list(resnet.children())[:-2]  # Bỏ avgpool + fc
+    # Drop avgpool and the last fc layer
+    # Output from layer4 → feature map (B, 2048, 7, 7)
+    modules = list(resnet.children())[:-2]  # Remove avgpool + fc
     backbone = torch.nn.Sequential(*modules)
     backbone.eval()
     backbone.to(DEVICE)
 
-    # Lớp Global Average Pooling riêng (cho vector 2048-d)
+    # Separate Global Average Pooling layer (for 2048-d vector)
     avgpool = torch.nn.AdaptiveAvgPool2d((1, 1))
 
     return backbone, avgpool
 
 
 def get_transform():
-    """Transform chuẩn cho ResNet-50."""
+    """Standard transform for ResNet-50."""
     return transforms.Compose([
         transforms.Resize((config.PRETRAINED_IMAGE_SIZE,
                            config.PRETRAINED_IMAGE_SIZE)),
@@ -91,7 +91,7 @@ def extract():
     print(f"Device: {DEVICE}")
     print("=" * 60)
 
-    # 1. Thu thập Image IDs
+    # 1. Collect Image IDs
     print("\n[1/3] Collecting image IDs...")
     image_ids = get_all_image_ids()
 
@@ -101,17 +101,17 @@ def extract():
     transform = get_transform()
     print("  ResNet-50 loaded successfully.")
 
-    # 3. Trích xuất features
+    # 3. Extract features
     print(f"\n[3/3] Extracting features for {len(image_ids)} images...")
     print(f"  Output: {config.FEATURES_H5}")
     print(f"  Batch size: {BATCH_SIZE}")
 
     with h5py.File(config.FEATURES_H5, "w") as h5f:
-        # Tạo 2 group: pooled và spatial
+        # Create 2 groups: pooled and spatial
         pooled_group = h5f.create_group("pooled")
         spatial_group = h5f.create_group("spatial")
 
-        # Xử lý theo batch
+        # Process by batch
         num_batches = (len(image_ids) + BATCH_SIZE - 1) // BATCH_SIZE
         extracted = 0
         skipped = 0
@@ -121,7 +121,7 @@ def extract():
             end = min(start + BATCH_SIZE, len(image_ids))
             batch_ids = image_ids[start:end]
 
-            # Load và transform ảnh trong batch
+            # Load and transform images in batch
             batch_tensors = []
             valid_ids = []
 
@@ -142,10 +142,10 @@ def extract():
             if not batch_tensors:
                 continue
 
-            # Stack thành batch tensor
+            # Stack into batch tensor
             batch_input = torch.stack(batch_tensors).to(DEVICE)  # (B, 3, 224, 224)
 
-            # Forward pass (không tính gradient)
+            # Forward pass (no gradients)
             with torch.no_grad():
                 spatial_features = backbone(batch_input)  # (B, 2048, 7, 7)
                 pooled_features = avgpool(spatial_features)  # (B, 2048, 1, 1)
@@ -153,13 +153,13 @@ def extract():
                     pooled_features.size(0), -1
                 )  # (B, 2048)
 
-            # Chuyển spatial: (B, 2048, 7, 7) → (B, 49, 2048)
+            # Convert spatial: (B, 2048, 7, 7) → (B, 49, 2048)
             B, C, H, W = spatial_features.size()
             spatial_flat = spatial_features.view(B, C, H * W).permute(
                 0, 2, 1
             )  # (B, 49, 2048)
 
-            # Lưu vào HDF5
+            # Save to HDF5
             for i, img_id in enumerate(valid_ids):
                 pooled_group.create_dataset(
                     img_id,
@@ -174,7 +174,7 @@ def extract():
 
             extracted += len(valid_ids)
 
-    # Thống kê
+    # Statistics
     file_size = os.path.getsize(config.FEATURES_H5) / (1024 ** 3)
     print(f"\n--- EXTRACTION COMPLETE ---")
     print(f"  Images extracted: {extracted}")

@@ -1,21 +1,21 @@
 """
-config.py - Cấu hình tập trung cho toàn bộ dự án VQA Seq2Seq
-Tất cả đường dẫn, tham số huấn luyện, và hằng số được quản lý tại đây.
+config.py - Central configuration for the VQA Seq2Seq Project
+All paths, training parameters, and constants are managed here.
 """
 
 import os
 
 # ============================================================
-# ĐƯỜNG DẪN DỮ LIỆU (DATA PATHS)
+# DATA PATHS
 # ============================================================
-# Kiểm tra môi trường (Kaggle hay Local)
+# Check environment (Kaggle or Local)
 IS_KAGGLE = os.path.exists("/kaggle/input")
 
 if IS_KAGGLE:
     BASE_DIR = "/kaggle/working"
-    # Dữ liệu subset (JSON + vocab) - Dựa theo đường dẫn thực tế trên Notebook của bạn
+    # Subset data (JSON + vocab) - Based on actual Notebook path
     META_DATA_DIR = "/kaggle/input/datasets/minhngcng3/gqa-vqa-subset"
-    # Dữ liệu ảnh gốc (từ bộ dataset 3.9GB bạn upload)
+    # Original images (from the uploaded 3.9GB dataset)
     IMAGES_DIR = "/kaggle/input/datasets/minhngcng3/gqa-images-subset/images_subset"
 
     SUBSET_DIR = META_DATA_DIR
@@ -23,7 +23,7 @@ if IS_KAGGLE:
     VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
     VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
     TEST_JSON = os.path.join(SUBSET_DIR, "testdev_balanced_questions.json")
-    # File h5 đã được bạn tải lên thành công vào INPUT (Dùng vĩnh viễn, không cần chạy lại)
+    # Successfully uploaded h5 file in INPUT (Permanent, no need to rerun)
     FEATURES_H5 = os.path.join(META_DATA_DIR, "resnet50_features.h5")
 else:
     BASE_DIR = r"d:\Deeplearning"
@@ -37,7 +37,7 @@ else:
     FEATURES_H5 = os.path.join(SUBSET_DIR, "resnet50_features.h5")
 
 # ============================================================
-# ĐƯỜNG DẪN KẾT QUẢ (RESULTS PATHS)
+# RESULTS PATHS
 # ============================================================
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
 if IS_KAGGLE and not os.path.exists(RESULTS_DIR):
@@ -55,33 +55,33 @@ MODEL_DIRS = {
 ATTENTION_MAPS_DIR = os.path.join(RESULTS_DIR, "attention_maps")
 
 # ============================================================
-# THAM SỐ VOCABULARY
+# VOCABULARY PARAMETERS
 # ============================================================
-FREQ_THRESHOLD = 3          # Từ phải xuất hiện >= 3 lần
+FREQ_THRESHOLD = 3          # Word must appear >= 3 times
 
 # ============================================================
-# THAM SỐ ẢNH (IMAGE PARAMETERS)
+# IMAGE PARAMETERS
 # ============================================================
-SCRATCH_IMAGE_SIZE = 128    # Kích thước ảnh cho Model Scratch
-PRETRAINED_IMAGE_SIZE = 224 # Kích thước ảnh cho Model Pretrained
+SCRATCH_IMAGE_SIZE = 128    # Image size for Scratch Model
+PRETRAINED_IMAGE_SIZE = 224 # Image size for Pretrained Model
 
 # ============================================================
-# THAM SỐ MÔ HÌNH (MODEL PARAMETERS)
+# MODEL PARAMETERS
 # ============================================================
-EMBED_SIZE = 256            # Kích thước embedding cho từ
-HIDDEN_SIZE = 256           # Kích thước hidden state của LSTM
-NUM_LSTM_LAYERS = 2         # Số lớp LSTM
-DROPOUT = 0.3               # Tỷ lệ dropout
+EMBED_SIZE = 256            # Word embedding size
+HIDDEN_SIZE = 256           # LSTM hidden state size
+NUM_LSTM_LAYERS = 2         # Number of LSTM layers
+DROPOUT = 0.3               # Dropout rate
 
 # CNN Scratch
-SCRATCH_CNN_OUT = 512       # Số kênh output của CNN Scratch
+SCRATCH_CNN_OUT = 512       # Number of CNN Scratch output channels
 
 # ResNet-50 Pretrained
-RESNET_FEATURE_DIM = 2048   # Vector pooled: 2048-d
+RESNET_FEATURE_DIM = 2048   # Pooled vector: 2048-d
 RESNET_SPATIAL_SIZE = 7     # Feature map: 7x7x2048
 
 # ============================================================
-# THAM SỐ HUẤN LUYỆN (TRAINING PARAMETERS)
+# TRAINING PARAMETERS
 # ============================================================
 # Scratch models
 SCRATCH_LR = 5e-4
@@ -94,17 +94,18 @@ PRETRAINED_BATCH_SIZE = 128
 PRETRAINED_EPOCHS = 12
 
 # End-to-End Pretrained models (Model 5 & 6)
-E2E_PRETRAINED_BATCH_SIZE = 64  # Nhỏ hơn vì ResNet-50 chạy forward pass mỗi batch
+E2E_PRETRAINED_BATCH_SIZE = 64  # Smaller because ResNet-50 runs forward pass each batch
 
-# Chung
-TEACHER_FORCING_RATIO = 1.0     # Bắt đầu = 1.0
-TEACHER_FORCING_DECAY = 0.05    # Giảm 0.05 mỗi epoch
-GRADIENT_CLIP = 5.0             # Max norm cho gradient clipping
-EARLY_STOPPING_PATIENCE = 5    # Dừng nếu Val Loss không giảm sau 5 epoch
-NUM_WORKERS = 2                 # Workers cho DataLoader
+# Common
+TEACHER_FORCING_RATIO = 1.0     # Starts at 1.0
+TEACHER_FORCING_DECAY = 0.05    # Decrease by 0.05 per epoch
+GRADIENT_CLIP = 5.0             # Max norm for gradient clipping
+EARLY_STOPPING_PATIENCE = 5    # Stop if Val Loss does not decrease after 5 epochs
+NUM_WORKERS = 2                 # Workers for DataLoader
 
 # ============================================================
-# THAM SỐ ĐÁNH GIÁ (EVALUATION PARAMETERS)
+# EVALUATION PARAMETERS
 # ============================================================
 BEAM_SIZE = 3                   # Beam search width
-MAX_ANSWER_LENGTH = 30          # Độ dài tối đa câu trả lời khi sinh
+MAX_ANSWER_LENGTH = 30          # Maximum generated answer length
+

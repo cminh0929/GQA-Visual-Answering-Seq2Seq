@@ -1,14 +1,14 @@
 """
-evaluate.py - Đánh giá mô hình VQA Seq2Seq trên tập Test
-Bước 5 trong VQA_Seq2Seq_Project_Plan.md
+evaluate.py - Evaluate VQA Seq2Seq models on Test set
+Step 5 in VQA_Seq2Seq_Project_Plan.md
 
-Chạy inference trên tập testdev, tính toán tất cả metrics,
-và lưu kết quả vào predictions.json + metrics.json.
+Run inference on testdev, compute all metrics,
+and save results to predictions.json + metrics.json.
 
 Usage:
     py -3.10 evaluate.py --model 2
     py -3.10 evaluate.py --model 4
-    py -3.10 evaluate.py --model 1 2 3 4    (đánh giá tất cả)
+    py -3.10 evaluate.py --model 1 2 3 4    (evaluate all)
 """
 
 import argparse
@@ -46,7 +46,7 @@ MODEL_NAMES = {
 
 
 def build_model(model_id, vocab_size):
-    """Tạo model."""
+    """Create model."""
     models_map = {
         1: VQAModel1_ScratchNoAtt,
         2: VQAModel2_PretrainedNoAtt,
@@ -59,7 +59,7 @@ def build_model(model_id, vocab_size):
 
 
 def build_test_loader(model_id, vocab):
-    """Tạo DataLoader cho tập test."""
+    """Create DataLoader for test set."""
     is_pretrained = model_id in [2, 4]       # Pre-extracted features
     is_end2end_pretrained = model_id in [5, 6]  # End-to-end pretrained
     has_attention = model_id in [3, 4, 6]
@@ -88,11 +88,11 @@ def build_test_loader(model_id, vocab):
 
 def evaluate_model(model_id, vocab):
     """
-    Đánh giá một model trên tập test.
+    Evaluate a model on test set.
 
     Returns:
-        metrics: dict chứa tất cả metrics
-        predictions_list: list các cặp (prediction, reference)
+        metrics: dict containing all metrics
+        predictions_list: list of tuples (prediction, reference)
     """
     model_dir = config.MODEL_DIRS[f"model_{model_id}"]
     has_attention = model_id in [3, 4]
@@ -116,7 +116,7 @@ def evaluate_model(model_id, vocab):
     test_loader, test_dataset = build_test_loader(model_id, vocab)
     print(f"  Test samples: {len(test_dataset)}")
 
-    # 3. Load raw data để lấy ground truth
+    # 3. Load raw data for ground truth
     with open(config.TEST_JSON, "r", encoding="utf-8") as f:
         raw_data = json.load(f)
     raw_keys = list(raw_data.keys())
@@ -138,7 +138,7 @@ def evaluate_model(model_id, vocab):
             questions = questions.to(DEVICE)
             batch_size = inputs.size(0)
 
-            # Generate câu trả lời
+            # Generate answers
             if has_attention:
                 generated, _ = model.generate(
                     inputs, questions,
@@ -152,7 +152,7 @@ def evaluate_model(model_id, vocab):
                     max_len=config.MAX_ANSWER_LENGTH
                 )
 
-            # Decode predictions và references
+            # Decode predictions and references
             for i in range(batch_size):
                 pred_text = vocab.decode(generated[i].cpu())
                 ref_item = raw_data[raw_keys[idx_counter]]
@@ -164,7 +164,7 @@ def evaluate_model(model_id, vocab):
                 all_short_preds.append(pred_text.split(".")[-1].strip() if "." in pred_text else pred_text)
                 all_short_refs.append(ref_short)
 
-                # Lưu một vài mẫu để kiểm tra
+                # Save sample outputs for review
                 if len(sample_outputs) < 10:
                     sample_outputs.append({
                         "question": ref_item["question"],
@@ -178,7 +178,7 @@ def evaluate_model(model_id, vocab):
 
     elapsed = time.time() - start_time
 
-    # 5. Tính metrics
+    # 5. Compute metrics
     print("  Computing metrics...")
     metrics = compute_all_metrics(all_predictions, all_references)
     metrics["short_accuracy"] = sum(
@@ -188,7 +188,7 @@ def evaluate_model(model_id, vocab):
     metrics["inference_time"] = elapsed
     metrics["num_samples"] = len(all_predictions)
 
-    # 6. In kết quả
+    # 6. Print results
     print(f"\n  --- RESULTS (Model {model_id}) ---")
     print(f"  {'Metric':<20} {'Score':>10}")
     print(f"  {'-'*30}")
@@ -197,7 +197,7 @@ def evaluate_model(model_id, vocab):
             print(f"  {key:<20} {value:>10.4f}")
     print(f"  {'inference_time':<20} {elapsed:>10.2f}s")
 
-    # 7. In mẫu dự đoán
+    # 7. Print samples
     print(f"\n  --- SAMPLE PREDICTIONS ---")
     for s in sample_outputs[:5]:
         print(f"  Q: {s['question']}")
@@ -205,7 +205,7 @@ def evaluate_model(model_id, vocab):
         print(f"  R: {s['reference_full']}")
         print()
 
-    # 8. Lưu kết quả
+    # 8. Save results
     predictions_path = os.path.join(model_dir, "predictions.json")
     with open(predictions_path, "w", encoding="utf-8") as f:
         json.dump(sample_outputs, f, indent=2, ensure_ascii=False)
@@ -221,7 +221,7 @@ def evaluate_model(model_id, vocab):
 
 
 def compare_models(all_metrics):
-    """In bảng so sánh giữa các model."""
+    """Print model comparison table."""
     print(f"\n{'='*80}")
     print("COMPARISON TABLE")
     print(f"{'='*80}")
@@ -263,11 +263,11 @@ def main():
         if metrics is not None:
             all_metrics[model_id] = metrics
 
-    # So sánh nếu có nhiều model
+    # Compare models if multiple models
     if len(all_metrics) > 1:
         compare_models(all_metrics)
 
-        # Lưu bảng so sánh
+        # Save comparison
         comparison_path = os.path.join(config.RESULTS_DIR, "comparison.json")
         serializable = {str(k): v for k, v in all_metrics.items()}
         with open(comparison_path, "w", encoding="utf-8") as f:

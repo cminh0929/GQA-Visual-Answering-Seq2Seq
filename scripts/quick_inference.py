@@ -1,5 +1,5 @@
 """
-quick_inference.py - Chạy thử mô hình 2 trên vài mẫu tập Val
+quick_inference.py - Test run model 2 on a few Val samples
 """
 import torch
 import json
@@ -7,7 +7,7 @@ import random
 import os
 import sys
 
-# Thêm path để import project modules
+# Add path to import project modules
 sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
 import config
@@ -32,7 +32,7 @@ def run():
     logger = TrainingLogger(config.MODEL_DIRS["model_2"])
     epoch = logger.load_checkpoint(model, load_best=True)
     if epoch == 0:
-        print("Model 2 chưa được huấn luyện hoặc không tìm thấy checkpoint!")
+        print("Model 2 is not trained or checkpoint not found!")
         return
     model.eval()
 
@@ -41,24 +41,24 @@ def run():
         val_data = json.load(f)
     val_keys = list(val_data.keys())
     
-    # 5. Dataset & Loader (để lấy features dễ dàng)
+    # 5. Dataset & Loader (to get features easily)
     dataset = GQAFeaturesDataset(config.VAL_JSON, config.FEATURES_H5, vocab, use_spatial=False)
     
-    # Chọn ngẫu nhiên 5 mẫu
+    # Randomly select 5 samples
     indices = random.sample(range(len(dataset)), 5)
     
-    print(f"\nChạy thử 5 mẫu ngẫu nhiên từ tập Validation:\n")
+    print(f"\nRunning test on 5 random samples from Validation set:\n")
 
     for idx in indices:
         feature, question_idx, answer_idx = dataset[idx]
         feature = feature.unsqueeze(0).to(DEVICE)
         question_idx = question_idx.unsqueeze(0).to(DEVICE)
 
-        # Thông tin mẫu
+        # Sample info
         item_id = val_keys[idx]
         item = val_data[item_id]
         
-        # Generate dự đoán
+        # Generate prediction
         with torch.no_grad():
             generated = model.generate(
                 feature, question_idx, 
@@ -66,13 +66,13 @@ def run():
                 max_len=config.MAX_ANSWER_LENGTH
             )
         
-        # Giải mã kết quả
+        # Decode result
         pred_text = vocab.decode(generated[0].cpu())
         true_text = item["fullAnswer"]
         question_text = item["question"]
         image_id = item["imageId"]
 
-        print(f"Ảnh: {image_id}.jpg")
+        print(f"Image: {image_id}.jpg")
         print(f"Q:    {question_text}")
         print(f"Pred: {pred_text}")
         print(f"True: {true_text}")

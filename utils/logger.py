@@ -1,5 +1,5 @@
 """
-logger.py - Logging history và Checkpoint management
+logger.py - Logging history and Checkpoint management
 """
 
 import json
@@ -9,20 +9,20 @@ import torch
 
 class TrainingLogger:
     """
-    Quản lý việc lưu lịch sử huấn luyện và checkpoint mô hình.
+    Manages saving training history and model checkpoints.
     
-    Chức năng:
-    - Ghi lại loss, accuracy, metrics sau mỗi epoch
-    - Lưu best model (dựa trên val_loss thấp nhất)
-    - Lưu last model (để resume training)
-    - Export history ra file JSON
+    Features:
+    - Records loss, accuracy, metrics after each epoch
+    - Saves best model (based on lowest val_loss)
+    - Saves last model (to resume training)
+    - Exports history to JSON file
     """
 
     def __init__(self, model_dir):
         """
         Args:
-            model_dir: Đường dẫn thư mục kết quả của model
-                       (vd: results/model_1_scratch_no_att)
+            model_dir: Path to the model's result directory
+                       (e.g., results/model_1_scratch_no_att)
         """
         self.model_dir = model_dir
         self.checkpoint_dir = os.path.join(model_dir, "checkpoints")
@@ -44,16 +44,16 @@ class TrainingLogger:
     def log_epoch(self, epoch, train_loss, val_loss, val_accuracy,
                   lr, tf_ratio, extra_metrics=None):
         """
-        Ghi lại kết quả của một epoch.
+        Records the results of one epoch.
 
         Args:
-            epoch: Số thứ tự epoch
-            train_loss: Loss trên tập train
-            val_loss: Loss trên tập val
-            val_accuracy: Accuracy trên tập val
-            lr: Learning rate hiện tại
-            tf_ratio: Teacher forcing ratio hiện tại
-            extra_metrics: Dict chứa các metric bổ sung (BLEU, etc.)
+            epoch: Epoch number
+            train_loss: Train set loss
+            val_loss: Validation set loss
+            val_accuracy: Validation set accuracy
+            lr: Current learning rate
+            tf_ratio: Current teacher forcing ratio
+            extra_metrics: Dict containing additional metrics (BLEU, etc.)
         """
         self.history["train_loss"].append(train_loss)
         self.history["val_loss"].append(val_loss)
@@ -67,7 +67,7 @@ class TrainingLogger:
                     self.history[key] = []
                 self.history[key].append(value)
 
-        # In kết quả
+        # Print results
         print(f"  Epoch {epoch:3d} | "
               f"Train Loss: {train_loss:.4f} | "
               f"Val Loss: {val_loss:.4f} | "
@@ -75,7 +75,7 @@ class TrainingLogger:
               f"LR: {lr:.6f} | "
               f"TF: {tf_ratio:.2f}")
 
-        # Kiểm tra best model
+        # Check for best model
         is_best = val_loss < self.best_val_loss
         if is_best:
             self.best_val_loss = val_loss
@@ -86,13 +86,13 @@ class TrainingLogger:
 
     def save_checkpoint(self, model, optimizer, epoch, is_best=False):
         """
-        Lưu checkpoint.
+        Save checkpoint.
 
         Args:
-            model: Mô hình PyTorch
+            model: PyTorch model
             optimizer: Optimizer
-            epoch: Epoch hiện tại
-            is_best: True nếu đây là model tốt nhất
+            epoch: Current epoch
+            is_best: True if this is the best model
         """
         state = {
             "epoch": epoch,
@@ -102,32 +102,32 @@ class TrainingLogger:
             "history": self.history,
         }
 
-        # Luôn lưu last model
+        # Always save last model
         last_path = os.path.join(self.checkpoint_dir, "last_model.pth")
         torch.save(state, last_path)
 
-        # Lưu best model nếu cần
+        # Save best model if needed
         if is_best:
             best_path = os.path.join(self.checkpoint_dir, "best_model.pth")
             torch.save(state, best_path)
 
     def save_history(self):
-        """Lưu history ra file JSON."""
+        """Save history to JSON file."""
         history_path = os.path.join(self.log_dir, "history.json")
         with open(history_path, "w", encoding="utf-8") as f:
             json.dump(self.history, f, indent=2)
 
     def load_checkpoint(self, model, optimizer=None, load_best=True):
         """
-        Load checkpoint để resume training hoặc inference.
+        Load checkpoint to resume training or for inference.
 
         Args:
-            model: Mô hình PyTorch
-            optimizer: Optimizer (None nếu chỉ inference)
+            model: PyTorch model
+            optimizer: Optimizer (None if only inference)
             load_best: True → load best model, False → load last model
 
         Returns:
-            epoch: Epoch cuối cùng đã train
+            epoch: The last trained epoch
         """
         filename = "best_model.pth" if load_best else "last_model.pth"
         path = os.path.join(self.checkpoint_dir, filename)
@@ -152,7 +152,7 @@ class TrainingLogger:
 
 class EarlyStopping:
     """
-    Dừng huấn luyện sớm nếu val_loss không cải thiện sau N epoch.
+    Stop training early if val_loss doesn't improve after N epochs.
     """
 
     def __init__(self, patience=5):
@@ -163,7 +163,7 @@ class EarlyStopping:
     def should_stop(self, val_loss):
         """
         Returns:
-            True nếu nên dừng training
+            True if training should be stopped
         """
         if val_loss < self.best_loss:
             self.best_loss = val_loss

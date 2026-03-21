@@ -1,9 +1,9 @@
 """
 Model 3: Scratch CNN + LSTM Seq2Seq (With Spatial Attention)
-- CNN: 4-layer CNN train từ đầu → spatial feature map
+- CNN: 4-layer CNN trained from scratch → spatial feature map
 - Question Encoder: Bi-LSTM
-- Decoder: Attention LSTM (Spatial Attention trên feature map)
-- Training: End-to-End (CNN + LSTM song song)
+- Decoder: Attention LSTM (Spatial Attention on feature map)
+- Training: End-to-End (CNN + LSTM in parallel)
 """
 
 import torch
@@ -20,14 +20,14 @@ import config
 class VQAModel3_ScratchAtt(nn.Module):
     """
     Model 3: Scratch CNN + LSTM Seq2Seq (With Spatial Attention)
-    Input:  ảnh (B, 3, 128, 128) + câu hỏi (B, seq_len)
-    Output: câu trả lời (B, max_len, vocab_size) + attention weights
+    Input: Image (B, 3, 128, 128) + Question (B, seq_len)
+    Output: Answer (B, max_len, vocab_size) + attention weights
     """
 
     def __init__(self, vocab_size):
         super().__init__()
 
-        # Image Encoder: CNN Scratch → spatial feature map (B, 512, 8, 8)
+        # Image Encoder: Scratch CNN → spatial feature map (B, 512, 8, 8)
         self.image_encoder = ScratchCNN(
             out_channels=config.SCRATCH_CNN_OUT,
             return_spatial=True
@@ -79,7 +79,7 @@ class VQAModel3_ScratchAtt(nn.Module):
         return outputs, alphas
 
     def generate(self, images, questions, sos_idx, eos_idx, max_len=30):
-        """Sinh câu trả lời khi inference."""
+        """Answer generation for inference."""
         spatial = self.image_encoder(images)
         B, C, H, W = spatial.size()
         spatial = spatial.view(B, C, H * W).permute(0, 2, 1)

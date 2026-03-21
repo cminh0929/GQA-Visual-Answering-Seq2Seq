@@ -1,5 +1,5 @@
 """
-attention.py - Cơ chế Spatial Attention (cho Model 3 & 4)
+attention.py - Spatial Attention mechanism (for Model 3 & 4)
 """
 
 import torch
@@ -9,8 +9,8 @@ import torch.nn.functional as F
 
 class SpatialAttention(nn.Module):
     """
-    Soft Attention trên feature map không gian của CNN.
-    Cho phép Decoder "nhìn" vào các vùng ảnh khác nhau tại mỗi bước giải mã.
+    Soft Attention on CNN spatial feature map.
+    Allows Decoder to "look" at different image regions at each decoding step.
 
     Input:  feature_map (B, num_pixels, feature_dim) + decoder_hidden (B, hidden_size)
     Output: context (B, feature_dim) + attention_weights (B, num_pixels)
@@ -19,9 +19,9 @@ class SpatialAttention(nn.Module):
     def __init__(self, feature_dim, hidden_size, attention_dim):
         """
         Args:
-            feature_dim: Kích thước đặc trưng ảnh (512 cho Scratch, 2048 cho ResNet)
-            hidden_size: Kích thước hidden state của Decoder LSTM
-            attention_dim: Kích thước lớp ẩn trong attention network
+            feature_dim: Image feature size (512 for Scratch, 2048 for ResNet)
+            hidden_size: Decoder LSTM hidden state size
+            attention_dim: Hidden layer size in attention network
         """
         super().__init__()
         self.feature_proj = nn.Linear(feature_dim, attention_dim)
@@ -31,25 +31,25 @@ class SpatialAttention(nn.Module):
     def forward(self, features, hidden):
         """
         Args:
-            features: (B, num_pixels, feature_dim) - feature map đã flatten
-            hidden:   (B, hidden_size) - hidden state hiện tại của Decoder
+            features: (B, num_pixels, feature_dim) - flattened feature map
+            hidden:   (B, hidden_size) - current Decoder hidden state
 
         Returns:
-            context: (B, feature_dim) - vector ngữ cảnh có trọng số attention
-            alpha:   (B, num_pixels) - trọng số attention (dùng để visualize)
+            context: (B, feature_dim) - context vector with attention weights
+            alpha:   (B, num_pixels) - attention weights (used for visualization)
         """
-        # Chiếu features và hidden vào không gian attention
+        # Project features and hidden into attention space
         feat_proj = self.feature_proj(features)          # (B, num_pixels, att_dim)
         hidden_proj = self.hidden_proj(hidden).unsqueeze(1)  # (B, 1, att_dim)
 
-        # Tính điểm attention
+        # Compute attention scores
         energy = torch.tanh(feat_proj + hidden_proj)     # (B, num_pixels, att_dim)
         scores = self.attention(energy).squeeze(2)        # (B, num_pixels)
 
-        # Softmax để lấy trọng số
+        # Softmax to get weights
         alpha = F.softmax(scores, dim=1)                  # (B, num_pixels)
 
-        # Nhân trọng số với features
+        # Multiply weights with features
         context = (features * alpha.unsqueeze(2)).sum(dim=1)  # (B, feature_dim)
 
         return context, alpha
@@ -57,10 +57,10 @@ class SpatialAttention(nn.Module):
 
 class AttentionDecoder(nn.Module):
     """
-    LSTM Decoder với cơ chế Spatial Attention.
-    Tại mỗi bước giải mã, Decoder "nhìn" vào vùng ảnh phù hợp nhất.
+    LSTM Decoder with Spatial Attention mechanism.
+    At each decoding step, Decoder "looks" at the most relevant image region.
 
-    Dùng cho Model 3 & Model 4.
+    Used for Model 3 & Model 4.
     """
 
     def __init__(self, vocab_size, embed_size, hidden_size,
@@ -68,14 +68,14 @@ class AttentionDecoder(nn.Module):
                  num_layers=1, dropout=0.3):
         """
         Args:
-            vocab_size: Kích thước bộ từ điển
-            embed_size: Kích thước embedding
-            hidden_size: Kích thước hidden state LSTM
-            feature_dim: Kích thước đặc trưng ảnh (512 hoặc 2048)
-            question_dim: Kích thước context vector câu hỏi
-            attention_dim: Kích thước lớp ẩn trong attention
-            num_layers: Số lớp LSTM (mặc định 1 cho Attention Decoder)
-            dropout: Tỷ lệ dropout
+            vocab_size: Vocabulary size
+            embed_size: Embedding size
+            hidden_size: LSTM hidden state size
+            feature_dim: Image feature size (512 or 2048)
+            question_dim: Question context vector size
+            attention_dim: Hidden layer size in attention
+            num_layers: Number of LSTM layers (default 1 for Attention Decoder)
+            dropout: Dropout rate
         """
         super().__init__()
         self.hidden_size = hidden_size
@@ -92,7 +92,7 @@ class AttentionDecoder(nn.Module):
             batch_first=True,
         )
 
-        # Chiếu question context → hidden state ban đầu
+        # Project question context → initial hidden state
         self.q_to_hidden = nn.Linear(question_dim, hidden_size * num_layers)
         self.q_to_cell = nn.Linear(question_dim, hidden_size * num_layers)
 
@@ -100,7 +100,7 @@ class AttentionDecoder(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def _init_hidden(self, question_context):
-        """Khởi tạo hidden state từ question context."""
+        """Initialize hidden state from question context."""
         batch_size = question_context.size(0)
 
         hidden = self.q_to_hidden(question_context)
@@ -116,17 +116,17 @@ class AttentionDecoder(nn.Module):
     def forward(self, spatial_features, question_context, targets,
                 teacher_forcing_ratio=1.0):
         """
-        Forward pass khi huấn luyện.
+        Forward pass during training.
 
         Args:
             spatial_features: (B, num_pixels, feature_dim)
             question_context: (B, question_dim)
             targets: (B, max_len)
-            teacher_forcing_ratio: Tỷ lệ Teacher Forcing
+            teacher_forcing_ratio: Teacher Forcing ratio
 
         Returns:
             outputs: (B, max_len, vocab_size)
-            alphas:  List[(B, num_pixels)] - attention weights cho visualization
+            alphas:  List[(B, num_pixels)] - attention weights for visualization
         """
         batch_size = targets.size(0)
         max_len = targets.size(1)
@@ -141,13 +141,13 @@ class AttentionDecoder(nn.Module):
         for t in range(1, max_len):
             embedded = self.dropout(self.embedding(input_token))  # (B, E)
 
-            # Attention: "nhìn" vào vùng ảnh phù hợp
+            # Attention: "look" at relevant region
             att_context, alpha = self.attention(
                 spatial_features, hidden[-1]
             )  # att_context: (B, feat_dim), alpha: (B, num_pixels)
             alphas.append(alpha)
 
-            # Nối embedding + attention context + question context
+            # Concatenate embedding + attention context + question context
             lstm_input = torch.cat(
                 [embedded, att_context, question_context], dim=1
             ).unsqueeze(1)  # (B, 1, E + feat_dim + q_dim)
@@ -166,7 +166,7 @@ class AttentionDecoder(nn.Module):
     def generate(self, spatial_features, question_context,
                  sos_idx, eos_idx, max_len=30):
         """
-        Sinh câu trả lời khi inference.
+        Generate answer during inference.
 
         Returns:
             generated: (B, max_len)
