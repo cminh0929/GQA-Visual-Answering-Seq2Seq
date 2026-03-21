@@ -24,7 +24,7 @@ Toàn bộ dữ liệu của dự án đã được tinh gọn và xuất bản 
 
 **Bước 1:** Tải từ Kaggle bằng API (hoặc tải thuỷ công bằng trình duyệt rồi giải nén)
 ```bash
-# Tải subset JSON, Từ điển & file H5 (Bắt buộc)
+# Tải subset JSON, Từ điển & file H5 
 kaggle datasets download minhngcng3/gqa-vqa-subset
 
 # Tải bộ ảnh gốc (Chỉ cần tải nếu bạn muốn chạy Model 1, 3, 5, 6)
@@ -32,17 +32,18 @@ kaggle datasets download minhngcng3/gqa-images-subset
 ```
 
 **Bước 2:** Tổ chức thư mục
-Khởi tạo và xả nén các thư mục tải về đưa vào gốc dự án sao cho kết quả cuối cùng phải giống hệt sơ đồ cây thư mục đính kèm:
+Khởi tạo và xả nén các thư mục tải về đưa vào gốc dự án. Xin lưu ý hãy gộp và điều chỉnh tên thư mục con theo cấu trúc phân chia hợp lý (chuẩn mực) dưới đây:
 ```text
 Deeplearning/
 └── gqa_data/
-    ├── subset/
+    ├── annotations/
     │   ├── train_subset_25k.json
     │   ├── val_subset_5k.json
-    │   ├── resnet50_features.h5
-    │   └── vocab.pkl
-    ├── questions/
     │   └── testdev_balanced_questions.json
+    ├── features/
+    │   └── resnet50_features.h5
+    ├── vocab/
+    │   └── vocab.pkl
     └── images/
         ├── 2374353.jpg
         ├── ... (hàng nghìn file ảnh khác)

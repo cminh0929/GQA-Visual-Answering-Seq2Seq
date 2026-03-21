@@ -29,12 +29,17 @@ else:
     BASE_DIR = r"d:\Deeplearning"
     DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
     IMAGES_DIR = os.path.join(DATA_DIR, "images")
-    SUBSET_DIR = os.path.join(DATA_DIR, "subset")
-    TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
-    VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
-    TEST_JSON = os.path.join(DATA_DIR, "questions", "testdev_balanced_questions.json")
-    VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
-    FEATURES_H5 = os.path.join(SUBSET_DIR, "resnet50_features.h5")
+    
+    # Cấu trúc thư mục mới hợp lý và khoa học hơn
+    ANNOTATIONS_DIR = os.path.join(DATA_DIR, "annotations")
+    FEATURES_DIR = os.path.join(DATA_DIR, "features")
+    VOCAB_DIR = os.path.join(DATA_DIR, "vocab")
+
+    TRAIN_JSON = os.path.join(ANNOTATIONS_DIR, "train_subset_25k.json")
+    VAL_JSON = os.path.join(ANNOTATIONS_DIR, "val_subset_5k.json")
+    TEST_JSON = os.path.join(ANNOTATIONS_DIR, "testdev_balanced_questions.json")
+    VOCAB_PATH = os.path.join(VOCAB_DIR, "vocab.pkl")
+    FEATURES_H5 = os.path.join(FEATURES_DIR, "resnet50_features.h5")
 
 # ============================================================
 # RESULTS PATHS
