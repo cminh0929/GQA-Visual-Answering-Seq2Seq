@@ -28,9 +28,9 @@ if IS_KAGGLE:
 else:
     BASE_DIR = r"d:\Deeplearning"
     DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
-    IMAGES_DIR = os.path.join(DATA_DIR, "images")
+    # Kaggle tự động giải nén tạo thêm thư mục con images_subset
+    IMAGES_DIR = os.path.join(DATA_DIR, "images", "images_subset")
     
-    # Cấu trúc thư mục mới hợp lý và khoa học hơn
     ANNOTATIONS_DIR = os.path.join(DATA_DIR, "annotations")
     FEATURES_DIR = os.path.join(DATA_DIR, "features")
     VOCAB_DIR = os.path.join(DATA_DIR, "vocab")

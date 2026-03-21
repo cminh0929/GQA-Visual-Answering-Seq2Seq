@@ -95,7 +95,7 @@ def evaluate_model(model_id, vocab):
         predictions_list: list of tuples (prediction, reference)
     """
     model_dir = config.MODEL_DIRS[f"model_{model_id}"]
-    has_attention = model_id in [3, 4]
+    has_attention = model_id in [3, 4, 6]
 
     print(f"\n{'='*60}")
     print(f"EVALUATING MODEL {model_id}: {MODEL_NAMES[model_id]}")

@@ -9,6 +9,8 @@ venv/
 gqa_data/
 results/
 tmp/
+tmp_metrics.txt
+err.txt
 .ipynb_checkpoints/
 *.h5
 *.pkl
