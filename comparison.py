@@ -5,12 +5,12 @@ import sys
 import pandas as pd
 import plotly.express as px
 
-# Thêm path để có thể import config
+# Add path to import config
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 try:
     import config
 except ImportError:
-    st.error("Không tìm thấy file config.py")
+    st.error("Could not find config.py")
     st.stop()
 
 # Configuration
@@ -26,7 +26,7 @@ MODEL_NAMES = {
 st.set_page_config(page_title="VQA Model Comparison", layout="wide", page_icon="📊")
 
 st.title("📊 VQA Model Evaluation Comparison")
-st.markdown("Dashboard được dùng để so sánh các tiêu chí hiệu suất giữa các Model.")
+st.markdown("Dashboard for comparing performance metrics across selected Models.")
 
 @st.cache_data
 def load_data():
@@ -44,17 +44,17 @@ def load_data():
 data = load_data()
 
 if not data:
-    st.error("⚠️ Không tìm thấy file `metrics.json` trong bất kỳ thư mục model nào. Bạn cần chạy `evaluate.py` trước tiên.")
+    st.error("⚠️ No `metrics.json` found in any model directory. Run `evaluate.py` first.")
     st.stop()
 
 # ---------------------------------------------------------
-# Chuẩn bị DataFrame
+# Prepare DataFrame
 # ---------------------------------------------------------
 rows = []
 for model_id, metrics in data.items():
     row = {"Model ID": str(model_id), "Model": MODEL_NAMES.get(str(model_id), f"Model {model_id}")}
     for k, v in metrics.items():
-        # Lọc bỏ "accuracy", "inference_time", "num_samples"
+        # Exclude "accuracy", "inference_time", "num_samples"
         if k not in ["accuracy", "inference_time", "num_samples"]:
             row[k] = v
     rows.append(row)
@@ -63,61 +63,60 @@ df = pd.DataFrame(rows)
 available_metrics = [c for c in df.columns if c not in ["Model ID", "Model"]]
 
 # ---------------------------------------------------------
-# SIDEBAR - Thiết lập
+# SIDEBAR - Settings
 # ---------------------------------------------------------
-st.sidebar.header("⚙️ Cấu Hình So Sánh")
+st.sidebar.header("⚙️ Comparison Settings")
 
 selected_models = st.sidebar.multiselect(
-    "1. Chọn các Model muốn so sánh:",
+    "1. Select Models to compare:",
     options=df["Model ID"].tolist(),
     default=df["Model ID"].tolist(),
     format_func=lambda x: MODEL_NAMES.get(x, f"Model {x}")
 )
 
 selected_metrics = st.sidebar.multiselect(
-    "2. Chọn các Tiêu chí đánh giá (Metrics):",
+    "2. Select Evaluation Metrics:",
     options=available_metrics,
     default=available_metrics
 )
 
 # ---------------------------------------------------------
-# HIỂN THỊ MAIN CONTENT
+# MAIN CONTENT
 # ---------------------------------------------------------
 if not selected_models:
-    st.warning("⚠️ Vui lòng chọn ít nhất một Model bên cột trái.")
+    st.warning("⚠️ Please select at least one Model from the sidebar.")
     st.stop()
 
 if not selected_metrics:
-    st.warning("⚠️ Vui lòng chọn ít nhất một Tiêu chí đánh giá bên cột trái.")
+    st.warning("⚠️ Please select at least one Metric from the sidebar.")
     st.stop()
 
-# Lọc DataFrame theo model đã chọn
+# Filter DataFrame by selected models
 filtered_df = df[df["Model ID"].isin(selected_models)]
 
-# Bảng dữ liệu
-st.subheader("📋 Bảng So Sánh Chi Tiết (Bôi Xanh Cột Cao Nhất)")
+# Data table
+st.subheader("📋 Detailed Comparison Table (Best values highlighted)")
 display_df = filtered_df[["Model"] + selected_metrics].set_index("Model")
-# Bôi sáng các giá trị lớn nhất theo từng cột để dễ nhìn (đỏ nhạt tới xanh đậm)
+# Highlight best values with gradient coloring
 cmap = "YlGn"
 try:
-    # Streamlit dataframe có thể quăng warning use_container_width tuỳ phiên bản, ta dùng mặc định
     st.dataframe(display_df.style.background_gradient(cmap=cmap, axis=0))
 except Exception:
     st.dataframe(display_df)
 
-# Biểu đồ cột
-st.subheader("📈 Trực Quan Hoá Bằng Biểu Đồ")
-# Melt DataFrame để phù hợp cấu trúc trục của Plotly
+# Bar chart
+st.subheader("📈 Visual Comparison Chart")
+# Melt DataFrame for Plotly axis structure
 melted_df = filtered_df.melt(id_vars=["Model"], value_vars=selected_metrics, var_name="Metric", value_name="Score")
 
-# Sử dụng màu sắc tương phản cao, chuyên nghiệp cho 6 Model
+# High-contrast, professional color palette for 6 Models
 custom_colors = [
-    "#E63946", # Đỏ trầm
-    "#F4A261", # Cam
-    "#E9C46A", # Vàng
-    "#2A9D8F", # Xanh lá
-    "#219EBC", # Xanh biển sáng
-    "#023047"  # Xanh dương đậm
+    "#E63946",  # Deep red
+    "#F4A261",  # Orange
+    "#E9C46A",  # Yellow
+    "#2A9D8F",  # Teal green
+    "#219EBC",  # Light blue
+    "#023047"   # Dark navy
 ]
 
 fig = px.bar(
@@ -125,16 +124,16 @@ fig = px.bar(
     x="Metric", 
     y="Score", 
     color="Model", 
-    barmode="group",        # Các cột đứng cạnh nhau để dễ xem
-    text_auto=".4f",        # Hiển thị 4 chữ số thập phân
+    barmode="group",        # Side-by-side bars for easy comparison
+    text_auto=".4f",        # Show 4 decimal places
     color_discrete_sequence=custom_colors
 )
 
 fig.update_layout(
-    xaxis_title="Tiêu chí đánh giá", 
-    yaxis_title="Điểm số", 
-    legend_title="Danh sách Models",
+    xaxis_title="Evaluation Metric", 
+    yaxis_title="Score", 
+    legend_title="Models",
     xaxis={'categoryorder':'total descending'},
-    plot_bgcolor="rgba(0,0,0,0)" # Nền trong suốt
+    plot_bgcolor="rgba(0,0,0,0)"  # Transparent background
 )
 st.plotly_chart(fig)

@@ -3,3 +3,5 @@ from models.model_1 import VQAModel1_ScratchNoAtt
 from models.model_2 import VQAModel2_PretrainedNoAtt
 from models.model_3 import VQAModel3_ScratchAtt
 from models.model_4 import VQAModel4_PretrainedAtt
+from models.model_5 import VQAModel5_PretrainedEndToEndNoAtt
+from models.model_6 import VQAModel6_PretrainedEndToEndAtt
