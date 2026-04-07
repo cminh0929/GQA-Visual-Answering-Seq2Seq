@@ -26,7 +26,7 @@ if IS_KAGGLE:
     # Successfully uploaded h5 file in INPUT (Permanent, no need to rerun)
     FEATURES_H5 = os.path.join(META_DATA_DIR, "resnet50_features.h5")
 else:
-    BASE_DIR = r"d:\Deeplearning"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
     # Kaggle auto-extracts and creates a subdirectory images_subset
     IMAGES_DIR = os.path.join(DATA_DIR, "images", "images_subset")

@@ -268,7 +268,8 @@ def plot_attention(model_id):
 
     import torch
     from data.dataset import load_vocab, GQAFeaturesDataset, GQADataset
-
+    from utils.logger import TrainingLogger
+    
     vocab = load_vocab(config.VOCAB_PATH)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

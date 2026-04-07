@@ -11,6 +11,8 @@ tqdm
 # Visualization & App
 matplotlib
 streamlit
+plotly
+pandas
 
 # Utilities
 kaggle

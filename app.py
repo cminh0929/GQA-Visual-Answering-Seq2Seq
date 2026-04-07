@@ -149,70 +149,142 @@ def main():
     # Load Base Resources
     vocab, backbone, avgpool, val_data, val_keys = load_base_resources()
     
-    # MODEL OPTION
-    selected_model_name = st.selectbox(
-        "🧠 Select a model for prediction:", 
-        list(MODEL_NAMES.values()),
-        index=1  # Default is Model 2 (Pretrained)
-    )
-    # Extract model_id from select string (e.g. get 2 from "Model 2: ...")
-    model_id = int(selected_model_name.split(":")[0][-1])
+    tab1, tab2 = st.tabs(["Single Model", "Compare All 6 Models"])
     
-    vqa_model, trained_epoch = load_vqa_model(model_id, len(vocab))
-    if trained_epoch == 0:
-        st.warning(f"⚠️ {selected_model_name} seems to be untrained (no checkpoint found). The result might be inaccurate.")
+    with tab1:
+        # MODEL OPTION
+        selected_model_name = st.selectbox(
+            "🧠 Select a model for prediction:", 
+            list(MODEL_NAMES.values()),
+            index=1  # Default is Model 2 (Pretrained)
+        )
+        # Extract model_id from select string (e.g. get 2 from "Model 2: ...")
+        model_id = int(selected_model_name.split(":")[0][-1])
+        
+        vqa_model, trained_epoch = load_vqa_model(model_id, len(vocab))
+        if trained_epoch == 0:
+            st.warning(f"⚠️ {selected_model_name} seems to be untrained (no checkpoint found). The result might be inaccurate.")
 
-    # RANDOM INFERENCE FRAME
-    st.markdown("---")
-    if st.button("🎲 Get 1 random sample (Quick Inference)", type="secondary"):
-        random_id = random.choice(val_keys)
-        item = val_data[random_id]
-        
-        img_id = item["imageId"]
-        true_question = item["question"]
-        true_answer = item["fullAnswer"]
-        
-        img_path = os.path.join(config.IMAGES_DIR, f"{img_id}.jpg")
-        
-        if os.path.exists(img_path):
-            input_image = Image.open(img_path).convert("RGB")
-            st.image(input_image, caption=f"Image ID: {img_id}", width=400)
-            st.info(f"**Question:** {true_question}")
+        # RANDOM INFERENCE FRAME
+        st.markdown("---")
+        if st.button("🎲 Get 1 random sample (Quick Inference)", type="secondary"):
+            random_id = random.choice(val_keys)
+            item = val_data[random_id]
             
-            with st.spinner(f"Analyzing with {MODEL_NAMES[model_id]}..."):
-                try:
-                    pred_answer = infer(input_image, true_question, model_id, vqa_model, vocab, backbone, avgpool)
-                    st.success(f"**🤖 Prediction:** {pred_answer}")
-                    st.write(f"*(✅ True Answer: {true_answer})*")
-                except Exception as e:
-                    st.error(f"Error: {e}")
-        else:
-            st.error("Failed to load image from local.")
+            img_id = item["imageId"]
+            true_question = item["question"]
+            true_answer = item["fullAnswer"]
+            
+            img_path = os.path.join(config.IMAGES_DIR, f"{img_id}.jpg")
+            
+            if os.path.exists(img_path):
+                input_image = Image.open(img_path).convert("RGB")
+                st.image(input_image, caption=f"Image ID: {img_id}", width=400)
+                st.info(f"**Question:** {true_question}")
+                
+                with st.spinner(f"Analyzing with {MODEL_NAMES[model_id]}..."):
+                    try:
+                        pred_answer = infer(input_image, true_question, model_id, vqa_model, vocab, backbone, avgpool)
+                        st.success(f"**🤖 Prediction:** {pred_answer}")
+                        st.write(f"*(✅ True Answer: {true_answer})*")
+                    except Exception as e:
+                        st.error(f"Error: {e}")
+            else:
+                st.error("Failed to load image from local.")
 
-    st.markdown("---")
-    st.subheader("Or upload your own image:")
+        st.markdown("---")
+        st.subheader("Or upload your own image:")
 
-    # 1. Upload image
-    uploaded_file = st.file_uploader("📥 Select image (jpg, png)", type=["jpg", "png", "jpeg"])
-    input_image = None
-    if uploaded_file:
-        input_image = Image.open(uploaded_file).convert("RGB")
-        st.image(input_image, caption="Input Image", width=400)
+        # 1. Upload image
+        uploaded_file = st.file_uploader("📥 Select image (jpg, png)", type=["jpg", "png", "jpeg"])
+        input_image = None
+        if uploaded_file:
+            input_image = Image.open(uploaded_file).convert("RGB")
+            st.image(input_image, caption="Input Image", width=400)
 
-    # 2. Question
-    question = st.text_input("❓ Enter question (English):", "What is in the picture?")
+        # 2. Question
+        question = st.text_input("❓ Enter question (English):", "What is in the picture?")
 
-    # 3. Model Answer
-    if st.button("Ask Model", type="primary"):
-        if input_image and question:
-            with st.spinner(f"Analyzing with {MODEL_NAMES[model_id]}..."):
-                try:
-                    pred_answer = infer(input_image, question, model_id, vqa_model, vocab, backbone, avgpool)
-                    st.success(f"**🤖 Answer ({MODEL_NAMES[model_id]}):** {pred_answer}")
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-        else:
-            st.warning("Please provide both image and question.")
+        # 3. Model Answer
+        if st.button("Ask Model", type="primary"):
+            if input_image and question:
+                with st.spinner(f"Analyzing with {MODEL_NAMES[model_id]}..."):
+                    try:
+                        pred_answer = infer(input_image, question, model_id, vqa_model, vocab, backbone, avgpool)
+                        st.success(f"**🤖 Answer ({MODEL_NAMES[model_id]}):** {pred_answer}")
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+            else:
+                st.warning("Please provide both image and question.")
+
+    with tab2:
+        st.header("Compare All Models")
+        st.markdown("Run inference on all 6 models simultaneously.")
+        
+        st.markdown("---")
+        if st.button("🎲 Get 1 random sample (Compare)", type="secondary", key="random_compare"):
+            random_id = random.choice(val_keys)
+            item = val_data[random_id]
+            
+            img_id = item["imageId"]
+            true_question = item["question"]
+            true_answer = item["fullAnswer"]
+            
+            img_path = os.path.join(config.IMAGES_DIR, f"{img_id}.jpg")
+            
+            if os.path.exists(img_path):
+                input_image = Image.open(img_path).convert("RGB")
+                st.image(input_image, caption=f"Image ID: {img_id}", width=400)
+                st.info(f"**Question:** {true_question}")
+                st.write(f"*(✅ True Answer: {true_answer})*")
+                
+                cols = st.columns(2)
+                for i in range(1, 7):
+                    mod_model, mod_epoch = load_vqa_model(i, len(vocab))
+                    col_idx = (i - 1) % 2
+                    with cols[col_idx]:
+                        with st.spinner(f"Analyzing with Model {i}..."):
+                            try:
+                                pred_answer = infer(input_image, true_question, i, mod_model, vocab, backbone, avgpool)
+                                status = " (⚠️ Untrained)" if mod_epoch == 0 else ""
+                                st.success(f"**Model {i}:** {pred_answer}{status}")
+                            except Exception as e:
+                                st.error(f"**Model {i} Error:** {e}")
+            else:
+                st.error("Failed to load image from local.")
+
+        st.markdown("---")
+        st.subheader("Or upload your own image for comparison:")
+
+        # 1. Upload image
+        uploaded_file_cmp = st.file_uploader("📥 Select image (jpg, png)", type=["jpg", "png", "jpeg"], key="upload_cmp")
+        input_image_cmp = None
+        if uploaded_file_cmp:
+            input_image_cmp = Image.open(uploaded_file_cmp).convert("RGB")
+            st.image(input_image_cmp, caption="Input Image", width=400)
+
+        # 2. Question
+        question_cmp = st.text_input("❓ Enter question (English):", "What is in the picture?", key="q_cmp")
+
+        # 3. Model Answer
+        if st.button("Ask All Models", type="primary", key="ask_cmp"):
+            if input_image_cmp and question_cmp:
+                st.info(f"**Question:** {question_cmp}")
+                
+                cols = st.columns(2)
+                for i in range(1, 7):
+                    mod_model, mod_epoch = load_vqa_model(i, len(vocab))
+                    col_idx = (i - 1) % 2
+                    with cols[col_idx]:
+                        with st.spinner(f"Analyzing with Model {i}..."):
+                            try:
+                                pred_answer = infer(input_image_cmp, question_cmp, i, mod_model, vocab, backbone, avgpool)
+                                status = " (⚠️ Untrained)" if mod_epoch == 0 else ""
+                                st.success(f"**Model {i}:** {pred_answer}{status}")
+                            except Exception as e:
+                                st.error(f"**Model {i} Error:** {e}")
+            else:
+                st.warning("Please provide both image and question.")
 
 if __name__ == "__main__":
     main()

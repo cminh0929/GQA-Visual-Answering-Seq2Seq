@@ -8,6 +8,12 @@ Tài liệu này tổng hợp toàn bộ thông tin chi tiết về bộ dữ li
 
 Bộ dữ liệu sử dụng là một tập con (subset) được trích xuất từ bộ GQA chuẩn, tập trung vào khả năng lập luận và hiểu bối cảnh không gian/logic của bức ảnh.
 
+### 🔗 Link tải Dataset (Kaggle)
+Để chạy dự án ở máy tính khác, bạn chỉ cần tải 2 bộ dữ liệu sau:
+*   **[GQA VQA Subset](https://www.kaggle.com/datasets/minhngcng3/gqa-vqa-subset)**: Chứa file `json` (train/val/test), từ điển `vocab.pkl` và file đặc trưng trích xuất sẵn `resnet50_features.h5`.
+*   **[GQA Images Subset](https://www.kaggle.com/datasets/minhngcng3/gqa-images-subset)**: Chứa kho ảnh gốc dùng để chạy các mô hình kiến trúc End-to-End.
+
+
 ### 📝 Thống kê số lượng
 *   **Tập Train (Huấn luyện):** 326,574 câu hỏi / 25,000 bức ảnh.
 *   **Tập Validation (Kiểm định):** 64,525 câu hỏi / 5,000 bức ảnh.
