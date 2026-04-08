@@ -62,6 +62,13 @@ class VQAModel5_PretrainedEndToEndNoAtt(nn.Module):
             dropout=config.DROPOUT,
         )
 
+    def _encode_context(self, images, questions):
+        """Unified encoding logic for forward and generate."""
+        img_features = self.image_encoder(images)            # (B, 2048)
+        img_proj = self.image_proj(img_features)             # (B, H*2)
+        _, q_context = self.question_encoder(questions)      # (B, H*2)
+        return torch.cat([img_proj, q_context], dim=1)        # (B, H*4)
+
     def forward(self, images, questions, answers, teacher_forcing_ratio=1.0):
         """
         Args:
@@ -71,18 +78,11 @@ class VQAModel5_PretrainedEndToEndNoAtt(nn.Module):
         Returns:
             outputs: (B, a_len, vocab_size)
         """
-        # CNN forward (frozen, no grad)
-        img_features = self.image_encoder(images)            # (B, 2048)
-        img_proj = self.image_proj(img_features)             # (B, H*2)
-        _, q_context = self.question_encoder(questions)       # (B, H*2)
-        context = torch.cat([img_proj, q_context], dim=1)     # (B, H*4)
+        context = self._encode_context(images, questions)
         outputs = self.decoder(context, answers, teacher_forcing_ratio)
         return outputs
 
     def generate(self, images, questions, sos_idx, eos_idx, max_len=30):
         """Answer generation for inference."""
-        img_features = self.image_encoder(images)
-        img_proj = self.image_proj(img_features)
-        _, q_context = self.question_encoder(questions)
-        context = torch.cat([img_proj, q_context], dim=1)
+        context = self._encode_context(images, questions)
         return self.decoder.generate(context, sos_idx, eos_idx, max_len)

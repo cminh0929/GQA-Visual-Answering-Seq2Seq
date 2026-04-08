@@ -1,0 +1,2846 @@
+{
+  "schemaVersion": "ecc.install.v1",
+  "installedAt": "2026-04-08T05:32:27.892Z",
+  "target": {
+    "id": "antigravity-project",
+    "target": "antigravity",
+    "kind": "project",
+    "root": "D:\\Code\\Deeplearning\\.agent",
+    "installStatePath": "D:\\Code\\Deeplearning\\.agent\\ecc-install-state.json"
+  },
+  "request": {
+    "profile": null,
+    "modules": [],
+    "includeComponents": [],
+    "excludeComponents": [],
+    "legacyLanguages": [
+      "python"
+    ],
+    "legacyMode": true
+  },
+  "resolution": {
+    "selectedModules": [
+      "rules-core",
+      "agents-core",
+      "commands-core"
+    ],
+    "skippedModules": []
+  },
+  "source": {
+    "repoVersion": "1.10.0",
+    "repoCommit": "62519f2b622b44d8289d573bb6e74c4c95fc7400",
+    "manifestVersion": 1
+  },
+  "operations": [
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\agents.md",
+      "sourceRelativePath": "rules/common/agents.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-agents.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\code-review.md",
+      "sourceRelativePath": "rules/common/code-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-code-review.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\coding-style.md",
+      "sourceRelativePath": "rules/common/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\development-workflow.md",
+      "sourceRelativePath": "rules/common/development-workflow.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-development-workflow.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\git-workflow.md",
+      "sourceRelativePath": "rules/common/git-workflow.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-git-workflow.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\hooks.md",
+      "sourceRelativePath": "rules/common/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\patterns.md",
+      "sourceRelativePath": "rules/common/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\performance.md",
+      "sourceRelativePath": "rules/common/performance.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-performance.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\security.md",
+      "sourceRelativePath": "rules/common/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\common\\testing.md",
+      "sourceRelativePath": "rules/common/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\common-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\cpp\\coding-style.md",
+      "sourceRelativePath": "rules/cpp/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\cpp-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\cpp\\hooks.md",
+      "sourceRelativePath": "rules/cpp/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\cpp-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\cpp\\patterns.md",
+      "sourceRelativePath": "rules/cpp/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\cpp-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\cpp\\security.md",
+      "sourceRelativePath": "rules/cpp/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\cpp-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\cpp\\testing.md",
+      "sourceRelativePath": "rules/cpp/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\cpp-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\csharp\\coding-style.md",
+      "sourceRelativePath": "rules/csharp/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\csharp-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\csharp\\hooks.md",
+      "sourceRelativePath": "rules/csharp/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\csharp-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\csharp\\patterns.md",
+      "sourceRelativePath": "rules/csharp/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\csharp-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\csharp\\security.md",
+      "sourceRelativePath": "rules/csharp/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\csharp-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\csharp\\testing.md",
+      "sourceRelativePath": "rules/csharp/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\csharp-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\dart\\coding-style.md",
+      "sourceRelativePath": "rules/dart/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\dart-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\dart\\hooks.md",
+      "sourceRelativePath": "rules/dart/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\dart-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\dart\\patterns.md",
+      "sourceRelativePath": "rules/dart/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\dart-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\dart\\security.md",
+      "sourceRelativePath": "rules/dart/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\dart-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\dart\\testing.md",
+      "sourceRelativePath": "rules/dart/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\dart-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\golang\\coding-style.md",
+      "sourceRelativePath": "rules/golang/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\golang-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\golang\\hooks.md",
+      "sourceRelativePath": "rules/golang/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\golang-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\golang\\patterns.md",
+      "sourceRelativePath": "rules/golang/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\golang-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\golang\\security.md",
+      "sourceRelativePath": "rules/golang/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\golang-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\golang\\testing.md",
+      "sourceRelativePath": "rules/golang/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\golang-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\java\\coding-style.md",
+      "sourceRelativePath": "rules/java/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\java-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\java\\hooks.md",
+      "sourceRelativePath": "rules/java/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\java-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\java\\patterns.md",
+      "sourceRelativePath": "rules/java/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\java-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\java\\security.md",
+      "sourceRelativePath": "rules/java/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\java-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\java\\testing.md",
+      "sourceRelativePath": "rules/java/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\java-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\kotlin\\coding-style.md",
+      "sourceRelativePath": "rules/kotlin/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\kotlin-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\kotlin\\hooks.md",
+      "sourceRelativePath": "rules/kotlin/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\kotlin-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\kotlin\\patterns.md",
+      "sourceRelativePath": "rules/kotlin/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\kotlin-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\kotlin\\security.md",
+      "sourceRelativePath": "rules/kotlin/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\kotlin-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\kotlin\\testing.md",
+      "sourceRelativePath": "rules/kotlin/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\kotlin-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\perl\\coding-style.md",
+      "sourceRelativePath": "rules/perl/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\perl-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\perl\\hooks.md",
+      "sourceRelativePath": "rules/perl/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\perl-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\perl\\patterns.md",
+      "sourceRelativePath": "rules/perl/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\perl-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\perl\\security.md",
+      "sourceRelativePath": "rules/perl/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\perl-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\perl\\testing.md",
+      "sourceRelativePath": "rules/perl/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\perl-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\php\\coding-style.md",
+      "sourceRelativePath": "rules/php/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\php-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\php\\hooks.md",
+      "sourceRelativePath": "rules/php/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\php-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\php\\patterns.md",
+      "sourceRelativePath": "rules/php/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\php-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\php\\security.md",
+      "sourceRelativePath": "rules/php/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\php-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\php\\testing.md",
+      "sourceRelativePath": "rules/php/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\php-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\python\\coding-style.md",
+      "sourceRelativePath": "rules/python/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\python-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\python\\hooks.md",
+      "sourceRelativePath": "rules/python/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\python-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\python\\patterns.md",
+      "sourceRelativePath": "rules/python/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\python-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\python\\security.md",
+      "sourceRelativePath": "rules/python/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\python-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\python\\testing.md",
+      "sourceRelativePath": "rules/python/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\python-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\README.md",
+      "sourceRelativePath": "rules/README.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\README.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\rust\\coding-style.md",
+      "sourceRelativePath": "rules/rust/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\rust-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\rust\\hooks.md",
+      "sourceRelativePath": "rules/rust/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\rust-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\rust\\patterns.md",
+      "sourceRelativePath": "rules/rust/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\rust-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\rust\\security.md",
+      "sourceRelativePath": "rules/rust/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\rust-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\rust\\testing.md",
+      "sourceRelativePath": "rules/rust/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\rust-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\swift\\coding-style.md",
+      "sourceRelativePath": "rules/swift/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\swift-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\swift\\hooks.md",
+      "sourceRelativePath": "rules/swift/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\swift-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\swift\\patterns.md",
+      "sourceRelativePath": "rules/swift/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\swift-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\swift\\security.md",
+      "sourceRelativePath": "rules/swift/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\swift-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\swift\\testing.md",
+      "sourceRelativePath": "rules/swift/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\swift-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\typescript\\coding-style.md",
+      "sourceRelativePath": "rules/typescript/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\typescript-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\typescript\\hooks.md",
+      "sourceRelativePath": "rules/typescript/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\typescript-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\typescript\\patterns.md",
+      "sourceRelativePath": "rules/typescript/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\typescript-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\typescript\\security.md",
+      "sourceRelativePath": "rules/typescript/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\typescript-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\typescript\\testing.md",
+      "sourceRelativePath": "rules/typescript/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\typescript-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\coding-style.md",
+      "sourceRelativePath": "rules/web/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\design-quality.md",
+      "sourceRelativePath": "rules/web/design-quality.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-design-quality.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\hooks.md",
+      "sourceRelativePath": "rules/web/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\patterns.md",
+      "sourceRelativePath": "rules/web/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\performance.md",
+      "sourceRelativePath": "rules/web/performance.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-performance.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\security.md",
+      "sourceRelativePath": "rules/web/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\web\\testing.md",
+      "sourceRelativePath": "rules/web/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\web-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\agents.md",
+      "sourceRelativePath": "rules/zh/agents.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-agents.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\code-review.md",
+      "sourceRelativePath": "rules/zh/code-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-code-review.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\coding-style.md",
+      "sourceRelativePath": "rules/zh/coding-style.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-coding-style.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\development-workflow.md",
+      "sourceRelativePath": "rules/zh/development-workflow.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-development-workflow.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\git-workflow.md",
+      "sourceRelativePath": "rules/zh/git-workflow.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-git-workflow.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\hooks.md",
+      "sourceRelativePath": "rules/zh/hooks.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-hooks.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\patterns.md",
+      "sourceRelativePath": "rules/zh/patterns.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-patterns.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\performance.md",
+      "sourceRelativePath": "rules/zh/performance.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-performance.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\README.md",
+      "sourceRelativePath": "rules/zh/README.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-README.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\security.md",
+      "sourceRelativePath": "rules/zh/security.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-security.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "rules-core",
+      "sourcePath": "D:\\Code\\Claucode\\rules\\zh\\testing.md",
+      "sourceRelativePath": "rules/zh/testing.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\rules\\zh-testing.md",
+      "strategy": "flatten-copy",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\plugins\\marketplace.json",
+      "sourceRelativePath": ".agents\\plugins\\marketplace.json",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\plugins\\marketplace.json",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\agent-introspection-debugging\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\agent-introspection-debugging\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\agent-introspection-debugging\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\agent-sort\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\agent-sort\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\agent-sort\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\api-design\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\api-design\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\api-design\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\api-design\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\api-design\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\api-design\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\article-writing\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\article-writing\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\article-writing\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\article-writing\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\article-writing\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\article-writing\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\backend-patterns\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\backend-patterns\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\backend-patterns\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\backend-patterns\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\backend-patterns\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\backend-patterns\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\brand-voice\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\brand-voice\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\brand-voice\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\brand-voice\\references\\voice-profile-schema.md",
+      "sourceRelativePath": ".agents\\skills\\brand-voice\\references\\voice-profile-schema.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\brand-voice\\references\\voice-profile-schema.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\bun-runtime\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\bun-runtime\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\bun-runtime\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\bun-runtime\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\bun-runtime\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\bun-runtime\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\claude-api\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\claude-api\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\claude-api\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\claude-api\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\claude-api\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\claude-api\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\coding-standards\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\coding-standards\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\coding-standards\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\coding-standards\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\coding-standards\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\coding-standards\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\content-engine\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\content-engine\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\content-engine\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\content-engine\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\content-engine\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\content-engine\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\crosspost\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\crosspost\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\crosspost\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\crosspost\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\crosspost\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\crosspost\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\deep-research\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\deep-research\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\deep-research\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\deep-research\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\deep-research\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\deep-research\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\dmux-workflows\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\dmux-workflows\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\dmux-workflows\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\dmux-workflows\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\dmux-workflows\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\dmux-workflows\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\documentation-lookup\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\documentation-lookup\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\documentation-lookup\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\documentation-lookup\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\documentation-lookup\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\documentation-lookup\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\e2e-testing\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\e2e-testing\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\e2e-testing\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\e2e-testing\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\e2e-testing\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\e2e-testing\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\eval-harness\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\eval-harness\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\eval-harness\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\eval-harness\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\eval-harness\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\eval-harness\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\everything-claude-code\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\everything-claude-code\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\everything-claude-code\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\everything-claude-code\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\everything-claude-code\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\everything-claude-code\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\exa-search\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\exa-search\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\exa-search\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\exa-search\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\exa-search\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\exa-search\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\fal-ai-media\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\fal-ai-media\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\fal-ai-media\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\fal-ai-media\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\fal-ai-media\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\fal-ai-media\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\frontend-design\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\frontend-design\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\frontend-design\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\frontend-patterns\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\frontend-patterns\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\frontend-patterns\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\frontend-patterns\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\frontend-patterns\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\frontend-patterns\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\frontend-slides\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\frontend-slides\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\frontend-slides\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\frontend-slides\\STYLE_PRESETS.md",
+      "sourceRelativePath": ".agents\\skills\\frontend-slides\\STYLE_PRESETS.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\frontend-slides\\STYLE_PRESETS.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\frontend-slides\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\frontend-slides\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\frontend-slides\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\investor-materials\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\investor-materials\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\investor-materials\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\investor-materials\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\investor-materials\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\investor-materials\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\investor-outreach\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\investor-outreach\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\investor-outreach\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\investor-outreach\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\investor-outreach\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\investor-outreach\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\market-research\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\market-research\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\market-research\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\market-research\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\market-research\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\market-research\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\mcp-server-patterns\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\mcp-server-patterns\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\mcp-server-patterns\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\nextjs-turbopack\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\nextjs-turbopack\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\nextjs-turbopack\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\nextjs-turbopack\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\nextjs-turbopack\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\nextjs-turbopack\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\product-capability\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\product-capability\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\product-capability\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\security-review\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\security-review\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\security-review\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\security-review\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\security-review\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\security-review\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\strategic-compact\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\strategic-compact\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\strategic-compact\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\strategic-compact\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\strategic-compact\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\strategic-compact\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\tdd-workflow\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\tdd-workflow\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\tdd-workflow\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\tdd-workflow\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\tdd-workflow\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\tdd-workflow\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\verification-loop\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\verification-loop\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\verification-loop\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\verification-loop\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\verification-loop\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\verification-loop\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\video-editing\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\video-editing\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\video-editing\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\video-editing\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\video-editing\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\video-editing\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\x-api\\SKILL.md",
+      "sourceRelativePath": ".agents\\skills\\x-api\\SKILL.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\x-api\\SKILL.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\.agents\\skills\\x-api\\agents\\openai.yaml",
+      "sourceRelativePath": ".agents\\skills\\x-api\\agents\\openai.yaml",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\.agents\\skills\\x-api\\agents\\openai.yaml",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\architect.md",
+      "sourceRelativePath": "agents\\architect.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\architect.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\build-error-resolver.md",
+      "sourceRelativePath": "agents\\build-error-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\build-error-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\chief-of-staff.md",
+      "sourceRelativePath": "agents\\chief-of-staff.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\chief-of-staff.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\code-architect.md",
+      "sourceRelativePath": "agents\\code-architect.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\code-architect.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\code-explorer.md",
+      "sourceRelativePath": "agents\\code-explorer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\code-explorer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\code-reviewer.md",
+      "sourceRelativePath": "agents\\code-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\code-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\code-simplifier.md",
+      "sourceRelativePath": "agents\\code-simplifier.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\code-simplifier.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\comment-analyzer.md",
+      "sourceRelativePath": "agents\\comment-analyzer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\comment-analyzer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\conversation-analyzer.md",
+      "sourceRelativePath": "agents\\conversation-analyzer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\conversation-analyzer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\cpp-build-resolver.md",
+      "sourceRelativePath": "agents\\cpp-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\cpp-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\cpp-reviewer.md",
+      "sourceRelativePath": "agents\\cpp-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\cpp-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\csharp-reviewer.md",
+      "sourceRelativePath": "agents\\csharp-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\csharp-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\dart-build-resolver.md",
+      "sourceRelativePath": "agents\\dart-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\dart-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\database-reviewer.md",
+      "sourceRelativePath": "agents\\database-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\database-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\doc-updater.md",
+      "sourceRelativePath": "agents\\doc-updater.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\doc-updater.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\docs-lookup.md",
+      "sourceRelativePath": "agents\\docs-lookup.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\docs-lookup.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\e2e-runner.md",
+      "sourceRelativePath": "agents\\e2e-runner.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\e2e-runner.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\flutter-reviewer.md",
+      "sourceRelativePath": "agents\\flutter-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\flutter-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\gan-evaluator.md",
+      "sourceRelativePath": "agents\\gan-evaluator.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\gan-evaluator.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\gan-generator.md",
+      "sourceRelativePath": "agents\\gan-generator.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\gan-generator.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\gan-planner.md",
+      "sourceRelativePath": "agents\\gan-planner.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\gan-planner.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\go-build-resolver.md",
+      "sourceRelativePath": "agents\\go-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\go-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\go-reviewer.md",
+      "sourceRelativePath": "agents\\go-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\go-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\harness-optimizer.md",
+      "sourceRelativePath": "agents\\harness-optimizer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\harness-optimizer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\healthcare-reviewer.md",
+      "sourceRelativePath": "agents\\healthcare-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\healthcare-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\java-build-resolver.md",
+      "sourceRelativePath": "agents\\java-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\java-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\java-reviewer.md",
+      "sourceRelativePath": "agents\\java-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\java-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\kotlin-build-resolver.md",
+      "sourceRelativePath": "agents\\kotlin-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\kotlin-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\kotlin-reviewer.md",
+      "sourceRelativePath": "agents\\kotlin-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\kotlin-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\loop-operator.md",
+      "sourceRelativePath": "agents\\loop-operator.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\loop-operator.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\opensource-forker.md",
+      "sourceRelativePath": "agents\\opensource-forker.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\opensource-forker.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\opensource-packager.md",
+      "sourceRelativePath": "agents\\opensource-packager.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\opensource-packager.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\opensource-sanitizer.md",
+      "sourceRelativePath": "agents\\opensource-sanitizer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\opensource-sanitizer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\performance-optimizer.md",
+      "sourceRelativePath": "agents\\performance-optimizer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\performance-optimizer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\planner.md",
+      "sourceRelativePath": "agents\\planner.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\planner.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\pr-test-analyzer.md",
+      "sourceRelativePath": "agents\\pr-test-analyzer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\pr-test-analyzer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\python-reviewer.md",
+      "sourceRelativePath": "agents\\python-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\python-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\pytorch-build-resolver.md",
+      "sourceRelativePath": "agents\\pytorch-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\pytorch-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\refactor-cleaner.md",
+      "sourceRelativePath": "agents\\refactor-cleaner.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\refactor-cleaner.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\rust-build-resolver.md",
+      "sourceRelativePath": "agents\\rust-build-resolver.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\rust-build-resolver.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\rust-reviewer.md",
+      "sourceRelativePath": "agents\\rust-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\rust-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\security-reviewer.md",
+      "sourceRelativePath": "agents\\security-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\security-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\seo-specialist.md",
+      "sourceRelativePath": "agents\\seo-specialist.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\seo-specialist.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\silent-failure-hunter.md",
+      "sourceRelativePath": "agents\\silent-failure-hunter.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\silent-failure-hunter.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\tdd-guide.md",
+      "sourceRelativePath": "agents\\tdd-guide.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\tdd-guide.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\type-design-analyzer.md",
+      "sourceRelativePath": "agents\\type-design-analyzer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\type-design-analyzer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\agents\\typescript-reviewer.md",
+      "sourceRelativePath": "agents\\typescript-reviewer.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\skills\\typescript-reviewer.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "agents-core",
+      "sourcePath": "D:\\Code\\Claucode\\AGENTS.md",
+      "sourceRelativePath": "AGENTS.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\AGENTS.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\agent-sort.md",
+      "sourceRelativePath": "commands\\agent-sort.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\agent-sort.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\aside.md",
+      "sourceRelativePath": "commands\\aside.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\aside.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\build-fix.md",
+      "sourceRelativePath": "commands\\build-fix.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\build-fix.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\checkpoint.md",
+      "sourceRelativePath": "commands\\checkpoint.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\checkpoint.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\claw.md",
+      "sourceRelativePath": "commands\\claw.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\claw.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\code-review.md",
+      "sourceRelativePath": "commands\\code-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\code-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\context-budget.md",
+      "sourceRelativePath": "commands\\context-budget.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\context-budget.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\cpp-build.md",
+      "sourceRelativePath": "commands\\cpp-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\cpp-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\cpp-review.md",
+      "sourceRelativePath": "commands\\cpp-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\cpp-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\cpp-test.md",
+      "sourceRelativePath": "commands\\cpp-test.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\cpp-test.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\devfleet.md",
+      "sourceRelativePath": "commands\\devfleet.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\devfleet.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\docs.md",
+      "sourceRelativePath": "commands\\docs.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\docs.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\e2e.md",
+      "sourceRelativePath": "commands\\e2e.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\e2e.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\eval.md",
+      "sourceRelativePath": "commands\\eval.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\eval.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\evolve.md",
+      "sourceRelativePath": "commands\\evolve.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\evolve.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\feature-dev.md",
+      "sourceRelativePath": "commands\\feature-dev.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\feature-dev.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\flutter-build.md",
+      "sourceRelativePath": "commands\\flutter-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\flutter-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\flutter-review.md",
+      "sourceRelativePath": "commands\\flutter-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\flutter-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\flutter-test.md",
+      "sourceRelativePath": "commands\\flutter-test.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\flutter-test.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\gan-build.md",
+      "sourceRelativePath": "commands\\gan-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\gan-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\gan-design.md",
+      "sourceRelativePath": "commands\\gan-design.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\gan-design.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\go-build.md",
+      "sourceRelativePath": "commands\\go-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\go-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\go-review.md",
+      "sourceRelativePath": "commands\\go-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\go-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\go-test.md",
+      "sourceRelativePath": "commands\\go-test.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\go-test.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\gradle-build.md",
+      "sourceRelativePath": "commands\\gradle-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\gradle-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\harness-audit.md",
+      "sourceRelativePath": "commands\\harness-audit.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\harness-audit.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\hookify-configure.md",
+      "sourceRelativePath": "commands\\hookify-configure.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\hookify-configure.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\hookify-help.md",
+      "sourceRelativePath": "commands\\hookify-help.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\hookify-help.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\hookify-list.md",
+      "sourceRelativePath": "commands\\hookify-list.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\hookify-list.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\hookify.md",
+      "sourceRelativePath": "commands\\hookify.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\hookify.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\instinct-export.md",
+      "sourceRelativePath": "commands\\instinct-export.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\instinct-export.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\instinct-import.md",
+      "sourceRelativePath": "commands\\instinct-import.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\instinct-import.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\instinct-status.md",
+      "sourceRelativePath": "commands\\instinct-status.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\instinct-status.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\jira.md",
+      "sourceRelativePath": "commands\\jira.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\jira.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\kotlin-build.md",
+      "sourceRelativePath": "commands\\kotlin-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\kotlin-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\kotlin-review.md",
+      "sourceRelativePath": "commands\\kotlin-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\kotlin-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\kotlin-test.md",
+      "sourceRelativePath": "commands\\kotlin-test.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\kotlin-test.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\learn-eval.md",
+      "sourceRelativePath": "commands\\learn-eval.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\learn-eval.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\learn.md",
+      "sourceRelativePath": "commands\\learn.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\learn.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\loop-start.md",
+      "sourceRelativePath": "commands\\loop-start.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\loop-start.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\loop-status.md",
+      "sourceRelativePath": "commands\\loop-status.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\loop-status.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\model-route.md",
+      "sourceRelativePath": "commands\\model-route.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\model-route.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\multi-backend.md",
+      "sourceRelativePath": "commands\\multi-backend.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\multi-backend.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\multi-execute.md",
+      "sourceRelativePath": "commands\\multi-execute.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\multi-execute.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\multi-frontend.md",
+      "sourceRelativePath": "commands\\multi-frontend.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\multi-frontend.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\multi-plan.md",
+      "sourceRelativePath": "commands\\multi-plan.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\multi-plan.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\multi-workflow.md",
+      "sourceRelativePath": "commands\\multi-workflow.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\multi-workflow.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\orchestrate.md",
+      "sourceRelativePath": "commands\\orchestrate.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\orchestrate.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\plan.md",
+      "sourceRelativePath": "commands\\plan.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\plan.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\pm2.md",
+      "sourceRelativePath": "commands\\pm2.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\pm2.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\projects.md",
+      "sourceRelativePath": "commands\\projects.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\projects.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\promote.md",
+      "sourceRelativePath": "commands\\promote.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\promote.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prompt-optimize.md",
+      "sourceRelativePath": "commands\\prompt-optimize.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prompt-optimize.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prp-commit.md",
+      "sourceRelativePath": "commands\\prp-commit.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prp-commit.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prp-implement.md",
+      "sourceRelativePath": "commands\\prp-implement.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prp-implement.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prp-plan.md",
+      "sourceRelativePath": "commands\\prp-plan.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prp-plan.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prp-pr.md",
+      "sourceRelativePath": "commands\\prp-pr.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prp-pr.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prp-prd.md",
+      "sourceRelativePath": "commands\\prp-prd.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prp-prd.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\prune.md",
+      "sourceRelativePath": "commands\\prune.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\prune.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\python-review.md",
+      "sourceRelativePath": "commands\\python-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\python-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\quality-gate.md",
+      "sourceRelativePath": "commands\\quality-gate.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\quality-gate.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\refactor-clean.md",
+      "sourceRelativePath": "commands\\refactor-clean.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\refactor-clean.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\resume-session.md",
+      "sourceRelativePath": "commands\\resume-session.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\resume-session.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\review-pr.md",
+      "sourceRelativePath": "commands\\review-pr.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\review-pr.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\rules-distill.md",
+      "sourceRelativePath": "commands\\rules-distill.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\rules-distill.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\rust-build.md",
+      "sourceRelativePath": "commands\\rust-build.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\rust-build.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\rust-review.md",
+      "sourceRelativePath": "commands\\rust-review.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\rust-review.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\rust-test.md",
+      "sourceRelativePath": "commands\\rust-test.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\rust-test.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\santa-loop.md",
+      "sourceRelativePath": "commands\\santa-loop.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\santa-loop.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\save-session.md",
+      "sourceRelativePath": "commands\\save-session.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\save-session.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\sessions.md",
+      "sourceRelativePath": "commands\\sessions.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\sessions.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\setup-pm.md",
+      "sourceRelativePath": "commands\\setup-pm.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\setup-pm.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\skill-create.md",
+      "sourceRelativePath": "commands\\skill-create.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\skill-create.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\skill-health.md",
+      "sourceRelativePath": "commands\\skill-health.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\skill-health.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\tdd.md",
+      "sourceRelativePath": "commands\\tdd.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\tdd.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\test-coverage.md",
+      "sourceRelativePath": "commands\\test-coverage.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\test-coverage.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\update-codemaps.md",
+      "sourceRelativePath": "commands\\update-codemaps.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\update-codemaps.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\update-docs.md",
+      "sourceRelativePath": "commands\\update-docs.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\update-docs.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    },
+    {
+      "kind": "copy-file",
+      "moduleId": "commands-core",
+      "sourcePath": "D:\\Code\\Claucode\\commands\\verify.md",
+      "sourceRelativePath": "commands\\verify.md",
+      "destinationPath": "D:\\Code\\Deeplearning\\.agent\\workflows\\verify.md",
+      "strategy": "preserve-relative-path",
+      "ownership": "managed",
+      "scaffoldOnly": false
+    }
+  ]
+}

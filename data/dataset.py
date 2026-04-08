@@ -284,12 +284,6 @@ class GQAFeaturesDataset(Dataset):
 
         return feature, torch.tensor(q_indices), torch.tensor(a_indices)
 
-    def __del__(self):
-        try:
-            if self.h5_file is not None:
-                self.h5_file.close()
-        except Exception:
-            pass
 
 
 # ============================================================

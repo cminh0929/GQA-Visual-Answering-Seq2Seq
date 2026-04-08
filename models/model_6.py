@@ -56,6 +56,14 @@ class VQAModel6_PretrainedEndToEndAtt(nn.Module):
             dropout=config.DROPOUT,
         )
 
+    def _encode_features(self, images, questions):
+        """Unified feature processing for spatial map and question."""
+        spatial = self.image_encoder(images)  # (B, 2048, 7, 7)
+        B, C, H, W = spatial.size()
+        spatial = spatial.view(B, C, H * W).permute(0, 2, 1)  # (B, 49, 2048)
+        _, q_context = self.question_encoder(questions)      # (B, H*2)
+        return spatial, q_context
+
     def forward(self, images, questions, answers, teacher_forcing_ratio=1.0):
         """
         Args:
@@ -66,13 +74,7 @@ class VQAModel6_PretrainedEndToEndAtt(nn.Module):
             outputs: (B, a_len, vocab_size)
             alphas: List of attention weights
         """
-        # CNN forward (frozen, no grad) → spatial features
-        spatial = self.image_encoder(images)  # (B, 2048, 7, 7)
-        B, C, H, W = spatial.size()
-        spatial = spatial.view(B, C, H * W).permute(0, 2, 1)  # (B, 49, 2048)
-
-        # Encode question
-        _, q_context = self.question_encoder(questions)  # (B, H*2)
+        spatial, q_context = self._encode_features(images, questions)
 
         # Decode with attention
         outputs, alphas = self.decoder(
@@ -82,10 +84,7 @@ class VQAModel6_PretrainedEndToEndAtt(nn.Module):
 
     def generate(self, images, questions, sos_idx, eos_idx, max_len=30):
         """Answer generation for inference."""
-        spatial = self.image_encoder(images)
-        B, C, H, W = spatial.size()
-        spatial = spatial.view(B, C, H * W).permute(0, 2, 1)
-        _, q_context = self.question_encoder(questions)
+        spatial, q_context = self._encode_features(images, questions)
         return self.decoder.generate(
             spatial, q_context, sos_idx, eos_idx, max_len
         )
