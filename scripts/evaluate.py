@@ -19,6 +19,8 @@ import time
 import torch
 from tqdm import tqdm
 
+# Add root directory to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import config
 from data.dataset import (
     GQADataset, GQAFeaturesDataset, load_vocab, get_dataloader

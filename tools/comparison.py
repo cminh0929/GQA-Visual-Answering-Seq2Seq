@@ -6,7 +6,7 @@ import pandas as pd
 import plotly.express as px
 
 # Add path to import config
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 try:
     import config
 except ImportError:

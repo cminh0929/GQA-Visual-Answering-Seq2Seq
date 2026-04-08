@@ -96,7 +96,7 @@ Deeplearning/
 python train.py --model 2
 
 # Đánh giá trên tập test
-python evaluate.py --model 2
+python scripts/evaluate.py --model 2
 
 # Chạy ứng dụng Demo (Streamlit)
 streamlit run app.py
