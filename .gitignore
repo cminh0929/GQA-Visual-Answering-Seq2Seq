@@ -23,3 +23,22 @@ dataset-metadata.json
 # IDE
 .vscode/
 .idea/
+
+# Development Scripts & Tools
+download_data.py
+download_images.py
+dump_models.py
+render_diagram.py
+vqa_architecture.md
+
+# Temporary Files
+tmp_diff.txt
+tmp_diff_utf8.txt
+pushed_files.txt
+all_models.txt
+
+# Agent Config
+.agent/
+
+# Trash folder
+trash/
