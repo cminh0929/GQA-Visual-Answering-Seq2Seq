@@ -19,12 +19,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import config
 from data.dataset import load_vocab, get_image_transform
-from models.model_1 import VQAModel1_ScratchNoAtt
-from models.model_2 import VQAModel2_PretrainedNoAtt
-from models.model_3 import VQAModel3_ScratchAtt
-from models.model_4 import VQAModel4_PretrainedAtt
-from models.model_5 import VQAModel5_PretrainedEndToEndNoAtt
-from models.model_6 import VQAModel6_PretrainedEndToEndAtt
+from models import get_model, get_model_info, list_models
 from utils.logger import TrainingLogger
 
 # ============================================================
@@ -33,14 +28,7 @@ from utils.logger import TrainingLogger
 st.set_page_config(page_title="VQA Demo", layout="centered")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-MODEL_NAMES = {
-    1: "Model 1: Scratch + No Attention",
-    2: "Model 2: Pretrained + No Attention",
-    3: "Model 3: Scratch + Attention",
-    4: "Model 4: Pretrained + Attention",
-    5: "Model 5: Pretrained End-to-End + No Attention",
-    6: "Model 6: Pretrained End-to-End + Attention"
-}
+MODEL_NAMES = {mid: get_model_info(mid)["name"] for mid in list_models()}
 
 # ============================================================
 # LOAD MODEL & DATA
@@ -64,21 +52,9 @@ def load_base_resources():
 
 @st.cache_resource
 def load_vqa_model(model_id, vocab_size):
-    """Load weights for the selected model. This function is cached by model_id."""
-    if model_id == 1:
-        model = VQAModel1_ScratchNoAtt(vocab_size)
-    elif model_id == 2:
-        model = VQAModel2_PretrainedNoAtt(vocab_size)
-    elif model_id == 3:
-        model = VQAModel3_ScratchAtt(vocab_size)
-    elif model_id == 4:
-        model = VQAModel4_PretrainedAtt(vocab_size)
-    elif model_id == 5:
-        model = VQAModel5_PretrainedEndToEndNoAtt(vocab_size)
-    elif model_id == 6:
-        model = VQAModel6_PretrainedEndToEndAtt(vocab_size)
-        
-    model = model.to(DEVICE)
+    """Load weights for the selected model using factory."""
+    model = get_model(model_id, vocab_size, device=DEVICE)
+    
     logger = TrainingLogger(config.MODEL_DIRS[f"model_{model_id}"])
     epoch = logger.load_checkpoint(model, load_best=True)
     model.eval()

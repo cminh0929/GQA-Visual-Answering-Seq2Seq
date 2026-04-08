@@ -22,12 +22,7 @@ import config
 from data.dataset import (
     GQADataset, GQAFeaturesDataset, load_vocab, get_dataloader
 )
-from models.model_1 import VQAModel1_ScratchNoAtt
-from models.model_2 import VQAModel2_PretrainedNoAtt
-from models.model_3 import VQAModel3_ScratchAtt
-from models.model_4 import VQAModel4_PretrainedAtt
-from models.model_5 import VQAModel5_PretrainedEndToEndNoAtt
-from models.model_6 import VQAModel6_PretrainedEndToEndAtt
+from models import get_model, get_model_info
 from utils.logger import TrainingLogger, EarlyStopping
 
 
@@ -43,9 +38,10 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def get_model_config(model_id):
     """Return appropriate config for each model."""
-    is_pretrained = model_id in [2, 4]       # Pre-extracted features
-    is_end2end_pretrained = model_id in [5, 6]  # End-to-end pretrained
-    has_attention = model_id in [3, 4, 6]
+    info = get_model_info(model_id)
+    is_pretrained = info["strategy"] == "pre-extracted"
+    is_end2end_pretrained = model_id in [5, 6]  # Specific E2E variants
+    has_attention = info["has_attention"]
     uses_pretrained_cfg = is_pretrained or is_end2end_pretrained
 
     return {
@@ -64,17 +60,8 @@ def get_model_config(model_id):
 
 
 def build_model(model_id, vocab_size):
-    """Create model based on ID."""
-    models_map = {
-        1: VQAModel1_ScratchNoAtt,
-        2: VQAModel2_PretrainedNoAtt,
-        3: VQAModel3_ScratchAtt,
-        4: VQAModel4_PretrainedAtt,
-        5: VQAModel5_PretrainedEndToEndNoAtt,
-        6: VQAModel6_PretrainedEndToEndAtt,
-    }
-    model = models_map[model_id](vocab_size)
-    return model.to(DEVICE)
+    """Create model using factory."""
+    return get_model(model_id, vocab_size, device=DEVICE)
 
 
 def build_dataloaders(model_cfg, vocab):

@@ -31,26 +31,18 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import config
 
 
+from models import get_model, get_model_info, list_models
+
 # ============================================================
 # STYLE
 # ============================================================
 plt.style.use("seaborn-v0_8-darkgrid")
 COLORS = {
-    1: "#e74c3c",  # Red - Scratch No Att
-    2: "#3498db",  # Blue - Pretrained No Att
-    3: "#e67e22",  # Orange - Scratch Att
-    4: "#2ecc71",  # Green - Pretrained Att
-    5: "#9b59b6",  # Purple - Pretrained E2E
-    6: "#1abc9c",  # Cyan - Pretrained E2E Att
+    1: "#e74c3c", 2: "#3498db", 3: "#e67e22",
+    4: "#2ecc71", 5: "#9b59b6", 6: "#1abc9c",
 }
-MODEL_LABELS = {
-    1: "M1: Scratch",
-    2: "M2: Pretrained",
-    3: "M3: Scratch+Att",
-    4: "M4: Pretrained+Att",
-    5: "M5: E2E Pretrained",
-    6: "M6: E2E + Att",
-}
+def get_label(mid):
+    return f"M{mid}: {get_model_info(mid)['name'].split(':')[-1].strip()}"
 
 
 # ============================================================
@@ -75,7 +67,7 @@ def plot_learning_curves():
 
         epochs = range(1, len(history["train_loss"]) + 1)
         color = COLORS[model_id]
-        label = MODEL_LABELS[model_id]
+        label = get_label(model_id)
 
         # Train Loss
         axes[0].plot(epochs, history["train_loss"],
@@ -125,7 +117,7 @@ def plot_learning_curves():
         if "val_accuracy" in history:
             epochs = range(1, len(history["val_accuracy"]) + 1)
             ax.plot(epochs, history["val_accuracy"],
-                    color=COLORS[model_id], label=MODEL_LABELS[model_id],
+                    color=COLORS[model_id], label=get_label(model_id),
                     linewidth=2, marker="o", markersize=4)
 
     ax.set_xlabel("Epoch")
@@ -179,7 +171,7 @@ def plot_comparison():
         mid_int = int(mid)
         values = [all_metrics[mid].get(k, 0) for k in metric_keys]
         bars = ax.bar(x + i * width, values, width,
-                      label=MODEL_LABELS.get(mid_int, f"Model {mid}"),
+                      label=get_label(mid_int),
                       color=COLORS.get(mid_int, "#95a5a6"),
                       edgecolor="white", linewidth=0.5)
         # Show values on top of bars
@@ -219,7 +211,7 @@ def plot_samples(model_id):
 
     num_samples = min(6, len(samples))
     fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-    fig.suptitle(f"Sample Predictions - {MODEL_LABELS[model_id]}",
+    fig.suptitle(f"Sample Predictions - {get_label(model_id)}",
                  fontsize=16, fontweight="bold")
 
     for i, ax in enumerate(axes.flat):
@@ -273,30 +265,25 @@ def plot_attention(model_id):
     vocab = load_vocab(config.VOCAB_PATH)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Load model
-    if model_id in [4, 6]:
-        if model_id == 4:
-            from models.model_4 import VQAModel4_PretrainedAtt
-            model = VQAModel4_PretrainedAtt(len(vocab)).to(device)
-            dataset = GQAFeaturesDataset(
-                config.TEST_JSON, config.FEATURES_H5, vocab, use_spatial=True
-            )
-        else:
-            from models.model_6 import VQAModel6_PretrainedEndToEndAtt
-            model = VQAModel6_PretrainedEndToEndAtt(len(vocab)).to(device)
-            dataset = GQADataset(
-                config.TEST_JSON, config.IMAGES_DIR, vocab,
-                image_size=config.PRETRAINED_IMAGE_SIZE
-            )
-        spatial_size = 7  # ResNet spatial: 7x7
-    else:
-        from models.model_3 import VQAModel3_ScratchAtt
-        model = VQAModel3_ScratchAtt(len(vocab)).to(device)
-        dataset = GQADataset(
-            config.TEST_JSON, config.IMAGES_DIR, vocab,
-            image_size=config.SCRATCH_IMAGE_SIZE
+    # Load model & Prepare Dataset
+    info = get_model_info(model_id)
+    model = get_model(model_id, len(vocab), device=device)
+    
+    is_pretrained = info["strategy"] == "pre-extracted"
+    is_end2end_pretrained = model_id in [5, 6]
+    has_attention = info["has_attention"]
+    
+    if is_pretrained:
+        dataset = GQAFeaturesDataset(
+            config.TEST_JSON, config.FEATURES_H5, vocab, use_spatial=has_attention
         )
-        spatial_size = 8  # Scratch CNN spatial: 8x8
+        spatial_size = 7
+    else:
+        # Model 1, 3, 5, 6
+        uses_pretrained_cfg = is_pretrained or is_end2end_pretrained
+        image_size = config.PRETRAINED_IMAGE_SIZE if uses_pretrained_cfg else config.SCRATCH_IMAGE_SIZE
+        dataset = GQADataset(config.TEST_JSON, config.IMAGES_DIR, vocab, image_size=image_size)
+        spatial_size = 7 if uses_pretrained_cfg else 8
 
     # Load checkpoint
     logger = TrainingLogger(config.MODEL_DIRS[f"model_{model_id}"])
@@ -315,7 +302,7 @@ def plot_attention(model_id):
     # Generate for a few samples
     num_vis = 4
     fig, axes = plt.subplots(num_vis, 6, figsize=(24, num_vis * 4))
-    fig.suptitle(f"Attention Maps - {MODEL_LABELS[model_id]}",
+    fig.suptitle(f"Attention Maps - {get_label(model_id)}",
                  fontsize=16, fontweight="bold")
 
     with torch.no_grad():

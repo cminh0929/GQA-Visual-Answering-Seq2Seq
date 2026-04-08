@@ -25,39 +25,16 @@ import config
 from data.dataset import (
     GQADataset, GQAFeaturesDataset, load_vocab, get_dataloader
 )
-from models.model_1 import VQAModel1_ScratchNoAtt
-from models.model_2 import VQAModel2_PretrainedNoAtt
-from models.model_3 import VQAModel3_ScratchAtt
-from models.model_4 import VQAModel4_PretrainedAtt
-from models.model_5 import VQAModel5_PretrainedEndToEndNoAtt
-from models.model_6 import VQAModel6_PretrainedEndToEndAtt
+from models import get_model, get_model_info
 from utils.logger import TrainingLogger
 from utils.metrics import compute_all_metrics
 
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-MODEL_NAMES = {
-    1: "Scratch + No Attention (End-to-End)",
-    2: "Pretrained + No Attention (Pre-extracted)",
-    3: "Scratch + Attention (End-to-End)",
-    4: "Pretrained + Attention (Pre-extracted)",
-    5: "Pretrained + No Attention (End-to-End)",
-    6: "Pretrained + Attention (End-to-End)",
-}
-
-
 def build_model(model_id, vocab_size):
-    """Create model."""
-    models_map = {
-        1: VQAModel1_ScratchNoAtt,
-        2: VQAModel2_PretrainedNoAtt,
-        3: VQAModel3_ScratchAtt,
-        4: VQAModel4_PretrainedAtt,
-        5: VQAModel5_PretrainedEndToEndNoAtt,
-        6: VQAModel6_PretrainedEndToEndAtt,
-    }
-    return models_map[model_id](vocab_size).to(DEVICE)
+    """Create model using factory."""
+    return get_model(model_id, vocab_size, device=DEVICE)
 
 
 def build_test_loader(model_id, vocab):
@@ -100,7 +77,7 @@ def evaluate_model(model_id, vocab):
     has_attention = model_id in [3, 4, 6]
 
     print(f"\n{'='*60}")
-    print(f"EVALUATING MODEL {model_id}: {MODEL_NAMES[model_id]}")
+    print(f"EVALUATING MODEL {model_id}: {get_model_info(model_id)['name']}")
     print(f"{'='*60}")
 
     # 1. Build model & load best checkpoint
