@@ -55,6 +55,7 @@ MODEL_DIRS = {
     "model_4": os.path.join(RESULTS_DIR, "model_4_pretrained_att"),
     "model_5": os.path.join(RESULTS_DIR, "model_5_pretrained_e2e_no_att"),
     "model_6": os.path.join(RESULTS_DIR, "model_6_pretrained_e2e_att"),
+    "model_7": os.path.join(RESULTS_DIR, "model_7_transformer"),
 }
 
 ATTENTION_MAPS_DIR = os.path.join(RESULTS_DIR, "attention_maps")
