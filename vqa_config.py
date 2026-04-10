@@ -1,34 +1,51 @@
 """
-config.py - Central configuration for the VQA Seq2Seq Project
-All paths, training parameters, and constants are managed here.
+vqa_config.py - Central configuration for the VQA Seq2Seq Project
+Supports SUBSET and FULL dataset modes for Kaggle and Local environments.
 """
 
 import os
 
 # ============================================================
+# EXECUTION MODE
+# ============================================================
+# 'SUBSET': 25k samples (fast for testing)
+# 'FULL': Original GQA dataset (best performance)
+MODE = 'FULL' 
+
+# ============================================================
 # DATA PATHS
 # ============================================================
-# Check environment (Kaggle or Local)
 IS_KAGGLE = os.path.exists("/kaggle/input")
 
 if IS_KAGGLE:
     BASE_DIR = "/kaggle/working"
-    # Subset data (JSON + vocab) - Based on actual Notebook path
-    META_DATA_DIR = "/kaggle/input/datasets/minhngcng3/gqa-vqa-subset"
-    # Original images (from the uploaded 3.9GB dataset)
-    IMAGES_DIR = "/kaggle/input/datasets/minhngcng3/gqa-images-subset/images_subset"
+    
+    if MODE == 'FULL':
+        # Paths for Full GQA Dataset on Kaggle
+        IMAGES_INPUT = "/kaggle/input/datasets/lyte69/gqa-images"
+        QUESTIONS_INPUT = "/kaggle/input/datasets/ammarmasselhy/gqa-questions"
 
-    SUBSET_DIR = META_DATA_DIR
-    TRAIN_JSON = os.path.join(SUBSET_DIR, "train_subset_25k.json")
-    VAL_JSON = os.path.join(SUBSET_DIR, "val_subset_5k.json")
-    VOCAB_PATH = os.path.join(SUBSET_DIR, "vocab.pkl")
-    TEST_JSON = os.path.join(SUBSET_DIR, "testdev_balanced_questions.json")
-    # Successfully uploaded h5 file in INPUT (Permanent, no need to rerun)
-    FEATURES_H5 = os.path.join(META_DATA_DIR, "resnet50_features.h5")
+        IMAGES_DIR = os.path.join(IMAGES_INPUT, "images")
+        TRAIN_JSON = os.path.join(QUESTIONS_INPUT, "train_balanced_questions.json")
+        VAL_JSON   = os.path.join(QUESTIONS_INPUT, "val_balanced_questions.json")
+        TEST_JSON  = os.path.join(QUESTIONS_INPUT, "testdev_balanced_questions.json")
+        VOCAB_PATH = os.path.join(BASE_DIR, "vocab_full_gqa.pkl")
+        FEATURES_H5 = None # Full mode usually re-runs extraction or runs E2E
+    else:
+        # Paths for Subset dataset previously used
+        SUBSET_IMAGES_DIR = "/kaggle/input/datasets/minhngcng3/gqa-images-subset/images_subset"
+        SUBSET_META_DIR = "/kaggle/input/datasets/minhngcng3/gqa-vqa-subset"
+        
+        IMAGES_DIR = SUBSET_IMAGES_DIR
+        TRAIN_JSON = os.path.join(SUBSET_META_DIR, "train_subset_25k.json")
+        VAL_JSON   = os.path.join(SUBSET_META_DIR, "val_subset_5k.json")
+        TEST_JSON  = os.path.join(SUBSET_META_DIR, "testdev_balanced_questions.json")
+        VOCAB_PATH = os.path.join(SUBSET_META_DIR, "vocab.pkl")
+        FEATURES_H5 = os.path.join(SUBSET_META_DIR, "resnet50_features.h5")
 else:
+    # Local Environment Paths
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
-    # Kaggle auto-extracts and creates a subdirectory images_subset
     IMAGES_DIR = os.path.join(DATA_DIR, "images", "images_subset")
     
     ANNOTATIONS_DIR = os.path.join(DATA_DIR, "annotations")
@@ -38,7 +55,7 @@ else:
     TRAIN_JSON = os.path.join(ANNOTATIONS_DIR, "train_subset_25k.json")
     VAL_JSON = os.path.join(ANNOTATIONS_DIR, "val_subset_5k.json")
     TEST_JSON = os.path.join(ANNOTATIONS_DIR, "testdev_balanced_questions.json")
-    VOCAB_PATH = os.path.join(VOCAB_DIR, "vocab.pkl")
+    VOCAB_PATH = os.path.join(VOCAB_DIR, "vocab-subset.pkl")
     FEATURES_H5 = os.path.join(FEATURES_DIR, "resnet50_features.h5")
 
 # ============================================================
@@ -48,70 +65,51 @@ RESULTS_DIR = os.path.join(BASE_DIR, "results")
 if IS_KAGGLE and not os.path.exists(RESULTS_DIR):
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-MODEL_DIRS = {
-    "model_1": os.path.join(RESULTS_DIR, "model_1_scratch_no_att"),
-    "model_2": os.path.join(RESULTS_DIR, "model_2_pretrained_no_att"),
-    "model_3": os.path.join(RESULTS_DIR, "model_3_scratch_att"),
-    "model_4": os.path.join(RESULTS_DIR, "model_4_pretrained_att"),
-    "model_5": os.path.join(RESULTS_DIR, "model_5_pretrained_e2e_no_att"),
-    "model_6": os.path.join(RESULTS_DIR, "model_6_pretrained_e2e_att"),
-    "model_7": os.path.join(RESULTS_DIR, "model_7_transformer"),
-}
-
+MODEL_DIRS = {f"model_{i}": os.path.join(RESULTS_DIR, f"model_{i}") for i in range(1, 8)}
 ATTENTION_MAPS_DIR = os.path.join(RESULTS_DIR, "attention_maps")
 
 # ============================================================
 # VOCABULARY PARAMETERS
 # ============================================================
-FREQ_THRESHOLD = 3          # Word must appear >= 3 times
+FREQ_THRESHOLD = 3 
 
 # ============================================================
 # IMAGE PARAMETERS
 # ============================================================
-SCRATCH_IMAGE_SIZE = 128    # Image size for Scratch Model
-PRETRAINED_IMAGE_SIZE = 224 # Image size for Pretrained Model
+SCRATCH_IMAGE_SIZE = 128
+PRETRAINED_IMAGE_SIZE = 224
 
 # ============================================================
 # MODEL PARAMETERS
 # ============================================================
-EMBED_SIZE = 256            # Word embedding size
-HIDDEN_SIZE = 256           # LSTM hidden state size
-NUM_LSTM_LAYERS = 2         # Number of LSTM layers
-DROPOUT = 0.3               # Dropout rate
-
-# CNN Scratch
-SCRATCH_CNN_OUT = 512       # Number of CNN Scratch output channels
-
-# ResNet-50 Pretrained
-RESNET_FEATURE_DIM = 2048   # Pooled vector: 2048-d
-RESNET_SPATIAL_SIZE = 7     # Feature map: 7x7x2048
+EMBED_SIZE = 256
+HIDDEN_SIZE = 256
+NUM_LSTM_LAYERS = 2
+DROPOUT = 0.3
+RESNET_FEATURE_DIM = 2048
+RESNET_SPATIAL_SIZE = 7
 
 # ============================================================
 # TRAINING PARAMETERS
 # ============================================================
-# Scratch models
 SCRATCH_LR = 5e-4
-SCRATCH_BATCH_SIZE = 128
-SCRATCH_EPOCHS = 12
-
-# Pretrained models (pre-extracted features)
 PRETRAINED_LR = 1e-4
+
+SCRATCH_BATCH_SIZE = 128
 PRETRAINED_BATCH_SIZE = 128
-PRETRAINED_EPOCHS = 12
+E2E_PRETRAINED_BATCH_SIZE = 128
 
-# End-to-End Pretrained models (Model 5 & 6)
-E2E_PRETRAINED_BATCH_SIZE = 128  # Increased to match others for fair comparison on T4 x2
+SCRATCH_EPOCHS = 5
+PRETRAINED_EPOCHS = 5
 
-# Common
-TEACHER_FORCING_RATIO = 1.0     # Starts at 1.0
-TEACHER_FORCING_DECAY = 0.05    # Decrease by 0.05 per epoch
-GRADIENT_CLIP = 5.0             # Max norm for gradient clipping
-EARLY_STOPPING_PATIENCE = 5    # Stop if Val Loss does not decrease after 5 epochs
-NUM_WORKERS = 4 if IS_KAGGLE else 2      # Balanced for Kaggle 4-vCPU and Local 2-core
+TEACHER_FORCING_RATIO = 1.0
+TEACHER_FORCING_DECAY = 0.05
+GRADIENT_CLIP = 5.0
+EARLY_STOPPING_PATIENCE = 5
+NUM_WORKERS = 4 if IS_KAGGLE else 2
 
 # ============================================================
 # EVALUATION PARAMETERS
 # ============================================================
-BEAM_SIZE = 3                   # Beam search width
-MAX_ANSWER_LENGTH = 30          # Maximum generated answer length
-
+BEAM_SIZE = 3
+MAX_ANSWER_LENGTH = 30
