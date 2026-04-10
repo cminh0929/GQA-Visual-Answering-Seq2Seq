@@ -10,7 +10,7 @@ import os
 # ============================================================
 # 'SUBSET': 25k samples (fast for testing)
 # 'FULL': Original GQA dataset (best performance)
-MODE = 'SUBSET' 
+MODE = 'FULL' 
 
 # ============================================================
 # DATA PATHS
