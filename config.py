@@ -107,7 +107,7 @@ TEACHER_FORCING_RATIO = 1.0     # Starts at 1.0
 TEACHER_FORCING_DECAY = 0.05    # Decrease by 0.05 per epoch
 GRADIENT_CLIP = 5.0             # Max norm for gradient clipping
 EARLY_STOPPING_PATIENCE = 5    # Stop if Val Loss does not decrease after 5 epochs
-NUM_WORKERS = 2                 # Workers for DataLoader
+NUM_WORKERS = 4 if IS_KAGGLE else 2      # Balanced for Kaggle 4-vCPU and Local 2-core
 
 # ============================================================
 # EVALUATION PARAMETERS

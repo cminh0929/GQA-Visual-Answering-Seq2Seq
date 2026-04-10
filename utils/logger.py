@@ -94,9 +94,12 @@ class TrainingLogger:
             epoch: Current epoch
             is_best: True if this is the best model
         """
+        # Handle DataParallel wrapping
+        model_to_save = model.module if hasattr(model, "module") else model
+        
         state = {
             "epoch": epoch,
-            "model_state_dict": model.state_dict(),
+            "model_state_dict": model_to_save.state_dict(),
             "optimizer_state_dict": optimizer.state_dict(),
             "best_val_loss": self.best_val_loss,
             "history": self.history,

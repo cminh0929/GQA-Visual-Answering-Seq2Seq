@@ -228,12 +228,21 @@ def main():
     # 2. Build model
     print(f"\n[2/4] Building Model {args.model}...")
     model = build_model(args.model, len(vocab))
+    
+    # Enable Multi-GPU support (e.g., Kaggle T4 x2)
+    if torch.cuda.device_count() > 1:
+        print(f"  ★ Multi-GPU detected: Using {torch.cuda.device_count()} GPUs with DataParallel")
+        model = torch.nn.DataParallel(model)
+    
+    model = model.to(DEVICE)
+    
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"  Trainable parameters: {total_params:,}")
 
     # 3. Build dataloaders
     print(f"\n[3/4] Building DataLoaders...")
     print(f"  Batch size: {model_cfg['batch_size']}")
+    print(f"  Num workers: {config.NUM_WORKERS}")
     train_loader, val_loader = build_dataloaders(model_cfg, vocab)
     print(f"  Train batches: {len(train_loader)}")
     print(f"  Val batches:   {len(val_loader)}")
