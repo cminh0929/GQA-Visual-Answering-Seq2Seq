@@ -8,9 +8,9 @@ import plotly.express as px
 # Add path to import config
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 try:
-    import config
+    import vqa_config as config
 except ImportError:
-    st.error("Could not find config.py")
+    st.error("Could not find vqa_config.py")
     st.stop()
 
 # Configuration

@@ -6,7 +6,7 @@ import sys
 # Add root to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-import config
+import vqa_config as config
 from models.components.pretrained_cnn import PretrainedCNN
 from models.components.transformer_utils import PositionalEncoding
 

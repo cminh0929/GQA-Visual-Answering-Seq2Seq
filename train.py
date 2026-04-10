@@ -18,7 +18,7 @@ import time
 import torch
 import torch.nn as nn
 
-import config
+import vqa_config as config
 from data.dataset import (
     GQADataset, GQAFeaturesDataset, load_vocab, get_dataloader
 )

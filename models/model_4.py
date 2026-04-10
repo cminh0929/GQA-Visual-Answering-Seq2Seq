@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from models.components.question_encoder import QuestionEncoder
 from models.components.attention import AttentionDecoder
-import config
+import vqa_config as config
 
 
 class VQAModel4_PretrainedAtt(nn.Module):

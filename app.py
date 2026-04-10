@@ -20,7 +20,7 @@ import torchvision.transforms as transforms
 # Add path to import project modules
 sys.path.insert(0, os.path.dirname(__file__))
 
-import config
+import vqa_config as config
 from data.dataset import load_vocab, get_image_transform
 from models import get_model, get_model_info, list_models
 from utils.logger import TrainingLogger

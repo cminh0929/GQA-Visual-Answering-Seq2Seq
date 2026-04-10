@@ -28,7 +28,7 @@ import matplotlib.gridspec as gridspec
 from PIL import Image
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-import config
+import vqa_config as config
 
 
 from models import get_model, get_model_info, list_models

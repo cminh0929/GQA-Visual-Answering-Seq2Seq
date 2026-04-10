@@ -23,7 +23,7 @@ from tqdm import tqdm
 
 # Add root directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-import config
+import vqa_config as config
 
 
 # ============================================================
