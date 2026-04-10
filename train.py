@@ -199,8 +199,8 @@ def validate(model, loader, criterion, vocab, has_attention, device):
 
 def main():
     parser = argparse.ArgumentParser(description="Train VQA Seq2Seq Model")
-    parser.add_argument("--model", type=int, required=True, choices=[1, 2, 3, 4, 5, 6],
-                        help="Model ID (1-6)")
+    parser.add_argument("--model", type=int, required=True, choices=[1, 2, 3, 4, 5, 6, 7],
+                        help="Model ID (1-7)")
     parser.add_argument("--resume", action="store_true",
                         help="Resume training from last checkpoint")
     args = parser.parse_args()
