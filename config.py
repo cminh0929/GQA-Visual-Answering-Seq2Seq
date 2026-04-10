@@ -100,7 +100,7 @@ PRETRAINED_BATCH_SIZE = 128
 PRETRAINED_EPOCHS = 12
 
 # End-to-End Pretrained models (Model 5 & 6)
-E2E_PRETRAINED_BATCH_SIZE = 64  # Smaller because ResNet-50 runs forward pass each batch
+E2E_PRETRAINED_BATCH_SIZE = 128  # Increased to match others for fair comparison on T4 x2
 
 # Common
 TEACHER_FORCING_RATIO = 1.0     # Starts at 1.0
