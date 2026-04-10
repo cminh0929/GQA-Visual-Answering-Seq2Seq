@@ -13,7 +13,7 @@ import sys
 # Add root directory to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from config import TRAIN_JSON, VOCAB_PATH, FREQ_THRESHOLD
+from vqa_config import TRAIN_JSON, VOCAB_PATH, FREQ_THRESHOLD
 from data.dataset import Vocabulary, save_vocab
 
 
