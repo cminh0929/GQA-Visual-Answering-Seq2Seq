@@ -89,6 +89,9 @@ DROPOUT = 0.3
 RESNET_FEATURE_DIM = 2048
 RESNET_SPATIAL_SIZE = 7
 
+# CNN Scratch
+SCRATCH_CNN_OUT = 512       # Number of CNN Scratch output channels
+
 # ============================================================
 # TRAINING PARAMETERS
 # ============================================================
