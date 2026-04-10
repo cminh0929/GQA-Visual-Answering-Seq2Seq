@@ -25,7 +25,19 @@ if IS_KAGGLE:
         IMAGES_INPUT = "/kaggle/input/datasets/lyte69/gqa-images"
         QUESTIONS_INPUT = "/kaggle/input/datasets/ammarmasselhy/gqa-questions"
 
-        IMAGES_DIR = os.path.join(IMAGES_INPUT, "images")
+        # Auto-detect real images path (Kaggle datasets can be nested)
+        possible_images_paths = [
+            os.path.join(IMAGES_INPUT, "images"),           # Standard
+            os.path.join(IMAGES_INPUT, "images", "images"),  # Double nested
+            IMAGES_INPUT                                    # Flattened
+        ]
+        
+        IMAGES_DIR = possible_images_paths[0]
+        for p in possible_images_paths:
+            if os.path.exists(p) and any(f.endswith('.jpg') for f in os.listdir(p)[:5]):
+                IMAGES_DIR = p
+                break
+                
         TRAIN_JSON = os.path.join(QUESTIONS_INPUT, "train_balanced_questions.json")
         VAL_JSON   = os.path.join(QUESTIONS_INPUT, "val_balanced_questions.json")
         TEST_JSON  = os.path.join(QUESTIONS_INPUT, "testdev_balanced_questions.json")
