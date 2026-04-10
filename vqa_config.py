@@ -10,7 +10,7 @@ import os
 # ============================================================
 # 'SUBSET': 25k samples (fast for testing)
 # 'FULL': Original GQA dataset (best performance)
-MODE = 'FULL' 
+MODE = 'SUBSET' 
 
 # ============================================================
 # DATA PATHS
@@ -25,19 +25,7 @@ if IS_KAGGLE:
         IMAGES_INPUT = "/kaggle/input/datasets/lyte69/gqa-images"
         QUESTIONS_INPUT = "/kaggle/input/datasets/ammarmasselhy/gqa-questions"
 
-        # Auto-detect real images path (Kaggle datasets can be nested)
-        possible_images_paths = [
-            os.path.join(IMAGES_INPUT, "images"),           # Standard
-            os.path.join(IMAGES_INPUT, "images", "images"),  # Double nested
-            IMAGES_INPUT                                    # Flattened
-        ]
-        
-        IMAGES_DIR = possible_images_paths[0]
-        for p in possible_images_paths:
-            if os.path.exists(p) and any(f.endswith('.jpg') for f in os.listdir(p)[:5]):
-                IMAGES_DIR = p
-                break
-                
+        IMAGES_DIR = os.path.join(IMAGES_INPUT, "images")
         TRAIN_JSON = os.path.join(QUESTIONS_INPUT, "train_balanced_questions.json")
         VAL_JSON   = os.path.join(QUESTIONS_INPUT, "val_balanced_questions.json")
         TEST_JSON  = os.path.join(QUESTIONS_INPUT, "testdev_balanced_questions.json")
@@ -58,26 +46,74 @@ else:
     # Local Environment Paths
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, "gqa_data")
-    IMAGES_DIR = os.path.join(DATA_DIR, "images", "images_subset")
     
-    ANNOTATIONS_DIR = os.path.join(DATA_DIR, "annotations")
-    FEATURES_DIR = os.path.join(DATA_DIR, "features")
-    VOCAB_DIR = os.path.join(DATA_DIR, "vocab")
-
-    TRAIN_JSON = os.path.join(ANNOTATIONS_DIR, "train_subset_25k.json")
-    VAL_JSON = os.path.join(ANNOTATIONS_DIR, "val_subset_5k.json")
-    TEST_JSON = os.path.join(ANNOTATIONS_DIR, "testdev_balanced_questions.json")
-    VOCAB_PATH = os.path.join(VOCAB_DIR, "vocab-subset.pkl")
-    FEATURES_H5 = os.path.join(FEATURES_DIR, "resnet50_features.h5")
+    if MODE == 'FULL':
+        IMAGES_DIR = os.path.join(DATA_DIR, "images", "images_subset") # Use subset images for local testing
+        TRAIN_JSON = os.path.join(DATA_DIR, "annotations", "train_subset_25k.json")
+        VAL_JSON = os.path.join(DATA_DIR, "annotations", "val_subset_5k.json")
+        TEST_JSON = os.path.join(DATA_DIR, "annotations", "testdev_balanced_questions.json")
+        VOCAB_PATH = os.path.join(DATA_DIR, "vocab", "vocab_full_gqa.pkl")
+        FEATURES_H5 = None
+    else:
+        IMAGES_DIR = os.path.join(DATA_DIR, "images", "images_subset")
+        TRAIN_JSON = os.path.join(DATA_DIR, "annotations", "train_subset_25k.json")
+        VAL_JSON = os.path.join(DATA_DIR, "annotations", "val_subset_5k.json")
+        TEST_JSON = os.path.join(DATA_DIR, "annotations", "testdev_balanced_questions.json")
+        VOCAB_PATH = os.path.join(DATA_DIR, "vocab", "vocab.pkl")
+        FEATURES_H5 = os.path.join(DATA_DIR, "features", "resnet50_features.h5")
 
 # ============================================================
 # RESULTS PATHS
 # ============================================================
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+# Default RESULTS_DIR based on MODE
+RESULTS_DIR = os.path.join(BASE_DIR, "results" if MODE == 'FULL' else "results_subset")
+
+# Sanity check: if preferred dir doesn't exist locally, fallback to the other one
+if not IS_KAGGLE and not os.path.exists(RESULTS_DIR):
+    alternative = os.path.join(BASE_DIR, "results_subset" if MODE == 'FULL' else "results")
+    if os.path.exists(alternative):
+        RESULTS_DIR = alternative
+
 if IS_KAGGLE and not os.path.exists(RESULTS_DIR):
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-MODEL_DIRS = {f"model_{i}": os.path.join(RESULTS_DIR, f"model_{i}") for i in range(1, 8)}
+# Model subdirectories mapping
+SUBSET_MAP = {
+    "model_1": "model_1_scratch_no_att",
+    "model_2": "model_2_pretrained_no_att",
+    "model_3": "model_3_scratch_att",
+    "model_4": "model_4_pretrained_att",
+    "model_5": "model_5_pretrained_e2e_no_att",
+    "model_6": "model_6_pretrained_e2e_att",
+    "model_7": "model_7_transformer"
+}
+
+def get_model_dir(model_id, mode=None):
+    """
+    Get the absolute path to a model's results directory.
+    Handles SUBSET descriptive names and FULL simple names.
+    """
+    target_mode = mode if mode else MODE
+    
+    # Determine base results directory
+    if target_mode == 'FULL':
+        res_dir = os.path.join(BASE_DIR, "results")
+    else:
+        res_dir = os.path.join(BASE_DIR, "results_subset")
+        
+    # Check for descriptive name if in subset mode
+    model_key = f"model_{model_id}"
+    if target_mode == 'SUBSET' and model_key in SUBSET_MAP:
+        descriptive_name = SUBSET_MAP[model_key]
+        descriptive_dir = os.path.join(res_dir, descriptive_name)
+        if os.path.exists(descriptive_dir):
+            return descriptive_dir
+            
+    # Fallback to simple name (model_X)
+    return os.path.join(res_dir, model_key)
+
+# Initialize global MODEL_DIRS for backward compatibility
+MODEL_DIRS = {f"model_{i}": get_model_dir(i) for i in range(1, 8)}
 ATTENTION_MAPS_DIR = os.path.join(RESULTS_DIR, "attention_maps")
 
 # ============================================================

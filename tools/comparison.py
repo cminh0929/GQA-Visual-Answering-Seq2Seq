@@ -4,6 +4,7 @@ import os
 import sys
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Add path to import config
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
@@ -13,127 +14,164 @@ except ImportError:
     st.error("Could not find vqa_config.py")
     st.stop()
 
+from models import get_model_info, list_models, get_model
 # Configuration
-MODEL_NAMES = {
-    "1": "Model 1: Scratch + No Attention",
-    "2": "Model 2: Pretrained + No Attention",
-    "3": "Model 3: Scratch + Attention",
-    "4": "Model 4: Pretrained + Attention",
-    "5": "Model 5: Pretrained E2E + No Attention",
-    "6": "Model 6: Pretrained E2E + Attention"
-}
+MODEL_NAMES = {str(mid): get_model_info(mid)["name"] for mid in list_models()}
 
-st.set_page_config(page_title="VQA Model Comparison", layout="wide", page_icon="📊")
+st.set_page_config(page_title="VQA Benchmarking", layout="wide", page_icon="📈")
 
-st.title("📊 VQA Model Evaluation Comparison")
-st.markdown("Dashboard for comparing performance metrics across selected Models.")
+def set_design():
+    st.markdown("""
+        <style>
+        .main { background-color: #f8f9fa; }
+        .stMetric { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .gain-positive { color: #28a745; font-weight: bold; }
+        .gain-negative { color: #dc3545; font-weight: bold; }
+        table { width: 100% !important; }
+        </style>
+    """, unsafe_allow_html=True)
+
+set_design()
+
+st.title("📈 VQA Benchmarking: Full vs Subset")
+st.markdown("Detailed performance comparison between models trained on the **Subset** (25k) and **Full** GQA datasets.")
 
 @st.cache_data
-def load_data():
-    data = {}
-    for i in range(1, 7):
-        model_str = f"model_{i}"
-        dir_path = config.MODEL_DIRS.get(model_str)
-        if dir_path:
-            metrics_path = os.path.join(dir_path, "metrics.json")
-            if os.path.exists(metrics_path):
-                with open(metrics_path, "r", encoding="utf-8") as f:
-                    data[str(i)] = json.load(f)
-    return data
+def load_all_metrics():
+    """Load metrics from both results and results_subset folders."""
+    all_data = []
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    # Mode configurations
+    scan_configs = [
+        {"mode": "FULL", "folder": "results"},
+        {"mode": "SUBSET", "folder": "results_subset"}
+    ]
+    
+    for cfg in scan_configs:
+        folder_path = os.path.join(base_dir, cfg["folder"])
+        if not os.path.exists(folder_path): continue
+        
+        # Scan subdirectories
+        for entry in os.listdir(folder_path):
+            entry_path = os.path.join(folder_path, entry)
+            if os.path.isdir(entry_path):
+                # Try to find model ID from folder name
+                model_id = None
+                if entry.startswith("model_"):
+                    parts = entry.split("_")
+                    if len(parts) >= 2 and parts[1].isdigit():
+                        model_id = parts[1]
+                
+                if not model_id: continue
+                
+                metrics_path = os.path.join(entry_path, "metrics.json")
+                if os.path.exists(metrics_path):
+                    try:
+                        with open(metrics_path, "r", encoding="utf-8") as f:
+                            m = json.load(f)
+                            m["Model ID"] = model_id
+                            m["Mode"] = cfg["mode"]
+                            m["Display Name"] = f"M{model_id} ({cfg['mode']})"
+                            all_data.append(m)
+                    except (FileNotFoundError, json.JSONDecodeError):
+                        pass
+    return all_data
 
-data = load_data()
+raw_data = load_all_metrics()
 
-if not data:
-    st.error("⚠️ No `metrics.json` found in any model directory. Run `evaluate.py` first.")
+if not raw_data:
+    st.error("No metrics found. Please run evaluate.py first for at least one model.")
+    st.stop()
+
+df = pd.DataFrame(raw_data)
+
+# ---------------------------------------------------------
+# Sidebar
+# ---------------------------------------------------------
+with st.sidebar:
+    st.header("⚙️ Benchmark Settings")
+    display_modes = st.multiselect("Dataset Modes", ["FULL", "SUBSET"], default=["FULL", "SUBSET"])
+    
+    available_model_ids = sorted(list(df["Model ID"].unique()), key=int)
+    selected_model_ids = st.multiselect("Target Models", available_model_ids, default=available_model_ids)
+    
+    # Detect available metrics
+    exclude_cols = ["Model ID", "Mode", "Display Name", "inference_time", "num_samples", "accuracy"]
+    metric_cols = [c for c in df.columns if c not in exclude_cols]
+    
+    # Sort metrics: Accuracy and Cider first
+    priority = ["short_accuracy", "cider", "bleu_4"]
+    metric_cols = priority + sorted([c for c in metric_cols if c not in priority])
+    
+    selected_metrics = st.multiselect("Metrics to Show", metric_cols, default=priority)
+
+# Filtering
+filtered_df = df[(df["Mode"].isin(display_modes)) & (df["Model ID"].isin(selected_model_ids))]
+
+if filtered_df.empty:
+    st.warning("No data matches the selected filters.")
     st.stop()
 
 # ---------------------------------------------------------
-# Prepare DataFrame
+# Comparison Dashboard
 # ---------------------------------------------------------
-rows = []
-for model_id, metrics in data.items():
-    row = {"Model ID": str(model_id), "Model": MODEL_NAMES.get(str(model_id), f"Model {model_id}")}
-    for k, v in metrics.items():
-        # Exclude "accuracy", "inference_time", "num_samples"
-        if k not in ["accuracy", "inference_time", "num_samples"]:
-            row[k] = v
-    rows.append(row)
+st.subheader("📊 Performance Visualization")
 
-df = pd.DataFrame(rows)
-available_metrics = [c for c in df.columns if c not in ["Model ID", "Model"]]
+# 1. Bar Chart Comparison
+for metric in selected_metrics:
+    fig = px.bar(
+        filtered_df, 
+        x="Model ID", 
+        y=metric, 
+        color="Mode",
+        barmode="group",
+        title=f"Comparison: {metric.replace('_', ' ').upper()}",
+        color_discrete_map={"FULL": "#1f77b4", "SUBSET": "#ff7f0e"},
+        text_auto='.4f'
+    )
+    fig.update_layout(height=350, plot_bgcolor="white")
+    st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------------------------------------
-# SIDEBAR - Settings
-# ---------------------------------------------------------
-st.sidebar.header("⚙️ Comparison Settings")
+# 2. Performance Scoreboard (Pivot-like)
+st.subheader("📋 Detailed Scoreboard")
 
-selected_models = st.sidebar.multiselect(
-    "1. Select Models to compare:",
-    options=df["Model ID"].tolist(),
-    default=df["Model ID"].tolist(),
-    format_func=lambda x: MODEL_NAMES.get(x, f"Model {x}")
-)
+pivot_rows = []
+for mid in selected_model_ids:
+    row = {"Model": MODEL_NAMES.get(mid, f"Model {mid}")}
+    for mode in ["FULL", "SUBSET"]:
+        subset_data = df[(df["Model ID"] == mid) & (df["Mode"] == mode)]
+        if not subset_data.empty:
+            for met in selected_metrics:
+                row[f"{met} ({mode})"] = subset_data.iloc[0][met]
+        else:
+            for met in selected_metrics:
+                row[f"{met} ({mode})"] = None
+    
+    # Calculate Gaps for Short Accuracy
+    if "short_accuracy (FULL)" in row and "short_accuracy (SUBSET)" in row:
+        val_f = row["short_accuracy (FULL)"]
+        val_s = row["short_accuracy (SUBSET)"]
+        if val_f is not None and val_s is not None:
+            gap = val_f - val_s
+            row["Acc. Delta"] = f"{gap*100:+.2f}%"
+        else:
+            row["Acc. Delta"] = "N/A"
+            
+    pivot_rows.append(row)
 
-selected_metrics = st.sidebar.multiselect(
-    "2. Select Evaluation Metrics:",
-    options=available_metrics,
-    default=available_metrics
-)
+report_df = pd.DataFrame(pivot_rows).set_index("Model")
+st.dataframe(report_df.style.highlight_max(axis=0, color="#d4edda"), width="stretch")
 
-# ---------------------------------------------------------
-# MAIN CONTENT
-# ---------------------------------------------------------
-if not selected_models:
-    st.warning("⚠️ Please select at least one Model from the sidebar.")
-    st.stop()
+# 3. Trends & Analysis
+st.subheader("🔍 Analysis")
+col1, col2 = st.columns(2)
 
-if not selected_metrics:
-    st.warning("⚠️ Please select at least one Metric from the sidebar.")
-    st.stop()
+with col1:
+    st.info("**Dataset Impact:** Generally, the FULL dataset improves the **Cider** score, which measures how 'natural' and descriptive the answers are compared to human ground truth.")
 
-# Filter DataFrame by selected models
-filtered_df = df[df["Model ID"].isin(selected_models)]
+with col2:
+    st.success("**Consistency:** All results above are derived from evaluation on the **GQA testdev** set (12,578 samples) for absolute fairness.")
 
-# Data table
-st.subheader("📋 Detailed Comparison Table (Best values highlighted)")
-display_df = filtered_df[["Model"] + selected_metrics].set_index("Model")
-# Highlight best values with gradient coloring
-cmap = "YlGn"
-try:
-    st.dataframe(display_df.style.background_gradient(cmap=cmap, axis=0))
-except Exception:
-    st.dataframe(display_df)
-
-# Bar chart
-st.subheader("📈 Visual Comparison Chart")
-# Melt DataFrame for Plotly axis structure
-melted_df = filtered_df.melt(id_vars=["Model"], value_vars=selected_metrics, var_name="Metric", value_name="Score")
-
-# High-contrast, professional color palette for 6 Models
-custom_colors = [
-    "#E63946",  # Deep red
-    "#F4A261",  # Orange
-    "#E9C46A",  # Yellow
-    "#2A9D8F",  # Teal green
-    "#219EBC",  # Light blue
-    "#023047"   # Dark navy
-]
-
-fig = px.bar(
-    melted_df, 
-    x="Metric", 
-    y="Score", 
-    color="Model", 
-    barmode="group",        # Side-by-side bars for easy comparison
-    text_auto=".4f",        # Show 4 decimal places
-    color_discrete_sequence=custom_colors
-)
-
-fig.update_layout(
-    xaxis_title="Evaluation Metric", 
-    yaxis_title="Score", 
-    legend_title="Models",
-    xaxis={'categoryorder':'total descending'},
-    plot_bgcolor="rgba(0,0,0,0)"  # Transparent background
-)
-st.plotly_chart(fig)
+if __name__ == "__main__":
+    pass

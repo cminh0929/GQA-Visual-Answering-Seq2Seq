@@ -207,17 +207,10 @@ def main():
 
     # Configuration
     model_cfg = get_model_config(args.model)
-    model_names = {
-        1: "Scratch + No Attention (End-to-End)",
-        2: "Pretrained + No Attention (Pre-extracted)",
-        3: "Scratch + Attention (End-to-End)",
-        4: "Pretrained + Attention (Pre-extracted)",
-        5: "Pretrained + No Attention (End-to-End)",
-        6: "Pretrained + Attention (End-to-End)",
-    }
+    model_info = get_model_info(args.model)
 
     print("=" * 60)
-    print(f"TRAINING MODEL {args.model}: {model_names[args.model]}")
+    print(f"TRAINING MODEL {args.model}: {model_info['name']}")
     print(f"Device: {DEVICE}")
     print("=" * 60)
 

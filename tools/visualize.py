@@ -36,11 +36,10 @@ from models import get_model, get_model_info, list_models
 # ============================================================
 # STYLE
 # ============================================================
-plt.style.use("seaborn-v0_8-darkgrid")
-COLORS = {
-    1: "#e74c3c", 2: "#3498db", 3: "#e67e22",
-    4: "#2ecc71", 5: "#9b59b6", 6: "#1abc9c",
-}
+# Map model IDs to colors (expanded to support more models)
+COLORS_LIST = ["#e74c3c", "#3498db", "#e67e22", "#2ecc71", "#9b59b6", "#1abc9c", "#f1c40f", "#34495e"]
+COLORS = {mid: COLORS_LIST[(i % len(COLORS_LIST))] for i, mid in enumerate(list_models())}
+
 def get_label(mid):
     return f"M{mid}: {get_model_info(mid)['name'].split(':')[-1].strip()}"
 
@@ -55,9 +54,9 @@ def plot_learning_curves():
 
     has_data = False
 
-    for model_id in range(1, 7):
+    for model_id in list_models():
         history_path = os.path.join(
-            config.MODEL_DIRS[f"model_{model_id}"], "logs", "history.json"
+            config.get_model_dir(model_id), "logs", "history.json"
         )
         if not os.path.exists(history_path):
             continue
@@ -104,9 +103,9 @@ def plot_learning_curves():
     fig, ax = plt.subplots(figsize=(10, 6))
     fig.suptitle("Validation Accuracy", fontsize=16, fontweight="bold")
 
-    for model_id in range(1, 7):
+    for model_id in list_models():
         history_path = os.path.join(
-            config.MODEL_DIRS[f"model_{model_id}"], "logs", "history.json"
+            config.get_model_dir(model_id), "logs", "history.json"
         )
         if not os.path.exists(history_path):
             continue
@@ -140,9 +139,9 @@ def plot_comparison():
     if not os.path.exists(comparison_path):
         # Default to reading from each model individually
         all_metrics = {}
-        for model_id in range(1, 7):
+        for model_id in list_models():
             metrics_path = os.path.join(
-                config.MODEL_DIRS[f"model_{model_id}"], "metrics.json"
+                config.get_model_dir(model_id), "metrics.json"
             )
             if os.path.exists(metrics_path):
                 with open(metrics_path, "r") as f:
